@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "254902344877",
+    "project_id": "consultation-app-6293d",
+    "storage_bucket": "consultation-app-6293d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254902344877:android:4a4118f8b471ff1e563a24",
+        "android_client_info": {
+          "package_name": "com.example.consultation_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254902344877-r082kcnrub8mlts7k856j6fe6k4ev9pk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.consultation_app",
+            "certificate_hash": "81fb8d6e861aaf8a6647f06c47a6b14db3b319a5"
+          }
+        },
+        {
+          "client_id": "254902344877-3vj9g409u4qi2lmtcvlg8f1fk50olfa5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGkBxLG83kRrSJ1GkfNDC3XfkC43OY64w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254902344877-3vj9g409u4qi2lmtcvlg8f1fk50olfa5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
