@@ -1,6 +1,6 @@
 {
   "without_sign_up" : "Giriş yapmadan devam et",
-  "login_mail_phone" : "Mail veya Telefon ile kaydol",
+  "login_mail_or_phone" : "Mail veya Telefon ile kaydol",
   "login_google" : "Google ile oturum aç",
   "login_facebook" : "Facebook ile oturum aç"
 }

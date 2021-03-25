@@ -35,7 +35,7 @@ class SignUpBody extends StatelessWidget {
             buttonText: AppLocalizations.of(context).translate("login_google"),
             buttonColor: Colors.white,
             buttonTextColor: Colors.black,
-            buttonIcon: FlutterLogo(),
+            buttonIcon: buildImage("assets/images/google_logo.png", 28),
             buttonOnPressed: () {},
             buttonHeight: 45,
           ),
@@ -44,16 +44,16 @@ class SignUpBody extends StatelessWidget {
                 AppLocalizations.of(context).translate("login_facebook"),
             buttonColor: Color(0xff3b5998),
             buttonTextColor: Colors.white,
-            buttonIcon: FlutterLogo(),
+            buttonIcon: buildImage("assets/images/facebook_logo.png", 28),
             buttonOnPressed: () {},
             buttonHeight: 45,
           ),
           BasicButton(
             buttonText:
-                AppLocalizations.of(context).translate("login_mail_phone"),
-            buttonColor: Colors.red.shade500,
+                AppLocalizations.of(context).translate("login_mail_or_phone"),
+            buttonColor: Theme.of(context).primaryColor,
             buttonTextColor: Colors.white,
-            buttonIcon: FlutterLogo(),
+            buttonIcon: buildImage("assets/images/mail_or_phone_icon.png", 34),
             buttonOnPressed: () {},
             buttonHeight: 45,
           ),
@@ -61,4 +61,7 @@ class SignUpBody extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildImage(String path, double height) =>
+      Image.asset(path, fit: BoxFit.cover, height: height);
 }
