@@ -2,7 +2,10 @@ import 'package:consultation_app/common_widget/basic_appbar.dart';
 import 'package:consultation_app/common_widget/basic_button.dart';
 import 'package:consultation_app/common_widget/login_anon_widget.dart';
 import 'package:consultation_app/models/app_localizations.dart';
+import 'package:consultation_app/models/user_model.dart';
+import 'package:consultation_app/models/user_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignUpPage extends StatelessWidget {
   @override
@@ -36,7 +39,7 @@ class SignUpBody extends StatelessWidget {
             buttonColor: Colors.white,
             buttonTextColor: Colors.black,
             buttonIcon: buildImage("assets/images/google_logo.png", 28),
-            buttonOnPressed: () {},
+            buttonOnPressed: () => _signInGoogle(context),
             buttonHeight: 45,
           ),
           BasicButton(
@@ -64,4 +67,12 @@ class SignUpBody extends StatelessWidget {
 
   Widget buildImage(String path, double height) =>
       Image.asset(path, fit: BoxFit.cover, height: height);
+  
+  void _signInGoogle(BuildContext context) async{
+    final _userViewModel = Provider.of<UserViewModel>(context, listen: false);
+    UserModel _user = await _userViewModel.signInGoogle();
+    if(_user != null){
+      print("ID USER ID USER: " + _user.userId.toString());
+    }
+  }
 }

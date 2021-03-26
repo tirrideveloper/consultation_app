@@ -12,7 +12,7 @@ class UserRepository implements AuthBase{
   FakeAuthService _fakeAuthService = locator<FakeAuthService>();
 
   //Release yapılırsa gerçek firebase girişleri yapılacak
-  AppMode appMode = AppMode.DEBUG;
+  AppMode appMode = AppMode.RELEASE;
 
   @override
   Future<UserModel> currentUser() async{
@@ -39,6 +39,15 @@ class UserRepository implements AuthBase{
       return await _fakeAuthService.signOut();
     } else {
       return await _firebaseAuthService.signOut();
+    }
+  }
+
+  @override
+  Future<UserModel> signInGoogle() async{
+    if (appMode == AppMode.DEBUG) {
+      return await _fakeAuthService.signInGoogle();
+    } else {
+      return await _firebaseAuthService.signInGoogle();
     }
   }
 

@@ -71,4 +71,20 @@ class UserViewModel with ChangeNotifier implements AuthBase {
       state = ViewState.Idle;
     }
   }
+
+  @override
+  Future<UserModel> signInGoogle() async {
+    try{
+      state = ViewState.Busy;
+      _userModel = await _userRepository.signInGoogle();
+      return _userModel;
+    }
+    catch(e){
+      print("VIEW MODEL SIGN IN GOOGLE ERROR" + e);
+      return null;
+    }
+    finally {
+      state = ViewState.Idle;
+    }
+  }
 }
