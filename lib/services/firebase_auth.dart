@@ -98,7 +98,8 @@ class FirebaseAuthService implements AuthBase {
     }
   }
 
-  //Yalnızca test kullanıcıları giriş yapabiliyor.(Facebook dev üzerinden ayarlanıyor)
+  //Yalnızca test kullanıcıları giriş yapabiliyor.
+  //(Facebook dev üzerinden ayarlanıyor)
   @override
   Future<UserModel> signInFacebook() async {
     final FacebookLogin facebookSignIn = FacebookLogin();
