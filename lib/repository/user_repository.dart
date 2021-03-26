@@ -7,7 +7,7 @@ import 'package:consultation_app/services/firebase_auth.dart';
 // bu sınıf uygulamayı test etmeye yardımcı olacak
 enum AppMode { DEBUG, RELEASE }
 
-class UserRepository implements AuthBase{
+class UserRepository implements AuthBase {
   FirebaseAuthService _firebaseAuthService = locator<FirebaseAuthService>();
   FakeAuthService _fakeAuthService = locator<FakeAuthService>();
 
@@ -15,7 +15,7 @@ class UserRepository implements AuthBase{
   AppMode appMode = AppMode.RELEASE;
 
   @override
-  Future<UserModel> currentUser() async{
+  Future<UserModel> currentUser() async {
     if (appMode == AppMode.DEBUG) {
       return await _fakeAuthService.currentUser();
     } else {
@@ -25,16 +25,15 @@ class UserRepository implements AuthBase{
 
   @override
   Future<UserModel> signInAnon() async {
-    if(appMode == AppMode.DEBUG){
+    if (appMode == AppMode.DEBUG) {
       return await _fakeAuthService.signInAnon();
-    }
-    else{
+    } else {
       return await _firebaseAuthService.signInAnon();
     }
   }
 
   @override
-  Future<bool> signOut() async{
+  Future<bool> signOut() async {
     if (appMode == AppMode.DEBUG) {
       return await _fakeAuthService.signOut();
     } else {
@@ -43,7 +42,7 @@ class UserRepository implements AuthBase{
   }
 
   @override
-  Future<UserModel> signInGoogle() async{
+  Future<UserModel> signInGoogle() async {
     if (appMode == AppMode.DEBUG) {
       return await _fakeAuthService.signInGoogle();
     } else {
@@ -51,4 +50,12 @@ class UserRepository implements AuthBase{
     }
   }
 
+  @override
+  Future<UserModel> signInFacebook() async {
+    if (appMode == AppMode.DEBUG) {
+      return await _fakeAuthService.signInFacebook();
+    } else {
+      return await _firebaseAuthService.signInFacebook();
+    }
+  }
 }

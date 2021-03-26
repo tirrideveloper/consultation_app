@@ -48,7 +48,7 @@ class SignUpBody extends StatelessWidget {
             buttonColor: Color(0xff3b5998),
             buttonTextColor: Colors.white,
             buttonIcon: buildImage("assets/images/facebook_logo.png", 28),
-            buttonOnPressed: () {},
+            buttonOnPressed: () => _signInFacebook(context),
             buttonHeight: 45,
           ),
           BasicButton(
@@ -71,6 +71,14 @@ class SignUpBody extends StatelessWidget {
   void _signInGoogle(BuildContext context) async{
     final _userViewModel = Provider.of<UserViewModel>(context, listen: false);
     UserModel _user = await _userViewModel.signInGoogle();
+    if(_user != null){
+      print("ID USER ID USER: " + _user.userId.toString());
+    }
+  }
+
+  void _signInFacebook(BuildContext context) async{
+    final _userViewModel = Provider.of<UserViewModel>(context, listen: false);
+    UserModel _user = await _userViewModel.signInFacebook();
     if(_user != null){
       print("ID USER ID USER: " + _user.userId.toString());
     }

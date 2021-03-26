@@ -8,7 +8,8 @@ abstract class AuthBase {
   Future<UserModel> signInAnon();
 
   Future<UserModel> signInGoogle();
-//Future<UserModel> signInFacebook();
+
+  Future<UserModel> signInFacebook();
 //Future<UserModel> signInPhone();
 //Future<UserModel> signInMail();
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">consultation-app</string>
+    <string name="facebook_app_id">272926094536577</string>
+    <string name="fb_login_protocol_scheme">fb272926094536577</string>
+</resources>
