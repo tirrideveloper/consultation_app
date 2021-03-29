@@ -9,17 +9,19 @@ class BasicButton extends StatelessWidget {
   final Widget buttonIcon;
   final VoidCallback buttonOnPressed;
   final double buttonMargin;
+  final double buttonWidth;
 
   const BasicButton(
       {Key key,
-        @required this.buttonText,
-        this.buttonColor,
-        this.buttonTextColor: Colors.white,
-        this.buttonRadius: 15,
-        this.buttonIcon,
-        this.buttonOnPressed,
-        this.buttonHeight,
-        this.buttonMargin: 10})
+      @required this.buttonText,
+      this.buttonColor,
+      this.buttonTextColor: Colors.white,
+      this.buttonRadius: 15,
+      this.buttonIcon,
+      this.buttonOnPressed,
+      this.buttonHeight,
+      this.buttonMargin: 10,
+      this.buttonWidth})
       : assert(buttonText != null),
         super(key: key);
 
@@ -29,11 +31,12 @@ class BasicButton extends StatelessWidget {
       margin: EdgeInsets.only(top: buttonMargin),
       child: SizedBox(
         height: buttonHeight,
+        width: buttonWidth,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: buttonColor,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(buttonRadius))
-          ),
+              primary: buttonColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(buttonRadius))),
           onPressed: buttonOnPressed,
           child: Container(
             child: Row(

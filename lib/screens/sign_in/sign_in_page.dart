@@ -33,6 +33,7 @@ class SignUpBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Container(
       margin: EdgeInsets.all(30),
       child: Column(
@@ -45,6 +46,7 @@ class SignUpBody extends StatelessWidget {
             buttonIcon: buildImage("assets/images/google_logo.png", 28),
             buttonOnPressed: () => _signInGoogle(context),
             buttonHeight: 45,
+            buttonWidth: width / 2,
           ),
           BasicButton(
             buttonText:
@@ -90,14 +92,13 @@ class SignUpBody extends StatelessWidget {
 
   void _emailAndPassword(BuildContext context) {
     // cihaz IOS ise IOS'un animasyonlarıyla sayfa geçişi olacak.
-    if(Platform.isIOS){
+    if (Platform.isIOS) {
       Navigator.of(context).push(
         CupertinoPageRoute(
           builder: (context) => EmailAndPassword(),
         ),
       );
-    }
-    else{
+    } else {
       Navigator.of(context).push(
         MaterialPageRoute(
           fullscreenDialog: true,
