@@ -1,3 +1,4 @@
+import 'package:consultation_app/models/tablet_detector.dart';
 import 'package:flutter/material.dart';
 
 class BasicButton extends StatelessWidget {
@@ -9,7 +10,7 @@ class BasicButton extends StatelessWidget {
   final Widget buttonIcon;
   final VoidCallback buttonOnPressed;
   final double buttonMargin;
-  final double buttonWidth;
+  final double buttonTextSize;
 
   const BasicButton(
       {Key key,
@@ -21,22 +22,30 @@ class BasicButton extends StatelessWidget {
       this.buttonOnPressed,
       this.buttonHeight,
       this.buttonMargin: 10,
-      this.buttonWidth})
+      this.buttonTextSize: 16})
       : assert(buttonText != null),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: buttonMargin),
+      margin: EdgeInsets.only(
+          top: TabletDetector.isTablet() == true
+              ? buttonMargin
+              : buttonMargin / 2),
       child: SizedBox(
-        height: buttonHeight,
-        width: buttonWidth,
+        height:
+            TabletDetector.isTablet() == true ? buttonHeight : buttonHeight / 2,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              primary: buttonColor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(buttonRadius))),
+            primary: buttonColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                  TabletDetector.isTablet() == true
+                      ? buttonRadius
+                      : buttonRadius / 2),
+            ),
+          ),
           onPressed: buttonOnPressed,
           child: Container(
             child: Row(
@@ -45,8 +54,14 @@ class BasicButton extends StatelessWidget {
               children: [
                 if (buttonIcon != null) ...[
                   buttonIcon,
-                  Text(buttonText,
-                      style: TextStyle(color: buttonTextColor, fontSize: 17)),
+                  Text(
+                    buttonText,
+                    style: TextStyle(
+                        color: buttonTextColor,
+                        fontSize: TabletDetector.isTablet() == true
+                            ? buttonTextSize
+                            : buttonTextSize / 2),
+                  ),
                   Container()
                 ],
                 if (buttonIcon == null) ...[

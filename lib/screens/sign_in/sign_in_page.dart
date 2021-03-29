@@ -1,9 +1,9 @@
 import 'dart:io';
-
 import 'package:consultation_app/common_widget/basic_appbar.dart';
 import 'package:consultation_app/common_widget/basic_button.dart';
 import 'package:consultation_app/common_widget/login_anon_widget.dart';
 import 'package:consultation_app/models/app_localizations.dart';
+import 'package:consultation_app/models/tablet_detector.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/models/user_view_model.dart';
 import 'package:consultation_app/screens/sign_in/email_and_password.dart';
@@ -33,7 +33,6 @@ class SignUpBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return Container(
       margin: EdgeInsets.all(30),
       child: Column(
@@ -43,28 +42,35 @@ class SignUpBody extends StatelessWidget {
             buttonText: AppLocalizations.of(context).translate("login_google"),
             buttonColor: Colors.white,
             buttonTextColor: Colors.black,
-            buttonIcon: buildImage("assets/images/google_logo.png", 28),
+            buttonIcon: buildImage("assets/images/google_logo.png", 50),
             buttonOnPressed: () => _signInGoogle(context),
-            buttonHeight: 45,
-            buttonWidth: width / 2,
+            buttonHeight: 90,
+            buttonTextSize: 32,
+            buttonRadius: 30,
           ),
           BasicButton(
             buttonText:
                 AppLocalizations.of(context).translate("login_facebook"),
             buttonColor: Color(0xff3b5998),
             buttonTextColor: Colors.white,
-            buttonIcon: buildImage("assets/images/facebook_logo.png", 28),
+            buttonIcon: buildImage("assets/images/facebook_logo.png", 50),
             buttonOnPressed: () => _signInFacebook(context),
-            buttonHeight: 45,
+            buttonHeight: 90,
+            buttonTextSize: 32,
+            buttonRadius: 30,
+            buttonMargin: 20,
           ),
           BasicButton(
             buttonText:
                 AppLocalizations.of(context).translate("login_mail_or_phone"),
             buttonColor: Theme.of(context).primaryColor,
             buttonTextColor: Colors.white,
-            buttonIcon: buildImage("assets/images/mail_or_phone_icon.png", 34),
+            buttonIcon: buildImage("assets/images/mail_or_phone_icon.png", 50),
             buttonOnPressed: () => _emailAndPassword(context),
-            buttonHeight: 45,
+            buttonHeight: 90,
+            buttonTextSize: 32,
+            buttonRadius: 30,
+            buttonMargin: 20,
           ),
         ],
       ),
@@ -72,7 +78,7 @@ class SignUpBody extends StatelessWidget {
   }
 
   Widget buildImage(String path, double height) =>
-      Image.asset(path, fit: BoxFit.cover, height: height);
+      Image.asset(path, fit: BoxFit.cover, height: TabletDetector.isTablet() == true ? height : height*0.56);
 
   void _signInGoogle(BuildContext context) async {
     final _userViewModel = Provider.of<UserViewModel>(context, listen: false);

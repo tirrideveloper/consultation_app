@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoginAnonWidget extends StatelessWidget {
-
-  void _guestLogin(BuildContext context) async{
+  void _guestLogin(BuildContext context) async {
     final _userViewModel = Provider.of<UserViewModel>(context, listen: false);
     UserModel _user = await _userViewModel.signInAnon();
     print("ID USER ID USER: " + _user.userId.toString());
@@ -17,11 +16,12 @@ class LoginAnonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    //double width = MediaQuery.of(context).size.width;
 
     return Container(
-      margin: EdgeInsets.only(bottom: 10, top: 10, right: width / 4),
-      child: Row(
+      margin: EdgeInsets.only(bottom: 10, top: 10),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           InkWell(
             onTap: () => _guestLogin(context),
