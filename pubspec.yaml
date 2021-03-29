@@ -16,7 +16,6 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  device_info: ^2.0.0
   #CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
 
