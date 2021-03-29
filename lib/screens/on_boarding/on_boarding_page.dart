@@ -1,4 +1,4 @@
-import 'package:consultation_app/screens/sign_up/sign_up_page.dart';
+import 'package:consultation_app/screens/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -65,6 +65,6 @@ class OnBoardingPage extends StatelessWidget {
       );
 
   void goToSignInPage(context) => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => SignUpPage()),
+        MaterialPageRoute(builder: (_) => SignInPage()),
       );
 }
