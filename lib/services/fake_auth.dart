@@ -31,4 +31,16 @@ class FakeAuthService implements AuthBase {
     return await Future.delayed(
         Duration(seconds: 2), () => UserModel(userId: userId));
   }
+
+  @override
+  Future<UserModel> createEmailAndPassword(String email, String password) {
+    // TODO: implement createEmailAndPassword
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<UserModel> signInEmailAndPassword(String email, String password) {
+    // TODO: implement signInEmailAndPassword
+    throw UnimplementedError();
+  }
 }

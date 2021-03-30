@@ -30,20 +30,20 @@ class BasicButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-          top: TabletDetector.isTablet() == true
+          top: TabletDetector.isTablet() != true
               ? buttonMargin
-              : buttonMargin / 2),
+              : buttonMargin * 2),
       child: SizedBox(
         height:
-            TabletDetector.isTablet() == true ? buttonHeight : buttonHeight / 2,
+            TabletDetector.isTablet() != true ? buttonHeight : buttonHeight * 2,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             primary: buttonColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
-                  TabletDetector.isTablet() == true
+                  TabletDetector.isTablet() != true
                       ? buttonRadius
-                      : buttonRadius / 2),
+                      : buttonRadius * 2),
             ),
           ),
           onPressed: buttonOnPressed,
@@ -58,9 +58,9 @@ class BasicButton extends StatelessWidget {
                     buttonText,
                     style: TextStyle(
                         color: buttonTextColor,
-                        fontSize: TabletDetector.isTablet() == true
+                        fontSize: TabletDetector.isTablet() != true
                             ? buttonTextSize
-                            : buttonTextSize / 2),
+                            : buttonTextSize * 2),
                   ),
                   Container()
                 ],

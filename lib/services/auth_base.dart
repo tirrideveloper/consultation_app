@@ -10,6 +10,10 @@ abstract class AuthBase {
   Future<UserModel> signInGoogle();
 
   Future<UserModel> signInFacebook();
+
+  Future<UserModel> signInEmailAndPassword(String email, String password);
+  Future<UserModel> createEmailAndPassword(String email, String password);
+
 //Future<UserModel> signInPhone();
-//Future<UserModel> signInMail();
+
 }

@@ -14,20 +14,25 @@ class UserViewModel with ChangeNotifier implements AuthBase {
   UserRepository _userRepository = locator<UserRepository>();
 
   UserModel _userModel;
+
   UserModel get user => _userModel;
 
+  String emailError;
+  String passwordError;
+
   ViewState get state => _state;
-  set state(ViewState value){
+
+  set state(ViewState value) {
     _state = value;
     notifyListeners();
   }
 
-  UserViewModel(){
+  UserViewModel() {
     currentUser();
   }
 
   @override
-  Future<UserModel> currentUser() async{
+  Future<UserModel> currentUser() async {
     try {
       state = ViewState.Busy;
       _userModel = await _userRepository.currentUser();
@@ -44,7 +49,7 @@ class UserViewModel with ChangeNotifier implements AuthBase {
   }
 
   @override
-  Future<UserModel> signInAnon() async{
+  Future<UserModel> signInAnon() async {
     try {
       state = ViewState.Busy;
       _userModel = await _userRepository.signInAnon();
@@ -58,7 +63,7 @@ class UserViewModel with ChangeNotifier implements AuthBase {
   }
 
   @override
-  Future<bool> signOut() async{
+  Future<bool> signOut() async {
     try {
       state = ViewState.Busy;
       bool result = await _userRepository.signOut();
@@ -74,22 +79,20 @@ class UserViewModel with ChangeNotifier implements AuthBase {
 
   @override
   Future<UserModel> signInGoogle() async {
-    try{
+    try {
       state = ViewState.Busy;
       _userModel = await _userRepository.signInGoogle();
       return _userModel;
-    }
-    catch(e){
+    } catch (e) {
       print("VIEW MODEL SIGN IN GOOGLE ERROR" + e);
       return null;
-    }
-    finally {
+    } finally {
       state = ViewState.Idle;
     }
   }
 
   @override
-  Future<UserModel> signInFacebook() async{
+  Future<UserModel> signInFacebook() async {
     try {
       state = ViewState.Busy;
       _userModel = await _userRepository.signInFacebook();
@@ -100,5 +103,57 @@ class UserViewModel with ChangeNotifier implements AuthBase {
     } finally {
       state = ViewState.Idle;
     }
+  }
+
+  @override
+  Future<UserModel> createEmailAndPassword(
+      String email, String password) async {
+    try {
+      state = ViewState.Busy;
+      _userModel =
+          await _userRepository.createEmailAndPassword(email, password);
+      return _userModel;
+    } catch (e) {
+      print("VIEW MODEL SIGN IN ANONYMOUSLY ERROR" + e);
+      return null;
+    } finally {
+      state = ViewState.Idle;
+    }
+  }
+
+  @override
+  Future<UserModel> signInEmailAndPassword(
+      String email, String password) async {
+    try {
+      state = ViewState.Busy;
+      _userModel =
+          await _userRepository.signInEmailAndPassword(email, password);
+      return _userModel;
+    } catch (e) {
+      print("VIEW MODEL SIGN IN ANONYMOUSLY ERROR" + e);
+      return null;
+    } finally {
+      state = ViewState.Idle;
+    }
+  }
+
+  bool checkValidEmailandPassword(String email, String password) {
+    var result = true;
+    bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email);
+    bool passwordValid =
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+            .hasMatch(password);
+
+    if(passwordValid == false){
+      passwordError = "en az 1 küçük ve büyük harf, sayı ve özel karakter olmalı";
+      result = false;
+    }
+    if(emailValid == false){
+      emailError = "geçerli mail adresi giriniz";
+      result= false;
+    }
+    return result;
   }
 }

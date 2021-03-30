@@ -42,35 +42,35 @@ class SignUpBody extends StatelessWidget {
             buttonText: AppLocalizations.of(context).translate("login_google"),
             buttonColor: Colors.white,
             buttonTextColor: Colors.black,
-            buttonIcon: buildImage("assets/images/google_logo.png", 50),
+            buttonIcon: buildImage("assets/images/google_logo.png", 25),
             buttonOnPressed: () => _signInGoogle(context),
-            buttonHeight: 90,
-            buttonTextSize: 32,
-            buttonRadius: 30,
+            buttonHeight: 45,
+            buttonTextSize: 16,
+            buttonRadius: 15,
           ),
           BasicButton(
             buttonText:
                 AppLocalizations.of(context).translate("login_facebook"),
             buttonColor: Color(0xff3b5998),
             buttonTextColor: Colors.white,
-            buttonIcon: buildImage("assets/images/facebook_logo.png", 50),
+            buttonIcon: buildImage("assets/images/facebook_logo.png", 25),
             buttonOnPressed: () => _signInFacebook(context),
-            buttonHeight: 90,
-            buttonTextSize: 32,
-            buttonRadius: 30,
-            buttonMargin: 20,
+            buttonHeight: 45,
+            buttonTextSize: 16,
+            buttonRadius: 15,
+            buttonMargin: 10,
           ),
           BasicButton(
             buttonText:
                 AppLocalizations.of(context).translate("login_mail_or_phone"),
             buttonColor: Theme.of(context).primaryColor,
             buttonTextColor: Colors.white,
-            buttonIcon: buildImage("assets/images/mail_or_phone_icon.png", 50),
+            buttonIcon: buildImage("assets/images/mail_or_phone_icon.png", 25),
             buttonOnPressed: () => _emailAndPassword(context),
-            buttonHeight: 90,
-            buttonTextSize: 32,
-            buttonRadius: 30,
-            buttonMargin: 20,
+            buttonHeight: 45,
+            buttonTextSize: 16,
+            buttonRadius: 15,
+            buttonMargin: 10,
           ),
         ],
       ),
@@ -78,7 +78,7 @@ class SignUpBody extends StatelessWidget {
   }
 
   Widget buildImage(String path, double height) =>
-      Image.asset(path, fit: BoxFit.cover, height: TabletDetector.isTablet() == true ? height : height*0.56);
+      Image.asset(path, fit: BoxFit.cover, height: TabletDetector.isTablet() != true ? height : height/0.56);
 
   void _signInGoogle(BuildContext context) async {
     final _userViewModel = Provider.of<UserViewModel>(context, listen: false);
@@ -101,6 +101,7 @@ class SignUpBody extends StatelessWidget {
     if (Platform.isIOS) {
       Navigator.of(context).push(
         CupertinoPageRoute(
+          fullscreenDialog: true,
           builder: (context) => EmailAndPassword(),
         ),
       );
