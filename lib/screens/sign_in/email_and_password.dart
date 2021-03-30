@@ -55,8 +55,8 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
         : "Hesabınız yok mu? Giriş yap";
 
     final _userViewModel = Provider.of<UserViewModel>(context);
-    if(_userViewModel.user != null){
-      Future.delayed(Duration(milliseconds: 10), (){
+    if (_userViewModel.user != null) {
+      Future.delayed(Duration(milliseconds: 10), () {
         Navigator.of(context).pop();
       });
     }
@@ -76,6 +76,9 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
                       TextFormField(
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
+                          errorText: _userViewModel.emailError != null
+                              ? _userViewModel.emailError
+                              : null,
                           prefixIcon: Icon(Icons.mail),
                           hintText: "Email",
                           labelText: "Email",
@@ -89,6 +92,9 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
                       TextFormField(
                         obscureText: _isHidden,
                         decoration: InputDecoration(
+                          errorText: _userViewModel.passwordError != null
+                              ? _userViewModel.passwordError
+                              : null,
                           prefixIcon: Icon(Icons.lock),
                           suffixIcon: InkWell(
                             onTap: _togglePasswordView,

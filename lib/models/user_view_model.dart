@@ -109,10 +109,13 @@ class UserViewModel with ChangeNotifier implements AuthBase {
   Future<UserModel> createEmailAndPassword(
       String email, String password) async {
     try {
-      state = ViewState.Busy;
-      _userModel =
-          await _userRepository.createEmailAndPassword(email, password);
-      return _userModel;
+      if(_checkValidEmailandPassword(email, password)){
+        state = ViewState.Busy;
+        _userModel =
+        await _userRepository.createEmailAndPassword(email, password);
+        return _userModel;
+      }
+      else return null;
     } catch (e) {
       print("VIEW MODEL SIGN IN ANONYMOUSLY ERROR" + e);
       return null;
@@ -125,10 +128,13 @@ class UserViewModel with ChangeNotifier implements AuthBase {
   Future<UserModel> signInEmailAndPassword(
       String email, String password) async {
     try {
-      state = ViewState.Busy;
-      _userModel =
-          await _userRepository.signInEmailAndPassword(email, password);
-      return _userModel;
+      if(_checkValidEmailandPassword(email, password)){
+        state = ViewState.Busy;
+        _userModel =
+        await _userRepository.createEmailAndPassword(email, password);
+        return _userModel;
+      }
+      else return null;
     } catch (e) {
       print("VIEW MODEL SIGN IN ANONYMOUSLY ERROR" + e);
       return null;
@@ -137,23 +143,27 @@ class UserViewModel with ChangeNotifier implements AuthBase {
     }
   }
 
-  bool checkValidEmailandPassword(String email, String password) {
+  bool _checkValidEmailandPassword(String email, String password) {
     var result = true;
     bool emailValid = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(email);
     bool passwordValid =
-        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')
             .hasMatch(password);
 
     if(passwordValid == false){
-      passwordError = "en az 1 küçük ve büyük harf, sayı ve özel karakter olmalı";
+      passwordError = "en az 1 küçük harf "
+          "1 büyük harf "
+          "1 sayı ve 8 karakter olmalı";
       result = false;
     }
+    else passwordError = null;
     if(emailValid == false){
       emailError = "geçerli mail adresi giriniz";
       result= false;
     }
+    else emailError = null;
     return result;
   }
 }
