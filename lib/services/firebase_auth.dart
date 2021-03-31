@@ -17,7 +17,7 @@ class FirebaseAuthService implements AuthBase {
     if (user == null) {
       return null;
     }
-    return UserModel(userId: user.uid);
+    return UserModel(userId: user.uid, email: user.email);
   }
 
   @override
@@ -45,6 +45,8 @@ class FirebaseAuthService implements AuthBase {
   @override
   Future<bool> signOut() async {
     try {
+      final _facebookLogin = FacebookLogin();
+      await _facebookLogin.logOut();
       final _googleSignIn = GoogleSignIn();
       await _googleSignIn.signOut();
 

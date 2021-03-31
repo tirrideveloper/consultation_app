@@ -7,7 +7,18 @@ class FireStoreDbService implements DbBase {
 
   @override
   Future<bool> saveUser(UserModel userModel) async {
-    await _firestore.collection("users").doc(userModel.userId).set(userModel.toMap());
+    await _firestore
+        .collection("users")
+        .doc(userModel.userId)
+        .set(userModel.toMap());
+
+    DocumentSnapshot _checkUser =
+        await FirebaseFirestore.instance.doc("users/${userModel.userId}").get();
+
+    Map _checkUserInformationMap = _checkUser.data();
+    UserModel _checkedUserInformation =
+        UserModel.fromMap(_checkUserInformationMap);
+    print("checked user: " + _checkedUserInformation.toString());
     return true;
   }
 }
