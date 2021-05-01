@@ -1,4 +1,5 @@
 import 'package:consultation_app/common_widget/basic_button.dart';
+import 'package:consultation_app/models/app_localizations.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/models/user_view_model.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
 
   @override
   Widget build(BuildContext context) {
-    _buttonText = _formType == FormType.LogIn ? "Giriş yap" : "Kayıt ol";
+    _buttonText = _formType == FormType.LogIn ? AppLocalizations.of(context).translate("login_text") : AppLocalizations.of(context).translate("sign_up_text");
     _linkText = _formType == FormType.LogIn
         ? "Hesabınız yok mu? Kayıt olun"
         : "Hesabınız yok mu? Giriş yap";

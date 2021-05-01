@@ -2,5 +2,7 @@
   "without_sign_up" : "Continue without login",
   "login_mail_or_phone" : "Sign up Mail or Phone",
   "login_google" : "Login with Google",
-  "login_facebook" : "Login with Facebook"
+  "login_facebook" : "Login with Facebook",
+  "login_text" : "Login",
+  "sign_up_text" : "Sign Up"
 }
