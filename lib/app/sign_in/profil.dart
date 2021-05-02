@@ -1,4 +1,5 @@
 import 'package:consultation_app/models/user_model.dart';
+import 'package:consultation_app/models/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 class ProfilPage extends StatelessWidget {
@@ -6,7 +7,7 @@ class ProfilPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Profil"),actions: <Widget>[
-        FlatButton(onPressed:()=> _cikisYap(context), child:Text("Cikis",
+        ElevatedButton(onPressed:()=> _cikisYap(context), child:Text("Cikis",
             style: TextStyle(color:Colors.white,fontSize: 18)
         ),
         )
@@ -18,7 +19,7 @@ class ProfilPage extends StatelessWidget {
 }
 
 Future<bool> _cikisYap(BuildContext context) async{
-  final _userModel = Provider.of<UserModel>(context);
-  bool sonuc= await _userModel.signOut();
-  return sonuc;
+  final _userModel = Provider.of<UserViewModel>(context);
+  bool result = await _userModel.signOut();
+  return result;
 }

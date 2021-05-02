@@ -19,10 +19,10 @@ class MyCustomBottomNavigation extends StatelessWidget {
       onTap: (index)=>onSelectedTab(TabItem.values[index]),
     ),
     tabBuilder: (context,index){
-      final gosterilecekItem=TabItem.values[index]
+      final gosterilecekItem=TabItem.values[index];
       return CupertinoTabView(
         builder: (context){
-          return sayfaOlusturucu[gosterilecekItem]
+          return sayfaOlusturucu[gosterilecekItem];
         });
     },
     );

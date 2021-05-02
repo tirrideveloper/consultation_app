@@ -3,12 +3,18 @@ import 'package:consultation_app/models/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
 
   final UserModel user;
 
   MainPage({Key key, @required this.user})
       : super(key: key);
+
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +33,9 @@ Future<bool> _signOut(BuildContext context) async {
   bool result = await _userViewModel.signOut();
   return result;
 }
+
+
+
 class MyHomePage  extends StatefulWidget {
   @override
   _State createState() => _State();
