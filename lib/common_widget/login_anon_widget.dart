@@ -27,6 +27,7 @@ class LoginAnonWidget extends StatelessWidget {
             onTap: () => _guestLogin(context),
             child: Text(
               AppLocalizations.of(context).translate("without_sign_up"),
+              textAlign: TextAlign.center,
               style: TextStyle(
                   color: Theme.of(context).primaryColor, fontSize: 16),
             ),

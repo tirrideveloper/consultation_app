@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:consultation_app/common_widget/basic_appbar.dart';
 import 'package:consultation_app/common_widget/basic_button.dart';
 import 'package:consultation_app/common_widget/login_anon_widget.dart';
@@ -47,6 +48,7 @@ class SignUpBody extends StatelessWidget {
             buttonHeight: 45,
             buttonTextSize: 16,
             buttonRadius: 15,
+            buttonMargin: 10,
           ),
           BasicButton(
             buttonText:
@@ -77,8 +79,9 @@ class SignUpBody extends StatelessWidget {
     );
   }
 
-  Widget buildImage(String path, double height) =>
-      Image.asset(path, fit: BoxFit.cover, height: TabletDetector.isTablet() != true ? height : height/0.56);
+  Widget buildImage(String path, double height) => Image.asset(path,
+      fit: BoxFit.cover,
+      height: TabletDetector.isTablet() != true ? height : height / 0.56);
 
   void _signInGoogle(BuildContext context) async {
     final _userViewModel = Provider.of<UserViewModel>(context, listen: false);
