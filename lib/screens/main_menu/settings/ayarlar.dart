@@ -1,3 +1,4 @@
+import 'package:consultation_app/models/app_localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings"),
+        title: Text(AppLocalizations.of(context).translate("tab_item_settings")),
       ),
       body: Container(
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),

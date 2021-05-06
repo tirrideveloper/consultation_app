@@ -1,10 +1,10 @@
+import 'package:consultation_app/models/app_localizations.dart';
 import 'package:consultation_app/screens/main_menu/profile/numbers_widget.dart';
 import 'package:consultation_app/models/tablet_detector.dart';
 import 'package:consultation_app/models/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'profile_image_widget.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -17,7 +17,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profil"),
+        title: Text(AppLocalizations.of(context).translate("tab_item_profile")),
       ),
       body: Container(
         margin: EdgeInsets.only(top: 25),
@@ -45,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           TabletDetector.isTablet() != true ? 30 : 30 * 2),
                     ),
                   ),
-                  child: Text("Send Message",
+                  child: Text(AppLocalizations.of(context).translate("tab_item_settings"),
                       style: TextStyle(color: Colors.white, fontSize: 18)),
                 ),
               ),
@@ -80,7 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'About',
+              AppLocalizations.of(context).translate("profile_about"),
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),

@@ -52,8 +52,8 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
   Widget build(BuildContext context) {
     _buttonText = _formType == FormType.LogIn ? AppLocalizations.of(context).translate("login_text") : AppLocalizations.of(context).translate("sign_up_text");
     _linkText = _formType == FormType.LogIn
-        ? "Hesabınız yok mu? Kayıt olun"
-        : "Hesabınız yok mu? Giriş yap";
+        ? AppLocalizations.of(context).translate("account_question_sign_in")
+        : AppLocalizations.of(context).translate("account_question_login");
 
     final _userViewModel = Provider.of<UserViewModel>(context);
     if (_userViewModel.user != null) {
@@ -105,8 +105,8 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
                                   : Icons.visibility_off,
                             ),
                           ),
-                          hintText: "Password",
-                          labelText: "Password",
+                          hintText: AppLocalizations.of(context).translate("sign_in_password"),
+                          labelText: AppLocalizations.of(context).translate("sign_in_password"),
                           border: OutlineInputBorder(),
                         ),
                         onSaved: (String inputPassword) {

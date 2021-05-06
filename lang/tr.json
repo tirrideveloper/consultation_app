@@ -4,5 +4,16 @@
   "login_google" : "Google ile oturum aç",
   "login_facebook" : "Facebook ile oturum aç",
   "login_text" : "Giriş yap",
-  "sign_up_text" : "Kayıt ol"
+  "sign_up_text" : "Kayıt ol",
+  "account_question_sign_in" : "Hesabınız yok mu? Kayıt olun",
+  "account_question_login" : "Hesabınız var mı? Giriş Yap",
+  "sign_in_password" : "Şifre",
+  "tab_item_home_page" : "Ana Sayfa",
+  "tab_item_profile" : "Profil",
+  "tab_item_search" : "Arama",
+  "tab_item_settings" : "Ayarlar",
+  "profile_following" : "Takip Edilen",
+  "profile_followers" : "Takip Eden",
+  "profile_rank" : "Derece",
+  "profile_about" : "Hakkında"
 }

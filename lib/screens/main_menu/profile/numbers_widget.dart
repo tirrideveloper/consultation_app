@@ -1,3 +1,4 @@
+import 'package:consultation_app/models/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class NumbersWidget extends StatelessWidget {
@@ -5,13 +6,17 @@ class NumbersWidget extends StatelessWidget {
   Widget build(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          buildButton(context, '4.8', 'Ranking'),
+          buildButton(context, '4.8',
+              AppLocalizations.of(context).translate("profile_rank")),
           buildDivider(),
-          buildButton(context, '35', 'Following'),
+          buildButton(context, '35',
+              AppLocalizations.of(context).translate("profile_following")),
           buildDivider(),
-          buildButton(context, '50', 'Followers'),
+          buildButton(context, '50',
+              AppLocalizations.of(context).translate("profile_followers")),
         ],
       );
+
   Widget buildDivider() => Container(
         height: 24,
         child: VerticalDivider(),

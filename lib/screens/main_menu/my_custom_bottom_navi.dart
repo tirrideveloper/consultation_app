@@ -38,9 +38,7 @@ class MyCustomBottomNavigation extends StatelessWidget {
 
 BottomNavigationBarItem _navItemOlustur(TabItem tabItem) {
   final olusturulacakTab = TabItemData.tumTablar[tabItem];
-  String bottomLabel = olusturulacakTab.title;
   return BottomNavigationBarItem(
-    icon: Icon(olusturulacakTab.icon),
-    label: bottomLabel,
+    icon: Icon(olusturulacakTab.icon)
   );
 }

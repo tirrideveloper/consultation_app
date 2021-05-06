@@ -4,5 +4,16 @@
   "login_google" : "Login with Google",
   "login_facebook" : "Login with Facebook",
   "login_text" : "Login",
-  "sign_up_text" : "Sign Up"
+  "sign_up_text" : "Sign Up",
+  "account_question_sign_in" : "Don't have an account? Sign up",
+  "account_question_login" : "Do you have an account? Login",
+  "sign_in_password" : "Password",
+  "tab_item_home_page" : "Home Page",
+  "tab_item_profile" : "Profile",
+  "tab_item_search" : "Search",
+  "tab_item_settings" : "Settings",
+  "profile_following" : "Following",
+  "profile_followers" : "Followers",
+  "profile_rank" : "Rank",
+  "profile_about" : "About"
 }
