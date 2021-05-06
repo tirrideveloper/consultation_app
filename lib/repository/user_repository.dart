@@ -14,7 +14,7 @@ class UserRepository implements AuthBase {
   FireStoreDbService _dbService = locator<FireStoreDbService>();
 
   //Release yapılırsa gerçek firebase girişleri yapılacak
-  AppMode appMode = AppMode.RELEASE;
+  AppMode appMode = AppMode.DEBUG;
 
   @override
   Future<UserModel> currentUser() async {

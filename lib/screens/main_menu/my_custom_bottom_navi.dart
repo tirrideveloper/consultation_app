@@ -21,6 +21,7 @@ class MyCustomBottomNavigation extends StatelessWidget {
           _navItemOlustur(TabItem.Kullanicilar),
           _navItemOlustur(TabItem.Profil),
           _navItemOlustur(TabItem.Arama),
+          _navItemOlustur(TabItem.Ayarlar),
         ],
         onTap: (index) => onSelectedTab(TabItem.values[index]),
       ),
@@ -36,8 +37,9 @@ class MyCustomBottomNavigation extends StatelessWidget {
 
 BottomNavigationBarItem _navItemOlustur(TabItem tabItem) {
   final olusturulacakTab = TabItemData.tumTablar[tabItem];
+  String bottomLabel = olusturulacakTab.title;
   return BottomNavigationBarItem(
     icon: Icon(olusturulacakTab.icon),
-    title: Text(olusturulacakTab.title),
+    label: bottomLabel,
   );
 }
