@@ -1,4 +1,4 @@
-import 'package:consultation_app/common_widget/numbers_widget.dart';
+import 'package:consultation_app/screens/main_menu/profile/numbers_widget.dart';
 import 'package:consultation_app/models/tablet_detector.dart';
 import 'package:consultation_app/models/user_view_model.dart';
 import 'package:flutter/cupertino.dart';

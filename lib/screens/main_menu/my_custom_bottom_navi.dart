@@ -17,6 +17,7 @@ class MyCustomBottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
+        activeColor: Theme.of(context).primaryColor,
         items: [
           _navItemOlustur(TabItem.Kullanicilar),
           _navItemOlustur(TabItem.Profil),

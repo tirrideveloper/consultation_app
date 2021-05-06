@@ -11,29 +11,12 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 1,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.green,
-          ),
-        ),
+        title: Text("Settings"),
       ),
       body: Container(
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
         child: ListView(
           children: [
-            Text(
-              "Settings",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-            ),
-            SizedBox(
-              height: 40,
-            ),
             Row(
               children: [
                 Icon(
@@ -147,7 +130,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ],
                 ),
                 actions: [
-                  FlatButton(
+                  ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
