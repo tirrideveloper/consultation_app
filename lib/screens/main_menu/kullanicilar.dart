@@ -10,7 +10,7 @@ class KullanicilarPage extends StatelessWidget {
             Text(AppLocalizations.of(context).translate("tab_item_home_page")),
       ),
       body: Center(
-        child: Text("Kullanicilar Sayfasi"),
+        child: Text("Ana Sayfa"),
       ),
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +18,8 @@ class UserModel {
     return {
       "userId": userId,
       "email": email,
-      "userName": userName ?? "",
+      "userName": userName ??
+          email.substring(0, email.indexOf("@")) + createRandomNumber(),
       "profileURL": profileURL ??
           "https://visualpharm.com/assets/233/Consultation-595b40b75ba036ed117d5a39.svg",
       "createdAt": createdAt ?? FieldValue.serverTimestamp(),
@@ -29,6 +32,7 @@ class UserModel {
       : userId = map["userId"],
         email = map["email"],
         userName = map["userName"],
+        profileURL = map["profileURL"],
         createdAt = (map["createdAt"] as Timestamp).toDate(),
         updatedAt = (map["updatedAt"] as Timestamp).toDate(),
         rank = map["rank"];
@@ -36,5 +40,10 @@ class UserModel {
   @override
   String toString() {
     return 'UserModel{userId: $userId, email: $email, userName: $userName, profileURL: $profileURL, createdAt: $createdAt, updatedAt: $updatedAt, rank: $rank}';
+  }
+
+  String createRandomNumber() {
+    int randomNumber = Random().nextInt(999999);
+    return randomNumber.toString();
   }
 }

@@ -17,28 +17,41 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  TabItem _currentTab = TabItem.Kullanicilar;
+  TabItem _currentTab = TabItem.AnaSayfa;
+
+  Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
+    TabItem.AnaSayfa: GlobalKey<NavigatorState>(),
+    TabItem.Profil: GlobalKey<NavigatorState>(),
+  };
 
   Map<TabItem, Widget> tumSayfalar() {
     return {
-      TabItem.Kullanicilar: KullanicilarPage(),
-      TabItem.Profil: ProfilePage(),
+      TabItem.AnaSayfa: KullanicilarPage(),
       TabItem.Ayarlar: SettingsPage(),
+      TabItem.Profil: ProfilePage(),
       TabItem.Arama: Aramapage(),
     };
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return WillPopScope(
+      onWillPop: () async =>
+          !await navigatorKeys[_currentTab].currentState.maybePop(),
       child: MyCustomBottomNavigation(
         sayfaOlusturucu: tumSayfalar(),
+        navigatorKeys: navigatorKeys,
         currentTab: _currentTab,
         onSelectedTab: (secilenTab) {
-          setState(() {
-            _currentTab = secilenTab;
-          });
-          print("Secilen tab item?" + secilenTab.toString());
+          if (secilenTab == _currentTab) {
+            navigatorKeys[secilenTab]
+                .currentState
+                .popUntil((route) => route.isFirst);
+          } else {
+            setState(() {
+              _currentTab = secilenTab;
+            });
+          }
         },
       ),
     );

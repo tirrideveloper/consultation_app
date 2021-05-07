@@ -11,10 +11,10 @@ enum AppMode { DEBUG, RELEASE }
 class UserRepository implements AuthBase {
   FirebaseAuthService _firebaseAuthService = locator<FirebaseAuthService>();
   FakeAuthService _fakeAuthService = locator<FakeAuthService>();
-  FireStoreDbService _dbService = locator<FireStoreDbService>();
+  FireStoreDbService _firestoreDBService = locator<FireStoreDbService>();
 
   //Release yapılırsa gerçek firebase girişleri yapılacak
-  AppMode appMode = AppMode.DEBUG;
+  AppMode appMode = AppMode.RELEASE;
 
   @override
   Future<UserModel> currentUser() async {
@@ -49,7 +49,7 @@ class UserRepository implements AuthBase {
       return await _fakeAuthService.signInGoogle();
     } else {
       UserModel _user = await _firebaseAuthService.signInGoogle();
-      bool _result = await _dbService.saveUser(_user);
+      bool _result = await _firestoreDBService.saveUser(_user);
       if (_result) {
         return _user;
       } else
@@ -63,7 +63,7 @@ class UserRepository implements AuthBase {
       return await _fakeAuthService.signInFacebook();
     } else {
       UserModel _user = await _firebaseAuthService.signInFacebook();
-      bool _result = await _dbService.saveUser(_user);
+      bool _result = await _firestoreDBService.saveUser(_user);
       if (_result) {
         return _user;
       } else
@@ -79,9 +79,9 @@ class UserRepository implements AuthBase {
     } else {
       UserModel _user =
           await _firebaseAuthService.createEmailAndPassword(email, password);
-      bool _result = await _dbService.saveUser(_user);
+      bool _result = await _firestoreDBService.saveUser(_user);
       if (_result) {
-        return _user;
+        return await _firestoreDBService.readUser(_user.userId);
       } else
         return null;
     }
@@ -93,7 +93,10 @@ class UserRepository implements AuthBase {
     if (appMode == AppMode.DEBUG) {
       return await _fakeAuthService.signInEmailAndPassword(email, password);
     } else {
-      return await _firebaseAuthService.signInEmailAndPassword(email, password);
+      UserModel _user =
+          await _firebaseAuthService.signInEmailAndPassword(email, password);
+      
+      return await _firestoreDBService.readUser(_user.userId);
     }
   }
 }
