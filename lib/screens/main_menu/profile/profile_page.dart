@@ -1,3 +1,4 @@
+import 'package:consultation_app/common_widget/platform_alert_dialog.dart';
 import 'package:consultation_app/models/app_localizations.dart';
 import 'package:consultation_app/screens/main_menu/profile/numbers_widget.dart';
 import 'package:consultation_app/models/tablet_detector.dart';
@@ -37,7 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 45,
                 width: 200,
                 child: ElevatedButton(
-                  onPressed: () => _signOut(context),
+                  onPressed: () => _signOutConfirmation(context),
                   style: ElevatedButton.styleFrom(
                     primary: Theme.of(context).primaryColor,
                     shape: RoundedRectangleBorder(
@@ -91,10 +92,24 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       );
+
+  Future _signOutConfirmation(BuildContext context) async{
+    final result = await PlatformAlertDialog(
+      title: "Çıkış Yap",
+      content: "Emin misiniz?",
+      buttonText: "Evet",
+      button2Text: "Vazgeç",
+    ).show(context);
+
+    // ignore: unrelated_type_equality_checks
+    if (result == true) {
+      _signOut(context);
+    }
+  }
+  Future<bool> _signOut(BuildContext context) async {
+    final _userModel = Provider.of<UserViewModel>(context, listen: false);
+    bool result = await _userModel.signOut();
+    return result;
+  }
 }
 
-Future<bool> _signOut(BuildContext context) async {
-  final _userModel = Provider.of<UserViewModel>(context, listen: false);
-  bool result = await _userModel.signOut();
-  return result;
-}

@@ -113,7 +113,6 @@ class UserViewModel with ChangeNotifier implements AuthBase {
         state = ViewState.Busy;
         _userModel =
         await _userRepository.createEmailAndPassword(email, password);
-
         return _userModel;
       }
       finally{

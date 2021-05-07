@@ -1,7 +1,10 @@
 import 'package:consultation_app/common_widget/basic_button.dart';
+import 'package:consultation_app/common_widget/platform_alert_dialog.dart';
+import 'package:consultation_app/error_exception.dart';
 import 'package:consultation_app/models/app_localizations.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/models/user_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -23,25 +26,26 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
   Future<void> _formSubmit() async {
     _formKey.currentState.save();
     final _userViewModel = Provider.of<UserViewModel>(context, listen: false);
+
     if (_formType == FormType.LogIn) {
-      try{
+      try {
         UserModel _signedUser =
-        await _userViewModel.signInEmailAndPassword(_email, _password);
-        if (_signedUser != null)
-          print("LOGGED USER" + _signedUser.userId.toString());
-      }
-      catch(e){
-
-      }
+            await _userViewModel.signInEmailAndPassword(_email, _password);
+        //if (_signedUser != null)
+        //print("Oturum açan user id:" + _signedUser.userId.toString());
+      } on FirebaseAuthException catch (e) {}
     } else {
-      try{
+      try {
         UserModel _createdUser =
-        await _userViewModel.createEmailAndPassword(_email, _password);
-        if (_createdUser != null)
-          print("LOGGED USER" + _createdUser.userId.toString());
-      }
-      on PlatformException catch(e){
-
+            await _userViewModel.createEmailAndPassword(_email, _password);
+        //if (_createdUser != null)
+        //print("Oturum açan user id:" + _createdUser.userId.toString());
+      } on FirebaseAuthException catch (e) {
+        return PlatformAlertDialog(
+                title: "Kullanıcı oluşturma hatası",
+                content:Errors.showError(e.code),
+                buttonText: "Tamam")
+            .show(context);
       }
     }
   }
@@ -61,7 +65,9 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
 
   @override
   Widget build(BuildContext context) {
-    _buttonText = _formType == FormType.LogIn ? AppLocalizations.of(context).translate("login_text") : AppLocalizations.of(context).translate("sign_up_text");
+    _buttonText = _formType == FormType.LogIn
+        ? AppLocalizations.of(context).translate("login_text")
+        : AppLocalizations.of(context).translate("sign_up_text");
     _linkText = _formType == FormType.LogIn
         ? AppLocalizations.of(context).translate("account_question_sign_in")
         : AppLocalizations.of(context).translate("account_question_login");
@@ -116,8 +122,10 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
                                   : Icons.visibility_off,
                             ),
                           ),
-                          hintText: AppLocalizations.of(context).translate("sign_in_password"),
-                          labelText: AppLocalizations.of(context).translate("sign_in_password"),
+                          hintText: AppLocalizations.of(context)
+                              .translate("sign_in_password"),
+                          labelText: AppLocalizations.of(context)
+                              .translate("sign_in_password"),
                           border: OutlineInputBorder(),
                         ),
                         onSaved: (String inputPassword) {
