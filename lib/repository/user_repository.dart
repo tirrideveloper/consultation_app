@@ -51,7 +51,7 @@ class UserRepository implements AuthBase {
       UserModel _user = await _firebaseAuthService.signInGoogle();
       bool _result = await _firestoreDBService.saveUser(_user);
       if (_result) {
-        return _user;
+        return await _firestoreDBService.readUser(_user.userId);
       } else
         return null;
     }
@@ -65,7 +65,7 @@ class UserRepository implements AuthBase {
       UserModel _user = await _firebaseAuthService.signInFacebook();
       bool _result = await _firestoreDBService.saveUser(_user);
       if (_result) {
-        return _user;
+        return await _firestoreDBService.readUser(_user.userId);
       } else
         return null;
     }
@@ -93,10 +93,15 @@ class UserRepository implements AuthBase {
     if (appMode == AppMode.DEBUG) {
       return await _fakeAuthService.signInEmailAndPassword(email, password);
     } else {
-      UserModel _user =
-          await _firebaseAuthService.signInEmailAndPassword(email, password);
-      
-      return await _firestoreDBService.readUser(_user.userId);
+      try {
+        UserModel _user =
+            await _firebaseAuthService.signInEmailAndPassword(email, password);
+
+        return await _firestoreDBService.readUser(_user.userId);
+      } catch (e) {
+        print("REPODA KULLANICI mail giriş HATASI" + e.toString());
+        return null;
+      }
     }
   }
 }

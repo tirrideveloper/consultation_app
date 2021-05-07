@@ -135,14 +135,9 @@ class FirebaseAuthService implements AuthBase {
   @override
   Future<UserModel> createEmailAndPassword(
       String email, String password) async {
-    try {
-      UserCredential userCredential = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      return _firebaseUser(userCredential.user);
-    } catch (e) {
-      print("ERROR ANONYMOUSLY AUTH" + e.toString());
-      return null;
-    }
+    UserCredential userCredential = await _firebaseAuth
+        .createUserWithEmailAndPassword(email: email, password: password);
+    return _firebaseUser(userCredential.user);
   }
 
   @override
@@ -153,7 +148,7 @@ class FirebaseAuthService implements AuthBase {
           .signInWithEmailAndPassword(email: email, password: password);
       return _firebaseUser(userCredential.user);
     } catch (e) {
-      print("ERROR ANONYMOUSLY AUTH" + e.toString());
+      print("FIREBASE AUTH SERVICE MAIL SIGN ERROR" + e.toString());
       return null;
     }
   }

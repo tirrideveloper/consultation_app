@@ -3,6 +3,7 @@ import 'package:consultation_app/models/app_localizations.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/models/user_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 enum FormType { Register, LogIn }
@@ -23,15 +24,25 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
     _formKey.currentState.save();
     final _userViewModel = Provider.of<UserViewModel>(context, listen: false);
     if (_formType == FormType.LogIn) {
-      UserModel _signedUser =
-          await _userViewModel.signInEmailAndPassword(_email, _password);
-      if (_signedUser != null)
-        print("LOGGED USER" + _signedUser.userId.toString());
+      try{
+        UserModel _signedUser =
+        await _userViewModel.signInEmailAndPassword(_email, _password);
+        if (_signedUser != null)
+          print("LOGGED USER" + _signedUser.userId.toString());
+      }
+      catch(e){
+
+      }
     } else {
-      UserModel _createdUser =
-          await _userViewModel.createEmailAndPassword(_email, _password);
-      if (_createdUser != null)
-        print("LOGGED USER" + _createdUser.userId.toString());
+      try{
+        UserModel _createdUser =
+        await _userViewModel.createEmailAndPassword(_email, _password);
+        if (_createdUser != null)
+          print("LOGGED USER" + _createdUser.userId.toString());
+      }
+      on PlatformException catch(e){
+
+      }
     }
   }
 
