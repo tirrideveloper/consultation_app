@@ -1,4 +1,3 @@
-import 'package:consultation_app/common_widget/platform_alert_dialog.dart';
 import 'package:consultation_app/models/app_localizations.dart';
 import 'package:consultation_app/screens/main_menu/profile/numbers_widget.dart';
 import 'package:consultation_app/models/tablet_detector.dart';
@@ -119,11 +118,12 @@ class _ProfilePageState extends State<ProfilePage> {
     if (result == true) {
       _signOut(context);
     }
-  }*/
+  }
 
   Future<bool> _signOut(BuildContext context) async {
     final _userModel = Provider.of<UserViewModel>(context, listen: false);
     bool result = await _userModel.signOut();
     return result;
-  }
+  }*/
+
 }

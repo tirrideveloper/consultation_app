@@ -28,7 +28,7 @@ class UserModel {
       "createdAt": createdAt ?? FieldValue.serverTimestamp(),
       "updatedAt": updatedAt ?? FieldValue.serverTimestamp(),
       "rank": rank ?? 1.0,
-      "aboutUser": aboutUser ?? "null"
+      "aboutUser": aboutUser ?? ""
     };
   }
 

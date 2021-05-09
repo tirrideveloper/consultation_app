@@ -137,6 +137,14 @@ class UserViewModel with ChangeNotifier implements AuthBase {
     }
   }
 
+  Future<bool> updateUserName(String userId, String newUserName) async {
+    var result = await _userRepository.updateUserName(userId, newUserName);
+    if (result) {
+      _userModel.userName = newUserName;
+    }
+    return result;
+  }
+
   bool _checkValidEmailAndPassword(String email, String password) {
     var result = true;
     bool emailValid = RegExp(
