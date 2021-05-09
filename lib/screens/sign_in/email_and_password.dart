@@ -33,7 +33,13 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
             await _userViewModel.signInEmailAndPassword(_email, _password);
         //if (_signedUser != null)
         //print("Oturum açan user id:" + _signedUser.userId.toString());
-      } on FirebaseAuthException catch (e) {}
+      } on FirebaseAuthException catch (e) {
+        return PlatformAlertDialog(
+                title: "Oturum açma hatası",
+                content: Errors.showError(e.code),
+                buttonText: "Tamam")
+            .show(context);
+      }
     } else {
       try {
         UserModel _createdUser =
@@ -43,7 +49,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
       } on FirebaseAuthException catch (e) {
         return PlatformAlertDialog(
                 title: "Kullanıcı oluşturma hatası",
-                content:Errors.showError(e.code),
+                content: Errors.showError(e.code),
                 buttonText: "Tamam")
             .show(context);
       }

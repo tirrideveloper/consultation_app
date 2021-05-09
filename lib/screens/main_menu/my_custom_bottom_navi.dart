@@ -25,7 +25,6 @@ class MyCustomBottomNavigation extends StatelessWidget {
           _navItemOlustur(TabItem.AnaSayfa),
           _navItemOlustur(TabItem.Arama),
           _navItemOlustur(TabItem.Profil),
-          _navItemOlustur(TabItem.Ayarlar),
         ],
         onTap: (index) => onSelectedTab(TabItem.values[index]),
       ),

@@ -17,7 +17,9 @@ class FirebaseAuthService implements AuthBase {
     if (user == null) {
       return null;
     }
-    return UserModel(userId: user.uid, email: user.email);
+    else{
+      return UserModel(userId: user.uid, email: user.email);
+    }
   }
 
   @override
@@ -143,13 +145,8 @@ class FirebaseAuthService implements AuthBase {
   @override
   Future<UserModel> signInEmailAndPassword(
       String email, String password) async {
-    try {
-      UserCredential userCredential = await _firebaseAuth
-          .signInWithEmailAndPassword(email: email, password: password);
-      return _firebaseUser(userCredential.user);
-    } catch (e) {
-      print("FIREBASE AUTH SERVICE MAIL SIGN ERROR" + e.toString());
-      return null;
-    }
+    UserCredential userCredential = await _firebaseAuth
+        .signInWithEmailAndPassword(email: email, password: password);
+    return _firebaseUser(userCredential.user);
   }
 }

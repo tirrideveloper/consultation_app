@@ -109,13 +109,12 @@ class UserViewModel with ChangeNotifier implements AuthBase {
   Future<UserModel> createEmailAndPassword(
       String email, String password) async {
     if (_checkValidEmailAndPassword(email, password)) {
-      try{
+      try {
         state = ViewState.Busy;
         _userModel =
-        await _userRepository.createEmailAndPassword(email, password);
+            await _userRepository.createEmailAndPassword(email, password);
         return _userModel;
-      }
-      finally{
+      } finally {
         state = ViewState.Idle;
       }
     } else
@@ -129,13 +128,10 @@ class UserViewModel with ChangeNotifier implements AuthBase {
       if (_checkValidEmailAndPassword(email, password)) {
         state = ViewState.Busy;
         _userModel =
-            await _userRepository.createEmailAndPassword(email, password);
+            await _userRepository.signInEmailAndPassword(email, password);
         return _userModel;
       } else
         return null;
-    } catch (e) {
-      print("VIEW MODEL SIGN IN ANONYMOUSLY ERROR" + e);
-      return null;
     } finally {
       state = ViewState.Idle;
     }

@@ -1,6 +1,5 @@
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/screens/main_menu/search/arama.dart';
-import 'package:consultation_app/screens/main_menu/settings/ayarlar.dart';
 import 'package:consultation_app/screens/main_menu/kullanicilar.dart';
 import 'package:consultation_app/screens/main_menu/my_custom_bottom_navi.dart';
 import 'package:consultation_app/screens/main_menu/profile/profile_page.dart';
@@ -27,7 +26,6 @@ class _HomePageState extends State<HomePage> {
   Map<TabItem, Widget> tumSayfalar() {
     return {
       TabItem.AnaSayfa: KullanicilarPage(),
-      TabItem.Ayarlar: SettingsPage(),
       TabItem.Profil: ProfilePage(),
       TabItem.Arama: Aramapage(),
     };
