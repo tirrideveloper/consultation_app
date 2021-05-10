@@ -33,18 +33,29 @@ class FireStoreDbService implements DbBase {
   }
 
   @override
-  Future<bool> updateUserName(String userId, String newUserName) async {
+  Future<bool> updateUserName(String userId, String userName) async {
     var users = await _firestoreDB
         .collection("users")
-        .where("userName", isEqualTo: newUserName)
+        .where("userName", isEqualTo: userName)
         .get();
-    if(users.docs.length >= 1){
+    if (users.docs.length >= 1) {
       return false;
-    }
-    else{
-      await _firestoreDB.collection("users").doc(userId).update(
-          {"username": newUserName});
+    } else {
+      await _firestoreDB
+          .collection("users")
+          .doc(userId)
+          .update({"userName": userName});
       return true;
     }
+  }
+
+  @override
+  Future<bool> updateUser(
+      String userId, String nameSurname, String aboutUser) async {
+    await _firestoreDB
+        .collection("users")
+        .doc(userId)
+        .update({"nameSurname": nameSurname, "aboutUser": aboutUser});
+    return true;
   }
 }

@@ -80,32 +80,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 height: 20,
               ),
               Text(
-                "Kullanıcı Adı",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: _controllerUserName,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(70)),
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
                 "Hakkında",
                 style: TextStyle(
                   fontSize: 20,
@@ -130,16 +104,61 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ),
               ),
+              Container(
+                width: 140,
+                child: BasicButton(
+                  buttonText: "Bilgileri Güncelle",
+                  buttonOnPressed: () {
+                    _userUpdate(context);
+                  },
+                  buttonColor: Theme.of(context).primaryColor,
+                  buttonMargin: 0,
+                ),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Text(
+                "Kullanıcı Adı",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
               SizedBox(
                 height: 10,
               ),
-              BasicButton(
-                buttonText: "Kaydet",
-                buttonOnPressed: () {
-                  _userNameUpdate(context);
-                },
-                buttonColor: Theme.of(context).primaryColor,
-              )
+              TextFormField(
+                controller: _controllerUserName,
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(70)),
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                child: Text(
+                  "- Kullanıcı adınız bir önceki kullanıcı adınızla aynı olamaz. \n- Lütfen benzersiz bir kullanıcı adı belirleyin.",
+                  style: TextStyle(color: Colors.grey, fontSize: 16),
+                ),
+              ),
+              Container(
+                width: 165,
+                child: BasicButton(
+                  buttonText: "Kullanıcı adı değiştir",
+                  buttonOnPressed: () {
+                    _userNameUpdate(context);
+                  },
+                  buttonMargin: 0,
+                  buttonColor: Theme.of(context).primaryColor,
+                ),
+              ),
             ],
           ),
         ),
@@ -149,6 +168,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void _userNameUpdate(BuildContext context) async {
     final _viewModel = Provider.of<UserViewModel>(context, listen: false);
+
     if (_viewModel.user.userName != _controllerUserName.text) {
       var updateResult = await _viewModel.updateUserName(
           _viewModel.user.userId, _controllerUserName.text);
@@ -156,7 +176,10 @@ class _SettingsPageState extends State<SettingsPage> {
       if (updateResult == true) {
         final snackBar = SnackBar(
           behavior: SnackBarBehavior.floating,
-          content: Text("Güncelleme Başarılı", style: TextStyle(fontSize: 14),),
+          content: Text(
+            "Güncelleme Başarılı",
+            style: TextStyle(fontSize: 14),
+          ),
           backgroundColor: Theme.of(context).primaryColor,
           action: SnackBarAction(
             label: "Tamam",
@@ -168,7 +191,10 @@ class _SettingsPageState extends State<SettingsPage> {
         _controllerUserName.text = _viewModel.user.userName;
         final snackBar = SnackBar(
           behavior: SnackBarBehavior.floating,
-          content: Text("Username Kullanılmakta", style: TextStyle(fontSize: 14),),
+          content: Text(
+            "Username Kullanılmakta",
+            style: TextStyle(fontSize: 14),
+          ),
           backgroundColor: Theme.of(context).primaryColor,
           action: SnackBarAction(
             label: "Tamam",
@@ -180,7 +206,46 @@ class _SettingsPageState extends State<SettingsPage> {
     } else {
       final snackBar = SnackBar(
         behavior: SnackBarBehavior.floating,
-        content: Text("Kullanıcı adı değiştirilmedi", style: TextStyle(fontSize: 14),),
+        content: Text(
+          "Kullanıcı adı değiştirilmedi",
+          style: TextStyle(fontSize: 14),
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+        action: SnackBarAction(
+          label: "Tamam",
+          onPressed: () {},
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
+  void _userUpdate(BuildContext context) async{
+    final _viewModel = Provider.of<UserViewModel>(context, listen: false);
+    var updateResult = await _viewModel.updateUser(
+        _viewModel.user.userId, _controllerNameSurname.text, _controllerAboutUser.text);
+    if (updateResult == true) {
+      final snackBar = SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          "Bilgiler Güncellendi",
+          style: TextStyle(fontSize: 14),
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+        action: SnackBarAction(
+          label: "Tamam",
+          onPressed: () {},
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+    else{
+      final snackBar = SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          "Değişiklikler uygulanamadı",
+          style: TextStyle(fontSize: 14),
+        ),
         backgroundColor: Theme.of(context).primaryColor,
         action: SnackBarAction(
           label: "Tamam",

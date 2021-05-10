@@ -5,6 +5,7 @@ import 'package:consultation_app/models/user_view_model.dart';
 import 'package:consultation_app/screens/main_menu/profile/profile_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'profile_image_widget.dart';
 
@@ -14,11 +15,30 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String _profilePhoto;
+  final _picker = ImagePicker();
+
+  void _takePhoto() async{
+    var image = await _picker.getImage(source: ImageSource.camera);
+    Navigator.of(context).pop();
+    setState(() {
+      _profilePhoto = image.path;
+    });
+  }
+
+  void _selectFromGallery() async{
+    var image = await _picker.getImage(source: ImageSource.gallery);
+    Navigator.of(context).pop();
+    setState(() {
+      _profilePhoto = image.path;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     UserViewModel _viewModel =
         Provider.of<UserViewModel>(context, listen: false);
-    print("KULLANICI DEGERLERI: " + _viewModel.user.toString());
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).translate("tab_item_profile")),
@@ -29,17 +49,42 @@ class _ProfilePageState extends State<ProfilePage> {
           physics: BouncingScrollPhysics(),
           children: [
             ProfileWidget(
-              imagePath:
-                  "https://images.unsplash.com/photo-1554151228-14d9def656e4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=333&q=80",
-              onClicked: () {},
+              imagePath: _profilePhoto == null ? _viewModel.user.profileURL : _profilePhoto,
+              onClicked: () {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        height: 160,
+                        child: Column(
+                          children: [
+                            ListTile(
+                              leading: Icon(Icons.camera),
+                              title: Text("Kamera ile çek"),
+                              onTap: () {
+                                _takePhoto();
+                              },
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.image),
+                              title: Text("Galeriden seç"),
+                              onTap: () {
+                                _selectFromGallery();
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+              },
             ),
             const SizedBox(height: 24),
             buildName(_viewModel.user.nameSurname, _viewModel.user.userName),
-            const SizedBox(height: 24),
+            const SizedBox(height: 15),
             Center(
               child: Container(
-                height: 45,
-                width: 200,
+                height: 42,
+                width: 120,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true).push(
@@ -63,7 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 24),
             NumbersWidget(),
             const SizedBox(height: 48),
-            buildAbout(_viewModel.user.aboutUser == "null" ? "" : _viewModel.user.aboutUser),
+            buildAbout(_viewModel.user.aboutUser),
           ],
         ),
       ),
@@ -105,8 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
-  /*Future _signOutConfirmation(BuildContext context) async {
+/*Future _signOutConfirmation(BuildContext context) async {
     final result = await PlatformAlertDialog(
       title: "Çıkış Yap",
       content: "Emin misiniz?",
@@ -125,5 +169,4 @@ class _ProfilePageState extends State<ProfilePage> {
     bool result = await _userModel.signOut();
     return result;
   }*/
-
 }

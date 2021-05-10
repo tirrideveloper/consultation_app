@@ -24,7 +24,7 @@ class UserModel {
           email.substring(0, email.indexOf("@")) + createRandomNumber(),
       "nameSurname": "İsminizi Giriniz",
       "profileURL": profileURL ??
-          "https://visualpharm.com/assets/233/Consultation-595b40b75ba036ed117d5a39.svg",
+          "https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png",
       "createdAt": createdAt ?? FieldValue.serverTimestamp(),
       "updatedAt": updatedAt ?? FieldValue.serverTimestamp(),
       "rank": rank ?? 1.0,

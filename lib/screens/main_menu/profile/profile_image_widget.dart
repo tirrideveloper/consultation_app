@@ -33,7 +33,7 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = imagePath.contains('')
+    final image = imagePath.contains('https')
         ? NetworkImage(imagePath)
         : FileImage(File(imagePath));
 
