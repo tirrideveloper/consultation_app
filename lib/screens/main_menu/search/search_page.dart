@@ -1,7 +1,12 @@
 import 'package:consultation_app/models/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-class Aramapage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
+  @override
+  _SearchPageState createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

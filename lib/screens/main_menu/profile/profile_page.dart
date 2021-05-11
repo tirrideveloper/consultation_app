@@ -18,20 +18,53 @@ class _ProfilePageState extends State<ProfilePage> {
   String _profilePhoto;
   final _picker = ImagePicker();
 
-  void _takePhoto() async{
+  void _takePhoto() async {
     var image = await _picker.getImage(source: ImageSource.camera);
-    Navigator.of(context).pop();
     setState(() {
       _profilePhoto = image.path;
+      updateAlert(context);
+      Navigator.of(context).pop();
     });
   }
 
-  void _selectFromGallery() async{
+  void _selectFromGallery() async {
     var image = await _picker.getImage(source: ImageSource.gallery);
-    Navigator.of(context).pop();
     setState(() {
       _profilePhoto = image.path;
+      updateAlert(context);
+      Navigator.of(context).pop();
     });
+  }
+
+  void updateAlert(BuildContext context) {
+    UserViewModel _viewModel =
+        Provider.of<UserViewModel>(context, listen: false);
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context2) {
+          return AlertDialog(
+            title: Text("Profil fotoğrafı"),
+            content: Text("Güncellensin mi?"),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  await _viewModel.uploadFile(
+                      _viewModel.user.userId, "profile_photo", _profilePhoto);
+                  Navigator.of(context2).pop();
+                },
+                child: Text("Evet"),
+              ),
+              TextButton(
+                onPressed: () {
+                  _profilePhoto = null;
+                  Navigator.of(context2).pop();
+                },
+                child: Text("Hayır"),
+              ),
+            ],
+          );
+        });
   }
 
   @override
@@ -44,12 +77,14 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Text(AppLocalizations.of(context).translate("tab_item_profile")),
       ),
       body: Container(
-        margin: EdgeInsets.only(top: 25),
+        margin: EdgeInsets.only(top: 15),
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
             ProfileWidget(
-              imagePath: _profilePhoto == null ? _viewModel.user.profileURL : _profilePhoto,
+              imagePath: _profilePhoto == null
+                  ? _viewModel.user.profileURL
+                  : _profilePhoto,
               onClicked: () {
                 showModalBottomSheet(
                     context: context,
@@ -107,7 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 24),
             NumbersWidget(),
-            const SizedBox(height: 48),
+            const SizedBox(height: 24),
             buildAbout(_viewModel.user.aboutUser),
           ],
         ),

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:consultation_app/locator.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/repository/user_repository.dart';
@@ -145,12 +147,21 @@ class UserViewModel with ChangeNotifier implements AuthBase {
     return result;
   }
 
-  Future<bool> updateUser(String userId, String nameSurname, String aboutUser) async {
-    var result = await _userRepository.updateUser(userId, nameSurname, aboutUser);
+  Future<bool> updateUser(
+      String userId, String nameSurname, String aboutUser) async {
+    var result =
+        await _userRepository.updateUser(userId, nameSurname, aboutUser);
     if (result) {
       _userModel.nameSurname = nameSurname;
       _userModel.aboutUser = aboutUser;
     }
+    return result;
+  }
+
+  Future<String> uploadFile(
+      String userId, String fileType, String profilePhoto) async {
+    var userPhoto = File(profilePhoto);
+    var result = await _userRepository.uploadFile(userId, fileType, userPhoto);
     return result;
   }
 

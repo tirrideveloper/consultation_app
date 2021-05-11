@@ -1,8 +1,8 @@
 import 'package:consultation_app/models/user_model.dart';
-import 'package:consultation_app/screens/main_menu/search/arama.dart';
 import 'package:consultation_app/screens/main_menu/kullanicilar.dart';
 import 'package:consultation_app/screens/main_menu/my_custom_bottom_navi.dart';
 import 'package:consultation_app/screens/main_menu/profile/profile_page.dart';
+import 'package:consultation_app/screens/main_menu/search/search_page.dart';
 import 'package:consultation_app/screens/main_menu/tab_items.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     return {
       TabItem.AnaSayfa: KullanicilarPage(),
       TabItem.Profil: ProfilePage(),
-      TabItem.Arama: Aramapage(),
+      TabItem.Arama: SearchPage(),
     };
   }
 
