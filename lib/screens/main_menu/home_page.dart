@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.AnaSayfa: GlobalKey<NavigatorState>(),
+    TabItem.Arama : GlobalKey<NavigatorState>(),
     TabItem.Profil: GlobalKey<NavigatorState>(),
   };
 

@@ -54,12 +54,12 @@ class ProfileWidget extends StatelessWidget {
         color: Colors.white,
         all: 3,
         child: buildCircle(
-          color: color,
+          color: Color(0xff689f38),
           all: 8,
           child: InkWell(
             onTap: onClicked,
             child: Icon(
-              isEdit ? Icons.add_a_photo : Icons.edit,
+              isEdit ? Icons.mail : Icons.edit,
               color: Colors.white,
               size: 20,
             ),

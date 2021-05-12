@@ -178,10 +178,11 @@ class _SettingsPageState extends State<SettingsPage> {
           behavior: SnackBarBehavior.floating,
           content: Text(
             "Güncelleme Başarılı",
-            style: TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: 14, color: Colors.white),
           ),
           backgroundColor: Theme.of(context).primaryColor,
           action: SnackBarAction(
+            textColor: Colors.white,
             label: "Tamam",
             onPressed: () {},
           ),
@@ -193,10 +194,11 @@ class _SettingsPageState extends State<SettingsPage> {
           behavior: SnackBarBehavior.floating,
           content: Text(
             "Username Kullanılmakta",
-            style: TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: 14, color: Colors.white),
           ),
           backgroundColor: Theme.of(context).primaryColor,
           action: SnackBarAction(
+            textColor: Colors.white,
             label: "Tamam",
             onPressed: () {},
           ),
@@ -208,10 +210,11 @@ class _SettingsPageState extends State<SettingsPage> {
         behavior: SnackBarBehavior.floating,
         content: Text(
           "Kullanıcı adı değiştirilmedi",
-          style: TextStyle(fontSize: 14),
+          style: TextStyle(fontSize: 14, color: Colors.white),
         ),
         backgroundColor: Theme.of(context).primaryColor,
         action: SnackBarAction(
+          textColor: Colors.white,
           label: "Tamam",
           onPressed: () {},
         ),
@@ -220,34 +223,35 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  void _userUpdate(BuildContext context) async{
+  void _userUpdate(BuildContext context) async {
     final _viewModel = Provider.of<UserViewModel>(context, listen: false);
-    var updateResult = await _viewModel.updateUser(
-        _viewModel.user.userId, _controllerNameSurname.text, _controllerAboutUser.text);
+    var updateResult = await _viewModel.updateUser(_viewModel.user.userId,
+        _controllerNameSurname.text, _controllerAboutUser.text);
     if (updateResult == true) {
       final snackBar = SnackBar(
         behavior: SnackBarBehavior.floating,
         content: Text(
           "Bilgiler Güncellendi",
-          style: TextStyle(fontSize: 14),
+          style: TextStyle(fontSize: 14, color: Colors.white),
         ),
         backgroundColor: Theme.of(context).primaryColor,
         action: SnackBarAction(
+          textColor: Colors.white,
           label: "Tamam",
           onPressed: () {},
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
-    else{
+    } else {
       final snackBar = SnackBar(
         behavior: SnackBarBehavior.floating,
         content: Text(
           "Değişiklikler uygulanamadı",
-          style: TextStyle(fontSize: 14),
+          style: TextStyle(fontSize: 14, color: Colors.white),
         ),
         backgroundColor: Theme.of(context).primaryColor,
         action: SnackBarAction(
+          textColor: Colors.white,
           label: "Tamam",
           onPressed: () {},
         ),

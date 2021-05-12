@@ -185,6 +185,8 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+}
+
 /*Future _signOutConfirmation(BuildContext context) async {
     final result = await PlatformAlertDialog(
       title: "Çıkış Yap",
@@ -204,4 +206,3 @@ class _ProfilePageState extends State<ProfilePage> {
     bool result = await _userModel.signOut();
     return result;
   }*/
-}

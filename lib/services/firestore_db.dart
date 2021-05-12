@@ -13,11 +13,11 @@ class FireStoreDbService implements DbBase {
         .set(userModel.toMap());
 
     DocumentSnapshot _checkUser =
-        await FirebaseFirestore.instance.doc("users/${userModel.userId}").get();
+    await FirebaseFirestore.instance.doc("users/${userModel.userId}").get();
 
     Map _checkUserInformationMap = _checkUser.data();
     UserModel _checkedUserInformation =
-        UserModel.fromMap(_checkUserInformationMap);
+    UserModel.fromMap(_checkUserInformationMap);
     print("checked user: " + _checkedUserInformation.toString());
     return true;
   }
@@ -25,7 +25,7 @@ class FireStoreDbService implements DbBase {
   @override
   Future<UserModel> readUser(String userId) async {
     DocumentSnapshot _readUser =
-        await _firestoreDB.collection("users").doc(userId).get();
+    await _firestoreDB.collection("users").doc(userId).get();
     Map<String, dynamic> _userInformationMap = _readUser.data();
 
     UserModel _readUserObject = UserModel.fromMap(_userInformationMap);
@@ -50,8 +50,8 @@ class FireStoreDbService implements DbBase {
   }
 
   @override
-  Future<bool> updateUser(
-      String userId, String nameSurname, String aboutUser) async {
+  Future<bool> updateUser(String userId, String nameSurname,
+      String aboutUser) async {
     await _firestoreDB
         .collection("users")
         .doc(userId)
