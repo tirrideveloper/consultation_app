@@ -16,8 +16,7 @@ class FirebaseAuthService implements AuthBase {
   UserModel _firebaseUser(User user) {
     if (user == null) {
       return null;
-    }
-    else{
+    } else {
       return UserModel(userId: user.uid, email: user.email);
     }
   }
@@ -79,20 +78,7 @@ class FirebaseAuthService implements AuthBase {
         final UserCredential userCredential =
             await _firebaseAuth.signInWithCredential(credential);
         return _firebaseUser(userCredential.user);
-      }
-
-      /*on FirebaseAuthException catch (e) {
-        if (e.code == 'account-exists-with-different-credential') {
-          // aynı maille zaten hesap var
-          // facebook google gibi hesapları birbirine bağlamak için
-          // linkWithCredential var ama güvenlik açığı oluşturuyor.
-        }
-        else if (e.code == 'invalid-credential') {
-          // hatalı veya eksik bilgi
-        }
-      }*/
-
-      catch (e) {
+      } catch (e) {
         print("USER CREDENTIAL ERROR" + e.toString());
         return null;
       }
@@ -102,8 +88,6 @@ class FirebaseAuthService implements AuthBase {
     }
   }
 
-  //Yalnızca test kullanıcıları giriş yapabiliyor.
-  //(Facebook dev üzerinden ayarlanıyor)
   @override
   Future<UserModel> signInFacebook() async {
     final FacebookLogin facebookSignIn = FacebookLogin();

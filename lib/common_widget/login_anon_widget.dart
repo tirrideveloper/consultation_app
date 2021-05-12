@@ -11,13 +11,8 @@ class LoginAnonWidget extends StatelessWidget {
     print("ID USER ID USER: " + _user.userId.toString());
   }
 
-  //Her anon giriş denemesinde firebase üzerinde yeni bir hesap açılıyor.
-  //Bunun yerine kullanıcı id'si cihaza özel sabit kalsa daha iyi.
-
   @override
   Widget build(BuildContext context) {
-    //double width = MediaQuery.of(context).size.width;
-
     return Container(
       margin: EdgeInsets.only(bottom: 10, top: 10),
       child: Column(

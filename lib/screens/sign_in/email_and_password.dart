@@ -2,7 +2,6 @@ import 'package:consultation_app/common_widget/basic_button.dart';
 import 'package:consultation_app/common_widget/platform_alert_dialog.dart';
 import 'package:consultation_app/models/error_exception.dart';
 import 'package:consultation_app/models/app_localizations.dart';
-import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/models/user_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,29 +28,27 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
 
     if (_formType == FormType.LogIn) {
       try {
-        UserModel _signedUser =
-            await _userViewModel.signInEmailAndPassword(_email, _password);
+        await _userViewModel.signInEmailAndPassword(_email, _password);
         //if (_signedUser != null)
-        //print("Oturum açan user id:" + _signedUser.userId.toString());
+        //print("signed user id:" + _signedUser.userId.toString());
       } on FirebaseAuthException catch (e) {
         return PlatformAlertDialog(
-                title: "Oturum açma hatası",
-                content: Errors.showError(e.code),
-                buttonText: "Tamam")
-            .show(context);
+          title: AppLocalizations.of(context).translate("login_error"),
+          content: Errors.showError(e.code),
+          buttonText: AppLocalizations.of(context).translate("okay_text"),
+        ).show(context);
       }
     } else {
       try {
-        UserModel _createdUser =
-            await _userViewModel.createEmailAndPassword(_email, _password);
+        await _userViewModel.createEmailAndPassword(_email, _password);
         //if (_createdUser != null)
-        //print("Oturum açan user id:" + _createdUser.userId.toString());
+        //print("created user id:" + _createdUser.userId.toString());
       } on FirebaseAuthException catch (e) {
         return PlatformAlertDialog(
-                title: "Kullanıcı oluşturma hatası",
-                content: Errors.showError(e.code),
-                buttonText: "Tamam")
-            .show(context);
+          title: AppLocalizations.of(context).translate("signup_error"),
+          content: Errors.showError(e.code),
+          buttonText: AppLocalizations.of(context).translate("okay_text"),
+        ).show(context);
       }
     }
   }

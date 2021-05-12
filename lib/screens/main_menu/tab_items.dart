@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-enum TabItem { AnaSayfa, Arama, Profil }
+enum TabItem { HomePage, Search, Profile }
 
 class TabItemData {
   final IconData icon;
 
   TabItemData(this.icon);
 
-  static Map<TabItem, TabItemData> tumTablar = {
-    TabItem.AnaSayfa: TabItemData(Icons.home),
-    TabItem.Arama: TabItemData(Icons.search),
-    TabItem.Profil: TabItemData(Icons.person),
+  static Map<TabItem, TabItemData> allTabs = {
+    TabItem.HomePage: TabItemData(Icons.home),
+    TabItem.Search: TabItemData(Icons.search),
+    TabItem.Profile: TabItemData(Icons.person),
   };
 }

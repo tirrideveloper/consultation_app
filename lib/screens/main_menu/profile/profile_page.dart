@@ -44,8 +44,13 @@ class _ProfilePageState extends State<ProfilePage> {
         context: context,
         builder: (BuildContext context2) {
           return AlertDialog(
-            title: Text("Profil fotoğrafı"),
-            content: Text("Güncellensin mi?"),
+            title: Text(
+              AppLocalizations.of(context).translate("update_information_text"),
+            ),
+            content: Text(
+              AppLocalizations.of(context)
+                  .translate("profile_photo_update_text"),
+            ),
             actions: [
               TextButton(
                 onPressed: () async {
@@ -53,14 +58,16 @@ class _ProfilePageState extends State<ProfilePage> {
                       _viewModel.user.userId, "profile_photo", _profilePhoto);
                   Navigator.of(context2).pop();
                 },
-                child: Text("Evet"),
+                child:
+                    Text(AppLocalizations.of(context).translate("okay_text")),
               ),
               TextButton(
                 onPressed: () {
                   _profilePhoto = null;
                   Navigator.of(context2).pop();
                 },
-                child: Text("Hayır"),
+                child:
+                    Text(AppLocalizations.of(context).translate("cancel_text")),
               ),
             ],
           );
@@ -95,14 +102,16 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             ListTile(
                               leading: Icon(Icons.camera),
-                              title: Text("Kamera ile çek"),
+                              title: Text(AppLocalizations.of(context)
+                                  .translate("take_photo_text")),
                               onTap: () {
                                 _takePhoto();
                               },
                             ),
                             ListTile(
                               leading: Icon(Icons.image),
-                              title: Text("Galeriden seç"),
+                              title: Text(AppLocalizations.of(context)
+                                  .translate("from_gallery_text")),
                               onTap: () {
                                 _selectFromGallery();
                               },
@@ -189,10 +198,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
 /*Future _signOutConfirmation(BuildContext context) async {
     final result = await PlatformAlertDialog(
-      title: "Çıkış Yap",
-      content: "Emin misiniz?",
-      buttonText: "Evet",
-      button2Text: "Vazgeç",
+      title: "exit",
+      content: "sure?",
+      buttonText: "okay",
+      button2Text: "cancel",
     ).show(context);
 
     // ignore: unrelated_type_equality_checks

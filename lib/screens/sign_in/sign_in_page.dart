@@ -100,7 +100,6 @@ class SignUpBody extends StatelessWidget {
   }
 
   void _emailAndPassword(BuildContext context) {
-    // cihaz IOS ise IOS'un animasyonlarıyla sayfa geçişi olacak.
     if (Platform.isIOS) {
       Navigator.of(context).push(
         CupertinoPageRoute(

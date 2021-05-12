@@ -6,9 +6,6 @@ import 'package:consultation_app/repository/user_repository.dart';
 import 'package:consultation_app/services/auth_base.dart';
 import 'package:flutter/material.dart';
 
-// Uygulamanın durumunu kontrol ediyoruz.
-// İşlemlerimiz olurken durum busy oluyor işlem tamamlanınca idle duruma geliyor.
-// Bu sayede karmaşıklıkların önüne geçiyoruz.
 enum ViewState { Idle, Busy }
 
 class UserViewModel with ChangeNotifier implements AuthBase {

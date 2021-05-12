@@ -8,7 +8,6 @@ import 'package:consultation_app/services/firebase_auth.dart';
 import 'package:consultation_app/services/firebase_storage.dart';
 import 'package:consultation_app/services/firestore_db.dart';
 
-// bu sınıf uygulamayı test etmeye yardımcı olacak
 enum AppMode { DEBUG, RELEASE }
 
 class UserRepository implements AuthBase {
@@ -17,7 +16,8 @@ class UserRepository implements AuthBase {
   FireStoreDbService _firestoreDBService = locator<FireStoreDbService>();
   FirebaseStorageService _storageService = locator<FirebaseStorageService>();
 
-  //Release yapılırsa gerçek firebase girişleri yapılacak
+  //RELEASE => firebase
+  //DEBUG => random
   AppMode appMode = AppMode.RELEASE;
 
   @override
@@ -125,7 +125,7 @@ class UserRepository implements AuthBase {
   Future<String> uploadFile(
       String userId, String fileType, File profilePhoto) async{
     if (appMode == AppMode.DEBUG) {
-      return "dosya_indirme_linki";
+      return "file_download_link";
     } else {
       var profilePhotoUrl =  await _storageService.uploadPhoto(
           userId, fileType, profilePhoto);

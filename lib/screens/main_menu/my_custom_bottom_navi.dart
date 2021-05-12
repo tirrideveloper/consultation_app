@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 class MyCustomBottomNavigation extends StatelessWidget {
   final TabItem currentTab;
   final ValueChanged<TabItem> onSelectedTab;
-  final Map<TabItem, Widget> sayfaOlusturucu;
+  final Map<TabItem, Widget> pageBuilder;
   final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys;
 
   const MyCustomBottomNavigation(
       {Key key,
       @required this.currentTab,
       @required this.onSelectedTab,
-      @required this.sayfaOlusturucu,
+      @required this.pageBuilder,
       @required this.navigatorKeys})
       : super(key: key);
 
@@ -22,25 +22,25 @@ class MyCustomBottomNavigation extends StatelessWidget {
       tabBar: CupertinoTabBar(
         activeColor: Theme.of(context).primaryColor,
         items: [
-          _navItemOlustur(TabItem.AnaSayfa),
-          _navItemOlustur(TabItem.Arama),
-          _navItemOlustur(TabItem.Profil),
+          _createNavItem(TabItem.HomePage),
+          _createNavItem(TabItem.Search),
+          _createNavItem(TabItem.Profile),
         ],
         onTap: (index) => onSelectedTab(TabItem.values[index]),
       ),
       tabBuilder: (context, index) {
-        final gosterilecekItem = TabItem.values[index];
+        final shownItem = TabItem.values[index];
         return CupertinoTabView(
-            navigatorKey: navigatorKeys[gosterilecekItem],
+            navigatorKey: navigatorKeys[shownItem],
             builder: (context) {
-              return sayfaOlusturucu[gosterilecekItem];
+              return pageBuilder[shownItem];
             });
       },
     );
   }
 }
 
-BottomNavigationBarItem _navItemOlustur(TabItem tabItem) {
-  final olusturulacakTab = TabItemData.tumTablar[tabItem];
-  return BottomNavigationBarItem(icon: Icon(olusturulacakTab.icon));
+BottomNavigationBarItem _createNavItem(TabItem tabItem) {
+  final createdTab = TabItemData.allTabs[tabItem];
+  return BottomNavigationBarItem(icon: Icon(createdTab.icon));
 }

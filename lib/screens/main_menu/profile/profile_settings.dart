@@ -54,7 +54,7 @@ class _SettingsPageState extends State<SettingsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "İsim Soyisim",
+                AppLocalizations.of(context).translate("name_surname_text"),
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -80,7 +80,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 height: 20,
               ),
               Text(
-                "Hakkında",
+                AppLocalizations.of(context).translate("about_text"),
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -107,7 +107,8 @@ class _SettingsPageState extends State<SettingsPage> {
               Container(
                 width: 140,
                 child: BasicButton(
-                  buttonText: "Bilgileri Güncelle",
+                  buttonText: AppLocalizations.of(context)
+                      .translate("update_information_text"),
                   buttonOnPressed: () {
                     _userUpdate(context);
                   },
@@ -119,7 +120,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 height: 50,
               ),
               Text(
-                "Kullanıcı Adı",
+                AppLocalizations.of(context).translate("username_text"),
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -144,14 +145,16 @@ class _SettingsPageState extends State<SettingsPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                 child: Text(
-                  "- Kullanıcı adınız bir önceki kullanıcı adınızla aynı olamaz. \n- Lütfen benzersiz bir kullanıcı adı belirleyin.",
+                  AppLocalizations.of(context)
+                      .translate("update_username_warning"),
                   style: TextStyle(color: Colors.grey, fontSize: 16),
                 ),
               ),
               Container(
                 width: 165,
                 child: BasicButton(
-                  buttonText: "Kullanıcı adı değiştir",
+                  buttonText: AppLocalizations.of(context)
+                      .translate("update_username_text"),
                   buttonOnPressed: () {
                     _userNameUpdate(context);
                   },
@@ -177,13 +180,13 @@ class _SettingsPageState extends State<SettingsPage> {
         final snackBar = SnackBar(
           behavior: SnackBarBehavior.floating,
           content: Text(
-            "Güncelleme Başarılı",
+            AppLocalizations.of(context).translate("successful_update"),
             style: TextStyle(fontSize: 14, color: Colors.white),
           ),
           backgroundColor: Theme.of(context).primaryColor,
           action: SnackBarAction(
             textColor: Colors.white,
-            label: "Tamam",
+            label: AppLocalizations.of(context).translate("okay_text"),
             onPressed: () {},
           ),
         );
@@ -193,13 +196,13 @@ class _SettingsPageState extends State<SettingsPage> {
         final snackBar = SnackBar(
           behavior: SnackBarBehavior.floating,
           content: Text(
-            "Username Kullanılmakta",
+            AppLocalizations.of(context).translate("username_already_taken"),
             style: TextStyle(fontSize: 14, color: Colors.white),
           ),
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Colors.red,
           action: SnackBarAction(
             textColor: Colors.white,
-            label: "Tamam",
+            label: AppLocalizations.of(context).translate("okay_text"),
             onPressed: () {},
           ),
         );
@@ -209,13 +212,13 @@ class _SettingsPageState extends State<SettingsPage> {
       final snackBar = SnackBar(
         behavior: SnackBarBehavior.floating,
         content: Text(
-          "Kullanıcı adı değiştirilmedi",
+          AppLocalizations.of(context).translate("error_occurred_text"),
           style: TextStyle(fontSize: 14, color: Colors.white),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.red,
         action: SnackBarAction(
           textColor: Colors.white,
-          label: "Tamam",
+          label: AppLocalizations.of(context).translate("okay_text"),
           onPressed: () {},
         ),
       );
@@ -231,13 +234,13 @@ class _SettingsPageState extends State<SettingsPage> {
       final snackBar = SnackBar(
         behavior: SnackBarBehavior.floating,
         content: Text(
-          "Bilgiler Güncellendi",
+          AppLocalizations.of(context).translate("successful_update"),
           style: TextStyle(fontSize: 14, color: Colors.white),
         ),
         backgroundColor: Theme.of(context).primaryColor,
         action: SnackBarAction(
           textColor: Colors.white,
-          label: "Tamam",
+          label: AppLocalizations.of(context).translate("okay_text"),
           onPressed: () {},
         ),
       );
@@ -246,13 +249,13 @@ class _SettingsPageState extends State<SettingsPage> {
       final snackBar = SnackBar(
         behavior: SnackBarBehavior.floating,
         content: Text(
-          "Değişiklikler uygulanamadı",
+          AppLocalizations.of(context).translate("error_occurred_text"),
           style: TextStyle(fontSize: 14, color: Colors.white),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.red,
         action: SnackBarAction(
           textColor: Colors.white,
-          label: "Tamam",
+          label: AppLocalizations.of(context).translate("okay_text"),
           onPressed: () {},
         ),
       );

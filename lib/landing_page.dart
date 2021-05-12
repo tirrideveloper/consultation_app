@@ -4,11 +4,6 @@ import 'package:after_layout/after_layout.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'control.dart';
 
-//Bu sınıf uygulamayı ilk açıldığında on boarding ekranını göstermek için var.
-//Tek başına düzgün çalışıyor. Ancak kullanıcı girişini kontrol ettiğimiz zaman
-//uygulamanın ilk açılışında sorunlu çalışıyor.
-//Sonrasında main.dart'da controlPage yerine yazdığımızda ise düzgün çalışıyor.
-
 class LandingPage extends StatefulWidget {
   @override
   _LandingPageState createState() => _LandingPageState();

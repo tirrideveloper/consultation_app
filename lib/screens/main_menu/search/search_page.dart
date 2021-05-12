@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:consultation_app/models/app_localizations.dart';
 import 'package:consultation_app/models/user_view_model.dart';
 import 'package:consultation_app/screens/main_menu/profile/other_users_profile.dart';
 import 'package:consultation_app/screens/main_menu/profile/profile_page.dart';
@@ -95,7 +96,7 @@ class _SearchPageState extends State<SearchPage> {
               decoration: InputDecoration(
                 hintStyle: TextStyle(color: Colors.grey.shade200),
                 border: InputBorder.none,
-                hintText: "Search...",
+                hintText: AppLocalizations.of(context).translate("search_text"),
                 suffixIcon: IconButton(
                   onPressed: () {
                     setState(() {
