@@ -4,10 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'profile_image_widget.dart';
 
-// ignore: must_be_immutable
 class OtherUserProfile extends StatefulWidget {
 
-  Map otherUser;
+  final Map otherUser;
   OtherUserProfile({this.otherUser});
 
   @override
@@ -19,7 +18,7 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate("tab_item_profile")),
+        title: Text(widget.otherUser["nameSurname"]),
       ),
       body: Container(
         margin: EdgeInsets.only(top: 15),
@@ -28,7 +27,7 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
           children: [
             ProfileWidget(imagePath: widget.otherUser["profileURL"], isEdit: true,),
             const SizedBox(height: 24),
-            buildName(widget.otherUser["nameSurname"], widget.otherUser["userName"]),
+            buildName(widget.otherUser["nameSurname"], widget.otherUser["userName"], widget.otherUser["verifiedUser"]),
             const SizedBox(height: 15),
             NumbersWidget(),
             const SizedBox(height: 24),
@@ -39,12 +38,21 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
     );
   }
 
-  Widget buildName(String nameSurname, userName) {
+  Widget buildName(String nameSurname, userName, bool verify) {
     return Column(
       children: [
-        Text(
-          nameSurname,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              nameSurname,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            ),
+            verify == true ? Padding(
+              padding: const EdgeInsets.only(left: 5),
+              child: Icon(Icons.verified, color: Theme.of(context).primaryColor),
+            ) : SizedBox(),
+          ],
         ),
         const SizedBox(height: 4),
         Text(

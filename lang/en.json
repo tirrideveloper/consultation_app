@@ -25,7 +25,7 @@
   "about_text" : "About",
   "update_information_text" : "Update information",
   "username_text" : "Username",
-  "update_username_w1" : "- Your username cannot be the same as your previous username. \n- Please set a unique username.",
+  "update_username_warning" : "- Your username cannot be the same as your previous username. \n- Please set a unique username.",
   "update_username_text" : "Update username",
   "successful_update" : "Information is updated",
   "error_occurred_text" : "An error occurred",
@@ -34,7 +34,7 @@
   "take_photo_text" : "Take a photo",
   "from_gallery_text" : "Select from gallery",
   "email_already_use_error": "This e-mail address is used, use a different e-mail.",
-  "user_not_found_error" : "This user was not found. Please check your information.",
-  "wrong_password_error" : "Your password is wrong. please check your information and try again."
-
+  "user_not_found_error" : "User not found",
+  "wrong_password_error" : "Your password is wrong. please check your information and try again.",
+  "password_reset_error" : "Reset Error"
 }

@@ -26,7 +26,7 @@
   "update_information_text" : "Bilgileri güncelle",
   "username_text" : "Kullanıcı Adı",
   "update_username_warning" : "- Kullanıcı adınız bir önceki kullanıcı adınızla aynı olamaz. \n- Lütfen benzersiz bir kullanıcı adı belirleyin.",
-  "update_username_text" : "Kullanıcı adını değiştir",
+  "update_username_text" : "Kullanıcı adı değiştir",
   "successful_update" : "Bilgiler güncellendi",
   "error_occurred_text" : "Hata oluştu",
   "username_already_taken" : "Kullanıcı adı kullanılmakta",
@@ -34,6 +34,7 @@
   "take_photo_text" : "Fotoğraf çek",
   "from_gallery_text" : "Galeriden seç",
   "email_already_use_error": "Bu mail adresi kullanılmaktadır, farklı bir mail kullanınız.",
-  "user_not_found_error" : "Bu kullanıcı bulunamadı. Lütfen bilgilerinizi kontrol ediniz.",
-  "wrong_password_error" : "Şifreniz yanlış. Lütfen bilgilerinizi kontrol edip tekrar deneyiniz."
+  "user_not_found_error" : "Kullanıcı bulunamadı",
+  "wrong_password_error" : "Şifreniz yanlış. Lütfen bilgilerinizi kontrol edip tekrar deneyiniz.",
+  "password_reset_error" : "Sıfırlama hatası"
 }

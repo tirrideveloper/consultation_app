@@ -1,8 +1,6 @@
 import 'package:consultation_app/models/app_localizations.dart';
 import 'package:consultation_app/screens/main_menu/profile/numbers_widget.dart';
-import 'package:consultation_app/models/tablet_detector.dart';
 import 'package:consultation_app/models/user_view_model.dart';
-import 'package:consultation_app/screens/main_menu/profile/profile_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -81,7 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate("tab_item_profile")),
+        title: Text(_viewModel.user.nameSurname),
       ),
       body: Container(
         margin: EdgeInsets.only(top: 15),
@@ -123,33 +121,8 @@ class _ProfilePageState extends State<ProfilePage> {
               },
             ),
             const SizedBox(height: 24),
-            buildName(_viewModel.user.nameSurname, _viewModel.user.userName),
+            buildName(_viewModel.user.nameSurname, _viewModel.user.userName, _viewModel.user.verifiedUser),
             const SizedBox(height: 15),
-            Center(
-              child: Container(
-                height: 42,
-                width: 120,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context, rootNavigator: true).push(
-                        MaterialPageRoute(
-                            builder: (context) => SettingsPage()));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          TabletDetector.isTablet() != true ? 30 : 30 * 2),
-                    ),
-                  ),
-                  child: Text(
-                      AppLocalizations.of(context)
-                          .translate("tab_item_settings"),
-                      style: TextStyle(color: Colors.white, fontSize: 18)),
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
             NumbersWidget(),
             const SizedBox(height: 24),
             buildAbout(_viewModel.user.aboutUser),
@@ -159,12 +132,21 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildName(String nameSurname, userName) {
+  Widget buildName(String nameSurname, userName, bool verify) {
     return Column(
       children: [
-        Text(
-          nameSurname,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              nameSurname,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            ),
+            verify == true ? Padding(
+              padding: const EdgeInsets.only(left: 5),
+              child: Icon(Icons.verified, color: Theme.of(context).primaryColor),
+            ) : SizedBox(),
+          ],
         ),
         const SizedBox(height: 4),
         Text(
@@ -195,23 +177,3 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
-
-/*Future _signOutConfirmation(BuildContext context) async {
-    final result = await PlatformAlertDialog(
-      title: "exit",
-      content: "sure?",
-      buttonText: "okay",
-      button2Text: "cancel",
-    ).show(context);
-
-    // ignore: unrelated_type_equality_checks
-    if (result == true) {
-      _signOut(context);
-    }
-  }
-
-  Future<bool> _signOut(BuildContext context) async {
-    final _userModel = Provider.of<UserViewModel>(context, listen: false);
-    bool result = await _userModel.signOut();
-    return result;
-  }*/

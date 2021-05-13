@@ -45,4 +45,9 @@ class FakeAuthService implements AuthBase {
     return await Future.delayed(
         Duration(seconds: 2), () => UserModel(userId: "signed_user", email: "fake@fake.com"));
   }
+
+  @override
+  Future resetUserPassword(String email) {
+    return null;
+  }
 }

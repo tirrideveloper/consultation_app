@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-enum FormType { Register, LogIn }
+enum FormType { Register, LogIn, resetPassword }
 
 class EmailAndPassword extends StatefulWidget {
   @override
@@ -21,6 +21,8 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
   String _buttonText, _linkText;
   var _formType = FormType.LogIn;
   final _formKey = GlobalKey<FormState>();
+  bool _showForgetPassword = true;
+  String _appBarText;
 
   Future<void> _formSubmit() async {
     _formKey.currentState.save();
@@ -34,9 +36,45 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
       } on FirebaseAuthException catch (e) {
         return PlatformAlertDialog(
           title: AppLocalizations.of(context).translate("login_error"),
-          content: Errors.showError(e.code),
+          content: Errors.showError(e.code, context),
           buttonText: AppLocalizations.of(context).translate("okay_text"),
         ).show(context);
+      }
+    } else if (_formType == FormType.resetPassword) {
+      try {
+        await _userViewModel.resetUserPassword(_email);
+        setState(() {
+          _formType = FormType.LogIn;
+        });
+        final snackBar = SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text(
+            "Resetleme maili gönderildi",
+            style: TextStyle(fontSize: 14, color: Colors.white),
+          ),
+          backgroundColor: Theme.of(context).primaryColor,
+          action: SnackBarAction(
+            textColor: Colors.white,
+            label: AppLocalizations.of(context).translate("okay_text"),
+            onPressed: () {},
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }catch (e) {
+        final snackBar = SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text(
+            AppLocalizations.of(context).translate("user_not_found_error"),
+            style: TextStyle(fontSize: 14, color: Colors.white),
+          ),
+          backgroundColor: Theme.of(context).primaryColor,
+          action: SnackBarAction(
+            textColor: Colors.white,
+            label: AppLocalizations.of(context).translate("okay_text"),
+            onPressed: () {},
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     } else {
       try {
@@ -46,7 +84,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
       } on FirebaseAuthException catch (e) {
         return PlatformAlertDialog(
           title: AppLocalizations.of(context).translate("signup_error"),
-          content: Errors.showError(e.code),
+          content: Errors.showError(e.code, context),
           buttonText: AppLocalizations.of(context).translate("okay_text"),
         ).show(context);
       }
@@ -55,8 +93,13 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
 
   void _change() {
     setState(() {
-      _formType =
-          _formType == FormType.LogIn ? FormType.Register : FormType.LogIn;
+      if (_formType == FormType.LogIn) {
+        _formType = FormType.Register;
+      } else if (_formType == FormType.Register) {
+        _formType = FormType.LogIn;
+      } else {
+        _formType = FormType.LogIn;
+      }
     });
   }
 
@@ -68,12 +111,24 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
 
   @override
   Widget build(BuildContext context) {
-    _buttonText = _formType == FormType.LogIn
-        ? AppLocalizations.of(context).translate("login_text")
-        : AppLocalizations.of(context).translate("sign_up_text");
-    _linkText = _formType == FormType.LogIn
-        ? AppLocalizations.of(context).translate("account_question_sign_in")
-        : AppLocalizations.of(context).translate("account_question_login");
+    if (_formType == FormType.LogIn) {
+      _showForgetPassword = true;
+      _buttonText = AppLocalizations.of(context).translate("login_text");
+      _linkText =
+          AppLocalizations.of(context).translate("account_question_sign_in");
+      _appBarText = "Giriş yap";
+    } else if (_formType == FormType.Register) {
+      _showForgetPassword = false;
+      _buttonText = AppLocalizations.of(context).translate("sign_up_text");
+      _linkText =
+          AppLocalizations.of(context).translate("account_question_login");
+      _appBarText = "Hesap oluştur";
+    } else {
+      _showForgetPassword = false;
+      _buttonText = "sıfırla";
+      _linkText = "girişe geri dön";
+      _appBarText = "Şifre sıfırla";
+    }
 
     final _userViewModel = Provider.of<UserViewModel>(context);
     if (_userViewModel.user != null) {
@@ -84,7 +139,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("SignUp"),
+        title: Text(_appBarText),
       ),
       body: _userViewModel.state == ViewState.Idle
           ? SingleChildScrollView(
@@ -93,6 +148,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
                 child: Form(
                   key: _formKey,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextFormField(
                         keyboardType: TextInputType.emailAddress,
@@ -110,51 +166,72 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
                         },
                       ),
                       SizedBox(height: 8),
-                      TextFormField(
-                        obscureText: _isHidden,
-                        decoration: InputDecoration(
-                          errorText: _userViewModel.passwordError != null
-                              ? _userViewModel.passwordError
-                              : null,
-                          prefixIcon: Icon(Icons.lock),
-                          suffixIcon: InkWell(
-                            onTap: _togglePasswordView,
-                            child: Icon(
-                              _isHidden
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                      _formType == FormType.resetPassword
+                          ? SizedBox(
+                              height: 0,
+                            )
+                          : TextFormField(
+                              obscureText: _isHidden,
+                              decoration: InputDecoration(
+                                errorText: _userViewModel.passwordError != null
+                                    ? _userViewModel.passwordError
+                                    : null,
+                                prefixIcon: Icon(Icons.lock),
+                                suffixIcon: InkWell(
+                                  onTap: _togglePasswordView,
+                                  child: Icon(
+                                    _isHidden
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  ),
+                                ),
+                                hintText: AppLocalizations.of(context)
+                                    .translate("sign_in_password"),
+                                labelText: AppLocalizations.of(context)
+                                    .translate("sign_in_password"),
+                                border: OutlineInputBorder(),
+                              ),
+                              onSaved: (String inputPassword) {
+                                _password = inputPassword;
+                              },
                             ),
-                          ),
-                          hintText: AppLocalizations.of(context)
-                              .translate("sign_in_password"),
-                          labelText: AppLocalizations.of(context)
-                              .translate("sign_in_password"),
-                          border: OutlineInputBorder(),
-                        ),
-                        onSaved: (String inputPassword) {
-                          _password = inputPassword;
-                        },
-                      ),
                       SizedBox(height: 8),
                       BasicButton(
                         buttonText: _buttonText,
                         buttonColor: Theme.of(context).primaryColor,
                         buttonOnPressed: () => _formSubmit(),
-                        buttonHeight: 45,
+                        buttonHeight: 40,
                         buttonTextSize: 16,
                         buttonRadius: 15,
                       ),
-                      SizedBox(height: 10),
                       TextButton(
                         onPressed: () => _change(),
                         child: Text(_linkText),
-                      )
+                      ),
+                      showForgotPassword(_showForgetPassword),
                     ],
                   ),
                 ),
               ),
             )
           : Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  Widget showForgotPassword(bool visible) {
+    return Visibility(
+      child: TextButton(
+        onPressed: () {
+          setState(() {
+            _formType = FormType.resetPassword;
+          });
+        },
+        child: Text(
+          "Parolanızı unuttunuz mu?",
+          style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+        ),
+      ),
+      visible: visible,
     );
   }
 }

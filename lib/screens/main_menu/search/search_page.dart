@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:consultation_app/common_widget/side_menu.dart';
 import 'package:consultation_app/models/app_localizations.dart';
 import 'package:consultation_app/models/user_view_model.dart';
 import 'package:consultation_app/screens/main_menu/profile/other_users_profile.dart';
@@ -42,8 +43,11 @@ class _SearchPageState extends State<SearchPage> {
             onTap: () {
               if ((snapshotData.docs[index].data() as Map)["userName"] ==
                   _viewModel.user.userName) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ProfilePage()));
+                Navigator.of(context, rootNavigator: true).push(
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage(),
+                  ),
+                );
               }
               else{
                 Navigator.of(context, rootNavigator: true).push(
@@ -59,6 +63,7 @@ class _SearchPageState extends State<SearchPage> {
               backgroundImage: NetworkImage(
                 (snapshotData.docs[index].data() as Map)["profileURL"],
               ),
+              backgroundColor: Colors.white,
             ),
             title: Text(
               (snapshotData.docs[index].data() as Map)["nameSurname"],
@@ -81,6 +86,7 @@ class _SearchPageState extends State<SearchPage> {
     }
 
     return Scaffold(
+      drawer: NavDrawer(),
       appBar: AppBar(
         title: Container(
           height: 40,

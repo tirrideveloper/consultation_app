@@ -13,6 +13,8 @@ class UserModel {
   DateTime updatedAt;
   double rank;
   String aboutUser;
+  bool verifiedUser;
+  String verifyFileURL;
 
   UserModel({@required this.userId, @required this.email});
 
@@ -22,14 +24,15 @@ class UserModel {
       "email": email,
       "userName": userName ??
           email.substring(0, email.indexOf("@")) + createRandomNumber(),
-      "nameSurname": "İsminizi Giriniz",
+      "nameSurname": nameSurname ?? "",
       "profileURL": profileURL ??
           "https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png",
       "createdAt": createdAt ?? FieldValue.serverTimestamp(),
       "updatedAt": updatedAt ?? FieldValue.serverTimestamp(),
       "rank": rank ?? 1.0,
       "aboutUser": aboutUser ?? "",
-
+      "verifiedUser": verifiedUser ?? false,
+      "verifyFileURL" : verifyFileURL ?? ""
     };
   }
 
@@ -42,7 +45,9 @@ class UserModel {
         createdAt = (map["createdAt"] as Timestamp).toDate(),
         updatedAt = (map["updatedAt"] as Timestamp).toDate(),
         rank = map["rank"],
-        aboutUser = map["aboutUser"];
+        aboutUser = map["aboutUser"],
+        verifiedUser = map["verifiedUser"],
+        verifyFileURL = map["verifyFileURL"];
 
   @override
   String toString() {

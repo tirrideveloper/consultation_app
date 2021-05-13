@@ -1,4 +1,4 @@
-import 'package:consultation_app/screens/on_boarding/on_boarding_page.dart';
+import 'package:consultation_app/screens/on_boarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:shared_preferences/shared_preferences.dart';

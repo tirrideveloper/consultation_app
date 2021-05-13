@@ -133,4 +133,9 @@ class FirebaseAuthService implements AuthBase {
         .signInWithEmailAndPassword(email: email, password: password);
     return _firebaseUser(userCredential.user);
   }
+
+  @override
+  Future resetUserPassword(String email) async {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
 }

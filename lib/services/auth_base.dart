@@ -14,4 +14,6 @@ abstract class AuthBase {
   Future<UserModel> signInEmailAndPassword(String email, String password);
 
   Future<UserModel> createEmailAndPassword(String email, String password);
+
+  Future resetUserPassword(String email);
 }

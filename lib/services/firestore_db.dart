@@ -67,4 +67,13 @@ class FireStoreDbService implements DbBase {
         .update({"profileURL": profilePhotoUrl});
     return true;
   }
+
+  @override
+  Future<bool> updateVerifyFile(String userId, String verifyFileUrl) async{
+    await _firestoreDB
+        .collection("users")
+        .doc(userId)
+        .update({"verifyFileURL": verifyFileUrl});
+    return true;
+  }
 }

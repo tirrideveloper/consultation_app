@@ -1,4 +1,4 @@
-import 'package:consultation_app/screens/main_menu/tab_items.dart';
+import 'package:consultation_app/screens/main_menu/navigation_bar/tab_items.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

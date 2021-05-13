@@ -124,13 +124,10 @@ class UserViewModel with ChangeNotifier implements AuthBase {
   Future<UserModel> signInEmailAndPassword(
       String email, String password) async {
     try {
-      if (_checkValidEmailAndPassword(email, password)) {
         state = ViewState.Busy;
         _userModel =
             await _userRepository.signInEmailAndPassword(email, password);
         return _userModel;
-      } else
-        return null;
     } finally {
       state = ViewState.Idle;
     }
@@ -159,6 +156,16 @@ class UserViewModel with ChangeNotifier implements AuthBase {
       String userId, String fileType, String profilePhoto) async {
     var userPhoto = File(profilePhoto);
     var result = await _userRepository.uploadFile(userId, fileType, userPhoto);
+    return result;
+  }
+
+  Future resetUserPassword(String email) async{
+    return await _userRepository.resetUserPassword(email);
+  }
+
+  Future<String> uploadVerifyFile(
+      String userId, File verifyFile, String fileName) async {
+    var result = await _userRepository.uploadVerifyFile(userId, verifyFile, fileName);
     return result;
   }
 

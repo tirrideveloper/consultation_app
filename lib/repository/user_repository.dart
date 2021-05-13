@@ -133,4 +133,26 @@ class UserRepository implements AuthBase {
       return profilePhotoUrl;
     }
   }
+
+  @override
+  Future resetUserPassword(String email) async {
+    if(appMode == AppMode.DEBUG){
+      return null;
+    }
+    else{
+      return await _firebaseAuthService.resetUserPassword(email);
+    }
+  }
+
+  Future<String> uploadVerifyFile(
+      String userId, File verifyFile, String fileName) async{
+    if (appMode == AppMode.DEBUG) {
+      return "file_download_link";
+    } else {
+      var verifyFileUrl =  await _storageService.uploadVerifyFile(
+          userId, verifyFile, fileName);
+      await _firestoreDBService.updateVerifyFile(userId, verifyFileUrl);
+      return verifyFileUrl;
+    }
+  }
 }
