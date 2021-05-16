@@ -32,7 +32,7 @@ class UserModel {
       "rank": rank ?? 1.0,
       "aboutUser": aboutUser ?? "",
       "verifiedUser": verifiedUser ?? false,
-      "verifyFileURL" : verifyFileURL ?? ""
+      "verifyFileURL": verifyFileURL ?? ""
     };
   }
 
