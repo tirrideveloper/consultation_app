@@ -171,32 +171,51 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void _userNameUpdate(BuildContext context) async {
     final _viewModel = Provider.of<UserViewModel>(context, listen: false);
+    bool usernameValid = RegExp(r'^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$')
+        .hasMatch(_controllerUserName.text);
 
-    if (_viewModel.user.userName != _controllerUserName.text) {
-      var updateResult = await _viewModel.updateUserName(
-          _viewModel.user.userId, _controllerUserName.text);
+    if (usernameValid) {
+      if (_viewModel.user.userName != _controllerUserName.text) {
+        var updateResult = await _viewModel.updateUserName(
+            _viewModel.user.userId, _controllerUserName.text);
 
-      if (updateResult == true) {
-        final snackBar = SnackBar(
-          behavior: SnackBarBehavior.floating,
-          content: Text(
-            AppLocalizations.of(context).translate("successful_update"),
-            style: TextStyle(fontSize: 14, color: Colors.white),
-          ),
-          backgroundColor: Theme.of(context).primaryColor,
-          action: SnackBarAction(
-            textColor: Colors.white,
-            label: AppLocalizations.of(context).translate("okay_text"),
-            onPressed: () {},
-          ),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        if (updateResult == true) {
+          final snackBar = SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              AppLocalizations.of(context).translate("successful_update"),
+              style: TextStyle(fontSize: 14, color: Colors.white),
+            ),
+            backgroundColor: Theme.of(context).primaryColor,
+            action: SnackBarAction(
+              textColor: Colors.white,
+              label: AppLocalizations.of(context).translate("okay_text"),
+              onPressed: () {},
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        } else {
+          _controllerUserName.text = _viewModel.user.userName;
+          final snackBar = SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              AppLocalizations.of(context).translate("username_already_taken"),
+              style: TextStyle(fontSize: 14, color: Colors.white),
+            ),
+            backgroundColor: Colors.red,
+            action: SnackBarAction(
+              textColor: Colors.white,
+              label: AppLocalizations.of(context).translate("okay_text"),
+              onPressed: () {},
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
       } else {
-        _controllerUserName.text = _viewModel.user.userName;
         final snackBar = SnackBar(
           behavior: SnackBarBehavior.floating,
           content: Text(
-            AppLocalizations.of(context).translate("username_already_taken"),
+            AppLocalizations.of(context).translate("error_occurred_text"),
             style: TextStyle(fontSize: 14, color: Colors.white),
           ),
           backgroundColor: Colors.red,
@@ -208,11 +227,12 @@ class _SettingsPageState extends State<SettingsPage> {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
-    } else {
+    }
+    else{
       final snackBar = SnackBar(
         behavior: SnackBarBehavior.floating,
         content: Text(
-          AppLocalizations.of(context).translate("error_occurred_text"),
+          "geçerli bir kullanıcı adı girin",
           style: TextStyle(fontSize: 14, color: Colors.white),
         ),
         backgroundColor: Colors.red,

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:consultation_app/locator.dart';
+import 'package:consultation_app/models/message_model.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/services/auth_base.dart';
 import 'package:consultation_app/services/fake_auth.dart';
@@ -123,12 +124,12 @@ class UserRepository implements AuthBase {
   }
 
   Future<String> uploadFile(
-      String userId, String fileType, File profilePhoto) async{
+      String userId, String fileType, File profilePhoto) async {
     if (appMode == AppMode.DEBUG) {
       return "file_download_link";
     } else {
-      var profilePhotoUrl =  await _storageService.uploadPhoto(
-          userId, fileType, profilePhoto);
+      var profilePhotoUrl =
+          await _storageService.uploadPhoto(userId, fileType, profilePhoto);
       await _firestoreDBService.updateProfilePhoto(userId, profilePhotoUrl);
       return profilePhotoUrl;
     }
@@ -136,23 +137,38 @@ class UserRepository implements AuthBase {
 
   @override
   Future resetUserPassword(String email) async {
-    if(appMode == AppMode.DEBUG){
+    if (appMode == AppMode.DEBUG) {
       return null;
-    }
-    else{
+    } else {
       return await _firebaseAuthService.resetUserPassword(email);
     }
   }
 
   Future<String> uploadVerifyFile(
-      String userId, File verifyFile, String fileName) async{
+      String userId, File verifyFile, String fileName) async {
     if (appMode == AppMode.DEBUG) {
       return "file_download_link";
     } else {
-      var verifyFileUrl =  await _storageService.uploadVerifyFile(
-          userId, verifyFile, fileName);
+      var verifyFileUrl =
+          await _storageService.uploadVerifyFile(userId, verifyFile, fileName);
       await _firestoreDBService.updateVerifyFile(userId, verifyFileUrl);
       return verifyFileUrl;
+    }
+  }
+
+  Stream<List<Message>> getMessages(String currentUserId, String otherUserId) {
+    if (appMode == AppMode.DEBUG) {
+      return Stream.empty();
+    } else {
+      return _firestoreDBService.getMessages(currentUserId, otherUserId);
+    }
+  }
+
+  Future<bool> saveMessage(Message message) async{
+    if (appMode == AppMode.DEBUG) {
+      return true;
+    } else {
+      return _firestoreDBService.saveMessage(message);
     }
   }
 }

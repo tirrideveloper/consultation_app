@@ -48,8 +48,7 @@ class _SearchPageState extends State<SearchPage> {
                     builder: (context) => ProfilePage(),
                   ),
                 );
-              }
-              else{
+              } else {
                 Navigator.of(context, rootNavigator: true).push(
                   MaterialPageRoute(
                     builder: (context) => OtherUserProfile(
@@ -79,6 +78,17 @@ class _SearchPageState extends State<SearchPage> {
                 color: Colors.grey,
                 fontSize: 20,
               ),
+            ),
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  "Rank",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                Text(
+                    (snapshotData.docs[index].data() as Map)["rank"].toString())
+              ],
             ),
           );
         },
@@ -130,6 +140,7 @@ class _SearchPageState extends State<SearchPage> {
                           isExecuted = true;
                         });
                       });
+                      FocusScope.of(context).unfocus();
                     });
               }),
         ],

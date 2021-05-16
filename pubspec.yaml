@@ -36,7 +36,7 @@ dependencies:
 
   # required for firebase authentication
   firebase_auth: ^1.1.4
-  google_sign_in: ^5.0.2
+  google_sign_in: ^5.0.3
   flutter_facebook_login: ^3.0.0
 
   # required for database
@@ -47,6 +47,7 @@ dependencies:
   file_picker: ^3.0.1
   image_picker: ^0.7.5
   get: ^4.1.4
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

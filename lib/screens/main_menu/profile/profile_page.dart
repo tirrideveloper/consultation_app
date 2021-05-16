@@ -1,3 +1,4 @@
+import 'package:consultation_app/common_widget/side_menu.dart';
 import 'package:consultation_app/models/app_localizations.dart';
 import 'package:consultation_app/screens/main_menu/profile/numbers_widget.dart';
 import 'package:consultation_app/models/user_view_model.dart';
@@ -35,8 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void updateAlert(BuildContext context) {
-    UserViewModel _viewModel =
-        Provider.of<UserViewModel>(context, listen: false);
+    final _viewModel = Provider.of<UserViewModel>(context, listen: false);
 
     showDialog(
         context: context,
@@ -74,10 +74,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    UserViewModel _viewModel =
-        Provider.of<UserViewModel>(context, listen: false);
+    final _viewModel = Provider.of<UserViewModel>(context, listen: false);
 
     return Scaffold(
+      drawer: NavDrawer(),
       appBar: AppBar(
         title: Text(_viewModel.user.nameSurname),
       ),
@@ -121,7 +121,8 @@ class _ProfilePageState extends State<ProfilePage> {
               },
             ),
             const SizedBox(height: 24),
-            buildName(_viewModel.user.nameSurname, _viewModel.user.userName, _viewModel.user.verifiedUser),
+            buildName(_viewModel.user.nameSurname, _viewModel.user.userName,
+                _viewModel.user.verifiedUser),
             const SizedBox(height: 15),
             NumbersWidget(),
             const SizedBox(height: 24),
@@ -142,10 +143,13 @@ class _ProfilePageState extends State<ProfilePage> {
               nameSurname,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
-            verify == true ? Padding(
-              padding: const EdgeInsets.only(left: 5),
-              child: Icon(Icons.verified, color: Theme.of(context).primaryColor),
-            ) : SizedBox(),
+            verify == true
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: Icon(Icons.verified,
+                        color: Theme.of(context).primaryColor),
+                  )
+                : SizedBox(),
           ],
         ),
         const SizedBox(height: 4),

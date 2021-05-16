@@ -25,7 +25,7 @@
   "about_text" : "Hakkında",
   "update_information_text" : "Bilgileri güncelle",
   "username_text" : "Kullanıcı Adı",
-  "update_username_warning" : "- Kullanıcı adınız bir önceki kullanıcı adınızla aynı olamaz. \n- Lütfen benzersiz bir kullanıcı adı belirleyin.",
+  "update_username_warning" : "- Kullanıcı adınız bir önceki kullanıcı adınızla aynı olamaz. \n- Kullanıcı adınız boşluk ve özel karakter içermemeli. \n- Lütfen benzersiz bir kullanıcı adı belirleyin.",
   "update_username_text" : "Kullanıcı adı değiştir",
   "successful_update" : "Bilgiler güncellendi",
   "error_occurred_text" : "Hata oluştu",

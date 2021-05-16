@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:consultation_app/locator.dart';
+import 'package:consultation_app/models/message_model.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/repository/user_repository.dart';
 import 'package:consultation_app/services/auth_base.dart';
@@ -190,5 +191,13 @@ class UserViewModel with ChangeNotifier implements AuthBase {
     } else
       emailError = null;
     return result;
+  }
+
+  Stream<List<Message>>getMessages(String currentUserId, String otherUserId) {
+    return _userRepository.getMessages(currentUserId, otherUserId);
+  }
+
+  Future<bool> saveMessage(Message message) {
+    return _userRepository.saveMessage(message);
   }
 }
