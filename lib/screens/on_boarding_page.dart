@@ -8,26 +8,28 @@ class OnBoardingPage extends StatelessWidget {
         child: IntroductionScreen(
           pages: [
             PageViewModel(
-              title: "This application will be amazing",
-              body: "Doctors will use this application everyday",
+              title: "Alanında uzman hekimler burada",
+              body:
+                  "Doktorlarımızın konsultasyon çalışmalarını kolaylaştırıyoruz",
               image: null, //buildImage("assets/..."),
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: "This application will be amazing2",
-              body: "Doctors will use this application everyday2",
+              title: "Zorlu süreçlerde riski azaltıyoruz",
+              body: "Mekandan bağımsız bir vaka çalışması sunuyoruz",
               image: null, //buildImage("assets/..."),
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: "This application will be amazing3",
-              body: "Doctors will use this application everyday3",
+              title: "Tıp öğrencilerinin yanındayız",
+              body:
+                  "Zorlu okul sürecinde bilinçli ve verimli vakalar gösteriyoruz",
               image: null, //buildImage("assets/..."),
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: "This application will be amazing4",
-              body: "Doctors will use this application everyday4",
+              title: "AM SORİ GAT DOT DET",
+              body: "bütün bunları yaparken bursaspora destek olabilirsin",
               image: null, //buildImage("assets/..."),
               decoration: getPageDecoration(),
             ),
