@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:consultation_app/models/chats_model.dart';
 import 'package:consultation_app/models/message_model.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/services/db_base.dart';
@@ -104,6 +105,14 @@ class FireStoreDbService implements DbBase {
         .doc(_messageId)
         .set(_messageMap);
 
+    await _firestoreDB.collection("chats").doc(_senderDocumentId).set({
+      "message_sender": message.sender,
+      "message_receiver": message.receiver,
+      "last_message": message.message,
+      "was_seen": false,
+      "creation_date": FieldValue.serverTimestamp(),
+    });
+
     _messageMap.update("isFromCurrentUser", (value) => false);
 
     await _firestoreDB
@@ -113,6 +122,55 @@ class FireStoreDbService implements DbBase {
         .doc(_messageId)
         .set(_messageMap);
 
+    await _firestoreDB.collection("chats").doc(_receiverDocumentId).set({
+      "message_sender": message.receiver,
+      "message_receiver": message.sender,
+      "last_message": message.message,
+      "was_seen": false,
+      "creation_date": FieldValue.serverTimestamp(),
+    });
+
     return true;
+  }
+
+  @override
+  Future<List<Chats>> getAllConversations(String userId) async {
+    QuerySnapshot querySnapshot = await _firestoreDB
+        .collection("chats")
+        .where("message_sender", isEqualTo: userId)
+        .orderBy("creation_date", descending: true)
+        .get();
+
+    List<Chats> allMessages = [];
+
+    for (DocumentSnapshot conversation in querySnapshot.docs) {
+      Chats _chat = Chats.fromMap(conversation.data());
+      allMessages.add(_chat);
+    }
+    return allMessages;
+  }
+
+  Future<List<UserModel>> usersList() async {
+    QuerySnapshot querySnapshot = await _firestoreDB.collection("users").get();
+
+    List<UserModel> users = [];
+
+    for (DocumentSnapshot user in querySnapshot.docs) {
+      UserModel _user = UserModel.fromMap(user.data());
+      users.add(_user);
+    }
+
+    return users;
+  }
+
+  @override
+  Future<DateTime> showTime(String userId) async {
+    await _firestoreDB
+        .collection("server")
+        .doc(userId)
+        .set({"saat": FieldValue.serverTimestamp()});
+    var readMap = await _firestoreDB.collection("server").doc(userId).get();
+    Timestamp readDate = readMap.data()["saat"];
+    return readDate.toDate();
   }
 }

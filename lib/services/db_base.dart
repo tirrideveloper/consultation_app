@@ -1,3 +1,4 @@
+import 'package:consultation_app/models/chats_model.dart';
 import 'package:consultation_app/models/message_model.dart';
 import 'package:consultation_app/models/user_model.dart';
 
@@ -17,4 +18,8 @@ abstract class DbBase {
   Stream<List<Message>> getMessages(String currentUserId, String otherUserId);
 
   Future<bool> saveMessage(Message message);
+
+  Future<List<Chats>> getAllConversations(String userId);
+
+  Future<DateTime> showTime(String userId);
 }

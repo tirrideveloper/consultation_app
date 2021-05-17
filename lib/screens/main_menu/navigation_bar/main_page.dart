@@ -1,5 +1,6 @@
 import 'package:consultation_app/models/user_model.dart';
-import 'package:consultation_app/screens/main_menu/navigation_bar/home_page.dart';
+import 'package:consultation_app/screens/main_menu/messaging/messages_page.dart';
+import 'package:consultation_app/screens/main_menu/home/home_page.dart';
 import 'package:consultation_app/screens/main_menu/navigation_bar/my_custom_bottom_navi.dart';
 import 'package:consultation_app/screens/main_menu/profile/profile_page.dart';
 import 'package:consultation_app/screens/main_menu/search/search_page.dart';
@@ -20,15 +21,17 @@ class _MainPageState extends State<MainPage> {
 
   Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.HomePage: GlobalKey<NavigatorState>(),
-    TabItem.Search : GlobalKey<NavigatorState>(),
+    TabItem.Search: GlobalKey<NavigatorState>(),
+    TabItem.Messages: GlobalKey<NavigatorState>(),
     TabItem.Profile: GlobalKey<NavigatorState>(),
   };
 
   Map<TabItem, Widget> allPages() {
     return {
       TabItem.HomePage: HomePage(),
-      TabItem.Profile: ProfilePage(),
       TabItem.Search: SearchPage(),
+      TabItem.Messages: MessagesPage(),
+      TabItem.Profile: ProfilePage(),
     };
   }
 

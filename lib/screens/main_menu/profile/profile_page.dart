@@ -83,51 +83,54 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: Container(
         margin: EdgeInsets.only(top: 15),
-        child: ListView(
-          physics: BouncingScrollPhysics(),
-          children: [
-            ProfileWidget(
-              imagePath: _profilePhoto == null
-                  ? _viewModel.user.profileURL
-                  : _profilePhoto,
-              onClicked: () {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return Container(
-                        height: 160,
-                        child: Column(
-                          children: [
-                            ListTile(
-                              leading: Icon(Icons.camera),
-                              title: Text(AppLocalizations.of(context)
-                                  .translate("take_photo_text")),
-                              onTap: () {
-                                _takePhoto();
-                              },
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.image),
-                              title: Text(AppLocalizations.of(context)
-                                  .translate("from_gallery_text")),
-                              onTap: () {
-                                _selectFromGallery();
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    });
-              },
-            ),
-            const SizedBox(height: 24),
-            buildName(_viewModel.user.nameSurname, _viewModel.user.userName,
-                _viewModel.user.verifiedUser),
-            const SizedBox(height: 15),
-            NumbersWidget(),
-            const SizedBox(height: 24),
-            buildAbout(_viewModel.user.aboutUser),
-          ],
+        child: RefreshIndicator(
+          onRefresh: _refreshPage,
+          child: ListView(
+            physics: AlwaysScrollableScrollPhysics(),
+            children: [
+              ProfileWidget(
+                imagePath: _profilePhoto == null
+                    ? _viewModel.user.profileURL
+                    : _profilePhoto,
+                onClicked: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return Container(
+                          height: 160,
+                          child: Column(
+                            children: [
+                              ListTile(
+                                leading: Icon(Icons.camera),
+                                title: Text(AppLocalizations.of(context)
+                                    .translate("take_photo_text")),
+                                onTap: () {
+                                  _takePhoto();
+                                },
+                              ),
+                              ListTile(
+                                leading: Icon(Icons.image),
+                                title: Text(AppLocalizations.of(context)
+                                    .translate("from_gallery_text")),
+                                onTap: () {
+                                  _selectFromGallery();
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      });
+                },
+              ),
+              const SizedBox(height: 24),
+              buildName(_viewModel.user.nameSurname, _viewModel.user.userName,
+                  _viewModel.user.verifiedUser),
+              const SizedBox(height: 15),
+              NumbersWidget(),
+              const SizedBox(height: 24),
+              buildAbout(_viewModel.user.aboutUser),
+            ],
+          ),
         ),
       ),
     );
@@ -179,5 +182,11 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
     );
+  }
+
+  Future<Null> _refreshPage() async {
+    setState(() {});
+    await Future.delayed(Duration(seconds: 1));
+    return null;
   }
 }

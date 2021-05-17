@@ -24,6 +24,7 @@ class MyCustomBottomNavigation extends StatelessWidget {
         items: [
           _createNavItem(TabItem.HomePage),
           _createNavItem(TabItem.Search),
+          _createNavItem(TabItem.Messages),
           _createNavItem(TabItem.Profile),
         ],
         onTap: (index) => onSelectedTab(TabItem.values[index]),

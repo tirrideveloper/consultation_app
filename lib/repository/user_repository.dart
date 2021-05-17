@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:consultation_app/locator.dart';
+import 'package:consultation_app/models/chats_model.dart';
 import 'package:consultation_app/models/message_model.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/services/auth_base.dart';
@@ -8,6 +9,7 @@ import 'package:consultation_app/services/fake_auth.dart';
 import 'package:consultation_app/services/firebase_auth.dart';
 import 'package:consultation_app/services/firebase_storage.dart';
 import 'package:consultation_app/services/firestore_db.dart';
+import 'package:timeago/timeago.dart' as timeAgo;
 
 enum AppMode { DEBUG, RELEASE }
 
@@ -20,6 +22,7 @@ class UserRepository implements AuthBase {
   //RELEASE => firebase
   //DEBUG => random
   AppMode appMode = AppMode.RELEASE;
+  List<UserModel> usersList = [];
 
   @override
   Future<UserModel> currentUser() async {
@@ -164,11 +167,62 @@ class UserRepository implements AuthBase {
     }
   }
 
-  Future<bool> saveMessage(Message message) async{
+  Future<bool> saveMessage(Message message) async {
     if (appMode == AppMode.DEBUG) {
       return true;
     } else {
       return _firestoreDBService.saveMessage(message);
     }
+  }
+
+  Future<List<UserModel>> getUsersList() async {
+    if (appMode == AppMode.DEBUG) {
+      return [];
+    } else {
+      usersList = await _firestoreDBService.usersList();
+      return null;
+    }
+  }
+
+  Future<List<Chats>> getAllConversations(String userId) async {
+    if (appMode == AppMode.DEBUG) {
+      return [];
+    } else {
+      DateTime _time = await _firestoreDBService.showTime(userId);
+      var chatsList = await _firestoreDBService.getAllConversations(userId);
+      for (var snapChat in chatsList) {
+        var userInUsersList = findUser(snapChat.messageReceiver);
+
+        if (userInUsersList != null) {
+          snapChat.spokenUserName = userInUsersList.userName;
+          snapChat.spokenUserProfileURL = userInUsersList.profileURL;
+        } else {
+          var _readUser =
+              await _firestoreDBService.readUser(snapChat.messageReceiver);
+          snapChat.spokenUserName = _readUser.nameSurname;
+          snapChat.spokenUserProfileURL = _readUser.profileURL;
+        }
+        calculateTimeAgo(snapChat, _time);
+      }
+      return chatsList;
+    }
+  }
+
+  void calculateTimeAgo(Chats snapChat, DateTime time) {
+    snapChat.lastReadTime = time;
+
+    timeAgo.setLocaleMessages("tr", timeAgo.TrMessages());
+
+    var _duration = time.difference(snapChat.creationDate.toDate());
+    snapChat.timeDifference = timeAgo.format(time.subtract(_duration), locale: "tr");
+  }
+
+  UserModel findUser(String userId) {
+    for (int i = 0; i < usersList.length; i++) {
+      if (usersList[i].userId == userId) {
+        return usersList[i];
+      }
+    }
+    return null;
   }
 }

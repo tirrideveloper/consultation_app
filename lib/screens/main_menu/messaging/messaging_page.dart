@@ -1,4 +1,4 @@
-import 'package:cloud_firestore_platform_interface/src/timestamp.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:consultation_app/models/message_model.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/models/user_view_model.dart';
@@ -28,7 +28,16 @@ class _MessagingPageState extends State<MessagingPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_otherUser["nameSurname"]),
+        title: Row(
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.white,
+              backgroundImage: NetworkImage(widget.otherUser["profileURL"]),
+            ),
+            SizedBox(width: 10,),
+            Text(_otherUser["nameSurname"]),
+          ],
+        ),
       ),
       body: Center(
         child: Column(
@@ -46,7 +55,7 @@ class _MessagingPageState extends State<MessagingPage> {
                     reverse: true,
                     controller: _scrollController,
                     itemBuilder: (context, index) {
-                      return _createChatBaloon(allMessages[index]);
+                      return _createChatBalloon(allMessages[index]);
                     },
                     itemCount: allMessages.length,
                   );
@@ -123,7 +132,7 @@ class _MessagingPageState extends State<MessagingPage> {
     );
   }
 
-  Widget _createChatBaloon(Message snapMessage) {
+  Widget _createChatBalloon(Message snapMessage) {
     Color _receiverMessageColor = Colors.lightBlue;
     Color _senderMessageColor = Colors.green.shade300;
 

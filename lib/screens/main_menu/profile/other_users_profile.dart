@@ -1,6 +1,6 @@
 import 'package:consultation_app/models/app_localizations.dart';
 import 'package:consultation_app/models/user_view_model.dart';
-import 'package:consultation_app/screens/main_menu/messaging_page.dart';
+import 'package:consultation_app/screens/main_menu/messaging/messaging_page.dart';
 import 'package:consultation_app/screens/main_menu/profile/numbers_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

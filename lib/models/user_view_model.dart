@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:consultation_app/locator.dart';
+import 'package:consultation_app/models/chats_model.dart';
 import 'package:consultation_app/models/message_model.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/repository/user_repository.dart';
@@ -125,10 +126,10 @@ class UserViewModel with ChangeNotifier implements AuthBase {
   Future<UserModel> signInEmailAndPassword(
       String email, String password) async {
     try {
-        state = ViewState.Busy;
-        _userModel =
-            await _userRepository.signInEmailAndPassword(email, password);
-        return _userModel;
+      state = ViewState.Busy;
+      _userModel =
+          await _userRepository.signInEmailAndPassword(email, password);
+      return _userModel;
     } finally {
       state = ViewState.Idle;
     }
@@ -160,13 +161,14 @@ class UserViewModel with ChangeNotifier implements AuthBase {
     return result;
   }
 
-  Future resetUserPassword(String email) async{
+  Future resetUserPassword(String email) async {
     return await _userRepository.resetUserPassword(email);
   }
 
   Future<String> uploadVerifyFile(
       String userId, File verifyFile, String fileName) async {
-    var result = await _userRepository.uploadVerifyFile(userId, verifyFile, fileName);
+    var result =
+        await _userRepository.uploadVerifyFile(userId, verifyFile, fileName);
     return result;
   }
 
@@ -193,11 +195,15 @@ class UserViewModel with ChangeNotifier implements AuthBase {
     return result;
   }
 
-  Stream<List<Message>>getMessages(String currentUserId, String otherUserId) {
+  Stream<List<Message>> getMessages(String currentUserId, String otherUserId) {
     return _userRepository.getMessages(currentUserId, otherUserId);
   }
 
-  Future<bool> saveMessage(Message message) {
-    return _userRepository.saveMessage(message);
+  Future<bool> saveMessage(Message message) async {
+    return await _userRepository.saveMessage(message);
+  }
+
+  Future<List<Chats>> getAllConversations(String userId) async {
+    return await _userRepository.getAllConversations(userId);
   }
 }
