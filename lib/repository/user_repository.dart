@@ -214,7 +214,8 @@ class UserRepository implements AuthBase {
     timeAgo.setLocaleMessages("tr", timeAgo.TrMessages());
 
     var _duration = time.difference(snapChat.creationDate.toDate());
-    snapChat.timeDifference = timeAgo.format(time.subtract(_duration), locale: "tr");
+    snapChat.timeDifference =
+        timeAgo.format(time.subtract(_duration), locale: "tr");
   }
 
   UserModel findUser(String userId) {
