@@ -10,27 +10,27 @@ class OnBoardingPage extends StatelessWidget {
             PageViewModel(
               title: "Alanında uzman hekimler burada",
               body:
-                  "Doktorlarımızın konsultasyon çalışmalarını kolaylaştırıyoruz",
-              image: null, //buildImage("assets/..."),
+              "Doktorlarımızın konsultasyon çalışmalarını kolaylaştırıyoruz",
+              image: buildImage("assets/images/doktor.jpg"),
               decoration: getPageDecoration(),
             ),
             PageViewModel(
               title: "Zorlu süreçlerde riski azaltıyoruz",
               body: "Mekandan bağımsız bir vaka çalışması sunuyoruz",
-              image: null, //buildImage("assets/..."),
+              image: buildImage("assets/images/hastahane.png"),
               decoration: getPageDecoration(),
             ),
             PageViewModel(
               title: "Tıp öğrencilerinin yanındayız",
               body:
-                  "Zorlu okul sürecinde bilinçli ve verimli vakalar gösteriyoruz",
-              image: null, //buildImage("assets/..."),
+              "Zorlu okul sürecinde bilinçli ve verimli vakalar gösteriyoruz",
+              image: buildImage("assets/images/öğrenci.jpg"),
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: "AM SORİ GAT DOT DET",
-              body: "bütün bunları yaparken bursaspora destek olabilirsin",
-              image: null, //buildImage("assets/..."),
+              title: "Haydi başlayalım",
+              body: "",
+              image:  buildImage("assets/images/docpat.jpg"),
               decoration: getPageDecoration(),
             ),
           ],
