@@ -1,4 +1,4 @@
-import 'package:consultation_app/models/tablet_detector.dart';
+import 'package:consultation_app/tools/tablet_detector.dart';
 import 'package:flutter/material.dart';
 
 class BasicButton extends StatelessWidget {

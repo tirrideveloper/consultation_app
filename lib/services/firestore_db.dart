@@ -79,19 +79,6 @@ class FireStoreDbService implements DbBase {
     return true;
   }
 
-  @override
-  Stream<List<Message>> getMessages(String currentUserId, String otherUserId) {
-    var snapshot = _firestoreDB
-        .collection("chats")
-        .doc(currentUserId + "--" + otherUserId)
-        .collection("messages")
-        .orderBy("date", descending: true)
-        .snapshots();
-    return snapshot.map((messageList) => messageList.docs
-        .map((message) => Message.fromMap(message.data()))
-        .toList());
-  }
-
   Future<bool> saveMessage(Message message) async {
     var _messageId = _firestoreDB.collection("chats").doc().id;
     var _senderDocumentId = message.sender + "--" + message.receiver;
@@ -150,6 +137,51 @@ class FireStoreDbService implements DbBase {
     return allMessages;
   }
 
+  Future<List<Message>> getMessagesWithPagination(String currentUserId,
+      String otherUserId, Message lastMessage, int numberOfElements) async {
+    QuerySnapshot _querySnapshot;
+    List<Message> _allMessages = [];
+
+    if (lastMessage == null) {
+      _querySnapshot = await _firestoreDB
+          .collection("chats")
+          .doc(currentUserId + "--" + otherUserId)
+          .collection("messages")
+          .orderBy("date", descending: true)
+          .limit(numberOfElements)
+          .get();
+    } else {
+      _querySnapshot = await _firestoreDB
+          .collection("chats")
+          .doc(currentUserId + "--" + otherUserId)
+          .collection("messages")
+          .orderBy("date", descending: true)
+          .startAfter([lastMessage.date])
+          .limit(numberOfElements)
+          .get();
+
+      await Future.delayed(Duration(seconds: 1));
+    }
+
+    for (DocumentSnapshot snap in _querySnapshot.docs) {
+      Message _message = Message.fromMap(snap.data());
+      _allMessages.add(_message);
+    }
+
+    return _allMessages;
+  }
+
+  @override
+  Future<DateTime> showTime(String userId) async {
+    await _firestoreDB
+        .collection("server")
+        .doc(userId)
+        .set({"saat": FieldValue.serverTimestamp()});
+    var readMap = await _firestoreDB.collection("server").doc(userId).get();
+    Timestamp readDate = readMap.data()["saat"];
+    return readDate.toDate();
+  }
+
   Future<List<UserModel>> usersList() async {
     QuerySnapshot querySnapshot = await _firestoreDB.collection("users").get();
 
@@ -163,14 +195,15 @@ class FireStoreDbService implements DbBase {
     return users;
   }
 
-  @override
-  Future<DateTime> showTime(String userId) async {
-    await _firestoreDB
-        .collection("server")
-        .doc(userId)
-        .set({"saat": FieldValue.serverTimestamp()});
-    var readMap = await _firestoreDB.collection("server").doc(userId).get();
-    Timestamp readDate = readMap.data()["saat"];
-    return readDate.toDate();
+  Stream<List<Message>> getMessages(String currentUserId, String otherUserId) {
+    var snapshot = _firestoreDB
+        .collection("chats")
+        .doc(currentUserId + "--" + otherUserId)
+        .collection("messages")
+        .orderBy("date", descending: true)
+        .snapshots();
+    return snapshot.map((messageList) => messageList.docs
+        .map((message) => Message.fromMap(message.data()))
+        .toList());
   }
 }

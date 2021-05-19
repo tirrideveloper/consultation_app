@@ -1,6 +1,6 @@
-import 'package:consultation_app/models/app_localizations.dart';
+import 'package:consultation_app/tools/app_localizations.dart';
 import 'package:consultation_app/models/user_model.dart';
-import 'package:consultation_app/models/user_view_model.dart';
+import 'package:consultation_app/view_model/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

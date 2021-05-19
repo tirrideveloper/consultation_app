@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:consultation_app/common_widget/side_menu.dart';
 import 'package:consultation_app/models/chats_model.dart';
-import 'package:consultation_app/models/user_view_model.dart';
+import 'package:consultation_app/models/user_model.dart';
+import 'package:consultation_app/view_model/chat_view_model.dart';
+import 'package:consultation_app/view_model/user_view_model.dart';
 import 'package:consultation_app/screens/main_menu/messaging/messaging_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -47,25 +49,32 @@ class _MessagesPageState extends State<MessagesPage> {
                             .collection("users")
                             .doc(snapshotChat.messageReceiver)
                             .get();
-                        Map<String, dynamic> _otherUser = _getOtherUser.data();
+                        Map<String, dynamic> _otherUserInfo =
+                            _getOtherUser.data();
+                        UserModel _otherUser =
+                            UserModel.fromMap(_otherUserInfo);
 
                         Navigator.of(context, rootNavigator: true).push(
                           MaterialPageRoute(
-                            builder: (context) => MessagingPage(
-                              currentUser: _viewModel.user,
-                              otherUser: _otherUser,
+                            builder: (context) => ChangeNotifierProvider(
+                              create: (context) => ChatViewModel(
+                                  currentUser: _viewModel.user,
+                                  otherUser: _otherUser),
+                              child: MessagingPage(),
                             ),
                           ),
                         );
                       },
-                      child: ListTile(
-                        title: Text(snapshotChat.spokenUserName),
-                        subtitle: Text(snapshotChat.lastMessage),
-                        trailing: Text(snapshotChat.timeDifference),
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          backgroundImage: NetworkImage(
-                            snapshotChat.spokenUserProfileURL,
+                      child: Card(
+                        child: ListTile(
+                          title: Text(snapshotChat.spokenUserName),
+                          subtitle: Text(snapshotChat.lastMessage),
+                          trailing: Text(snapshotChat.timeDifference),
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.grey.shade200,
+                            backgroundImage: NetworkImage(
+                              snapshotChat.spokenUserProfileURL,
+                            ),
                           ),
                         ),
                       ),

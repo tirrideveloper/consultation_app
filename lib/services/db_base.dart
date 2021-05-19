@@ -15,7 +15,7 @@ abstract class DbBase {
 
   Future<bool> updateVerifyFile(String userId, String verifyFileUrl);
 
-  Stream<List<Message>> getMessages(String currentUserId, String otherUserId);
+  //Stream<List<Message>> getMessages(String currentUserId, String otherUserId);
 
   Future<bool> saveMessage(Message message);
 

@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:consultation_app/common_widget/basic_button.dart';
-import 'package:consultation_app/models/app_localizations.dart';
-import 'package:consultation_app/models/user_view_model.dart';
+import 'package:consultation_app/tools/app_localizations.dart';
+import 'package:consultation_app/view_model/user_view_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

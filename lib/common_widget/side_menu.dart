@@ -1,6 +1,6 @@
 import 'package:consultation_app/common_widget/platform_alert_dialog.dart';
-import 'package:consultation_app/models/app_localizations.dart';
-import 'package:consultation_app/models/user_view_model.dart';
+import 'package:consultation_app/tools/app_localizations.dart';
+import 'package:consultation_app/view_model/user_view_model.dart';
 import 'package:consultation_app/screens/main_menu/profile/profile_page.dart';
 import 'package:consultation_app/screens/main_menu/settings/profile_settings.dart';
 import 'package:consultation_app/screens/main_menu/settings/verify_user.dart';
