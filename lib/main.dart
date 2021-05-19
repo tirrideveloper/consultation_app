@@ -1,11 +1,11 @@
 import 'package:consultation_app/locator.dart';
-import 'package:consultation_app/models/user_view_model.dart';
+import 'package:consultation_app/view_model/user_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'landing_page.dart';
-import 'models/app_localizations.dart';
+import 'tools/landing_page.dart';
+import 'tools/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +14,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => UserViewModel()),
+        ChangeNotifierProvider(create: (context) => UserViewModel())
       ],
       child: MyApp(),
     ),

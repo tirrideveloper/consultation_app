@@ -1,4 +1,4 @@
-import 'package:consultation_app/models/app_localizations.dart';
+import 'package:consultation_app/tools/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class NumbersWidget extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:consultation_app/common_widget/side_menu.dart';
-import 'package:consultation_app/models/app_localizations.dart';
+import 'package:consultation_app/tools/app_localizations.dart';
 import 'package:consultation_app/screens/main_menu/profile/numbers_widget.dart';
-import 'package:consultation_app/models/user_view_model.dart';
+import 'package:consultation_app/view_model/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

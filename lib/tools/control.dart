@@ -1,4 +1,4 @@
-import 'package:consultation_app/models/user_view_model.dart';
+import 'package:consultation_app/view_model/user_view_model.dart';
 import 'package:consultation_app/screens/main_menu/navigation_bar/main_page.dart';
 import 'package:consultation_app/screens/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';

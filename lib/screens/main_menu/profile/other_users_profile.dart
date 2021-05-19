@@ -1,5 +1,7 @@
-import 'package:consultation_app/models/app_localizations.dart';
-import 'package:consultation_app/models/user_view_model.dart';
+import 'package:consultation_app/models/user_model.dart';
+import 'package:consultation_app/tools/app_localizations.dart';
+import 'package:consultation_app/view_model/chat_view_model.dart';
+import 'package:consultation_app/view_model/user_view_model.dart';
 import 'package:consultation_app/screens/main_menu/messaging/messaging_page.dart';
 import 'package:consultation_app/screens/main_menu/profile/numbers_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'profile_image_widget.dart';
 
 class OtherUserProfile extends StatefulWidget {
-  final Map otherUser;
+  final UserModel otherUser;
 
   OtherUserProfile({this.otherUser});
 
@@ -19,9 +21,12 @@ class OtherUserProfile extends StatefulWidget {
 class _OtherUserProfileState extends State<OtherUserProfile> {
   @override
   Widget build(BuildContext context) {
+    UserViewModel _viewModel =
+        Provider.of<UserViewModel>(context, listen: false);
+    var user = widget.otherUser;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.otherUser["nameSurname"]),
+        title: Text(user.nameSurname),
       ),
       body: Container(
         margin: EdgeInsets.only(top: 15),
@@ -29,17 +34,16 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
           physics: BouncingScrollPhysics(),
           children: [
             ProfileWidget(
-              imagePath: widget.otherUser["profileURL"],
-              isEdit: true,
-              onClicked: _goMessagingScreen,
+              imagePath: user.profileURL,
+              isEdit: user.userId == _viewModel.user.userId ? false : true,
+              onClicked: user.userId == _viewModel.user.userId ? null : _goMessagingScreen,
             ),
             const SizedBox(height: 24),
-            buildName(widget.otherUser["nameSurname"],
-                widget.otherUser["userName"], widget.otherUser["verifiedUser"]),
+            buildName(user.nameSurname, user.userName, user.verifiedUser),
             const SizedBox(height: 15),
             NumbersWidget(),
             const SizedBox(height: 24),
-            buildAbout(widget.otherUser["aboutUser"]),
+            buildAbout(user.aboutUser),
           ],
         ),
       ),
@@ -58,12 +62,10 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
             ),
             verify == true
                 ? Padding(
-              padding: const EdgeInsets.only(left: 5),
-              child: Icon(Icons.verified,
-                  color: Theme
-                      .of(context)
-                      .primaryColor),
-            )
+                    padding: const EdgeInsets.only(left: 5),
+                    child: Icon(Icons.verified,
+                        color: Theme.of(context).primaryColor),
+                  )
                 : SizedBox(),
           ],
         ),
@@ -100,8 +102,11 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
     final _viewModel = Provider.of<UserViewModel>(context, listen: false);
     Navigator.of(context, rootNavigator: false).push(
       MaterialPageRoute(
-        builder: (context) =>
-            MessagingPage(currentUser: _viewModel.user, otherUser: widget.otherUser,),
+        builder: (context) => ChangeNotifierProvider(
+          create: (context) => ChatViewModel(
+              currentUser: _viewModel.user, otherUser: widget.otherUser),
+          child: MessagingPage(),
+        ),
       ),
     );
   }

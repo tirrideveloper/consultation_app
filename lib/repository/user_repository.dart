@@ -159,14 +159,6 @@ class UserRepository implements AuthBase {
     }
   }
 
-  Stream<List<Message>> getMessages(String currentUserId, String otherUserId) {
-    if (appMode == AppMode.DEBUG) {
-      return Stream.empty();
-    } else {
-      return _firestoreDBService.getMessages(currentUserId, otherUserId);
-    }
-  }
-
   Future<bool> saveMessage(Message message) async {
     if (appMode == AppMode.DEBUG) {
       return true;
@@ -225,5 +217,23 @@ class UserRepository implements AuthBase {
       }
     }
     return null;
+  }
+
+  Future<List<Message>> getMessageWithPagination(String currentUserId,
+      String otherUserId, Message lastMessage, int numberOfElements) async {
+    if (appMode == AppMode.DEBUG) {
+      return [];
+    } else {
+      return await _firestoreDBService.getMessagesWithPagination(
+          currentUserId, otherUserId, lastMessage, numberOfElements);
+    }
+  }
+
+  Stream<List<Message>> getMessages(String currentUserId, String otherUserId) {
+    if (appMode == AppMode.DEBUG) {
+      return Stream.empty();
+    } else {
+      return _firestoreDBService.getMessages(currentUserId, otherUserId);
+    }
   }
 }
