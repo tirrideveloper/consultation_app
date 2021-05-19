@@ -23,6 +23,7 @@ class OnBoardingPage extends StatelessWidget {
             PageViewModel(
               title: "Tıp öğrencilerinin yanındayız",
               body:
+
               "Zorlu okul sürecinde bilinçli ve verimli vakalar gösteriyoruz",
               image: buildImage("assets/images/öğrenci.jpg"),
               decoration: getPageDecoration(),

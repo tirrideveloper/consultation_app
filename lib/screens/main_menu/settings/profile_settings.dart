@@ -1,6 +1,6 @@
 import 'package:consultation_app/common_widget/basic_button.dart';
-import 'package:consultation_app/models/app_localizations.dart';
-import 'package:consultation_app/models/user_view_model.dart';
+import 'package:consultation_app/tools/app_localizations.dart';
+import 'package:consultation_app/view_model/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -105,7 +105,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               Container(
-                width: 140,
+                width: 160,
                 child: BasicButton(
                   buttonText: AppLocalizations.of(context)
                       .translate("update_information_text"),
