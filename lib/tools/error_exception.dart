@@ -14,6 +14,9 @@ class Errors {
       case 'wrong-password':
         return AppLocalizations.of(context).translate("wrong_password_error");
 
+      case 'account-exists-with-different-credential':
+        return "Bu mail adresi ile daha önce giriş yapılmış. \n Bilgilerinizi hatırlamıyorsanız şifrenizi sıfırlayabilirsiniz.";
+
       default:
         return AppLocalizations.of(context).translate("error_occurred_tex");
     }

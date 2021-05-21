@@ -82,7 +82,7 @@ class _NavDrawerState extends State<NavDrawer> {
           ),
           ListTile(
             leading: Icon(
-              Icons.settings,
+              Icons.settings_outlined,
               color: Color(0xff689f38),
             ),
             title: Text(
@@ -94,7 +94,7 @@ class _NavDrawerState extends State<NavDrawer> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.verified_user, color: Color(0xff689f38)),
+            leading: Icon(Icons.verified_user_outlined, color: Color(0xff689f38)),
             title: Text('Onaylama'),
             onTap: () {
               Navigator.of(context).pop();
@@ -102,6 +102,28 @@ class _NavDrawerState extends State<NavDrawer> {
                   .push(MaterialPageRoute(builder: (context) => VerifyUser()));
             },
           ),
+          ListTile(
+            leading: Icon(Icons.security_outlined, color: Color(0xff689f38)),
+            title: Text('Şifre ve kullanıcı adı değiştirme'),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.feedback_outlined, color: Color(0xff689f38)),
+            title: Text('Geri Bildirim gönder'),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.contact_support_outlined,
+              color: Color(0xff689f38),
+              size: 26,
+            ),
+            title: Text('Bize Ulaşın'),
+          ),
+          ListTile(
+            leading: Icon(Icons.info_outline, color: Color(0xff689f38)),
+            title: Text('Hakkında'),
+          ),
+          Divider(),
           ListTile(
             leading: Icon(Icons.exit_to_app, color: Color(0xff689f38)),
             title: Text('Logout'),

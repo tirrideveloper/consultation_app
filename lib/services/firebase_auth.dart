@@ -93,7 +93,7 @@ class FirebaseAuthService implements AuthBase {
     final FacebookLogin facebookSignIn = FacebookLogin();
 
     final FacebookLoginResult _result =
-        await facebookSignIn.logIn(['email', 'public_profile']);
+        await facebookSignIn.logIn(['public_profile', 'email']);
 
     switch (_result.status) {
       case FacebookLoginStatus.loggedIn:
