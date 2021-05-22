@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:consultation_app/locator.dart';
+import 'package:consultation_app/models/case_model.dart';
 import 'package:consultation_app/models/chats_model.dart';
 import 'package:consultation_app/models/message_model.dart';
 import 'package:consultation_app/models/user_model.dart';
@@ -247,6 +248,14 @@ class UserRepository implements AuthBase {
       return Stream.empty();
     } else {
       return _firestoreDBService.getMessages(currentUserId, otherUserId);
+    }
+  }
+
+  Future<bool> saveCase(CaseModel caseModel) async {
+    if (appMode == AppMode.DEBUG) {
+      return true;
+    } else {
+      return _firestoreDBService.saveCase(caseModel);
     }
   }
 }

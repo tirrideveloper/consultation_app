@@ -249,7 +249,7 @@ class _SettingsPageState extends State<SettingsPage> {
   void _userUpdate(BuildContext context) async {
     final _viewModel = Provider.of<UserViewModel>(context, listen: false);
     var updateResult = await _viewModel.updateUser(_viewModel.user.userId,
-        _controllerNameSurname.text, _controllerAboutUser.text);
+        _controllerNameSurname.text.trim(), _controllerAboutUser.text.trim());
     if (updateResult == true) {
       final snackBar = SnackBar(
         behavior: SnackBarBehavior.floating,

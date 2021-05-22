@@ -36,5 +36,6 @@
   "email_already_use_error": "This e-mail address is used, use a different e-mail.",
   "user_not_found_error" : "User not found",
   "wrong_password_error" : "Your password is wrong. please check your information and try again.",
-  "password_reset_error" : "Reset Error"
+  "password_reset_error" : "Reset Error",
+  "messages_page" : "Messages"
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:consultation_app/models/case_model.dart';
 import 'package:consultation_app/models/chats_model.dart';
 import 'package:consultation_app/models/message_model.dart';
 import 'package:consultation_app/models/user_model.dart';
@@ -9,18 +10,17 @@ class FireStoreDbService implements DbBase {
 
   @override
   Future<bool> saveUser(UserModel userModel) async {
-
     DocumentSnapshot _checkUser =
-    await FirebaseFirestore.instance.doc("users/${userModel.userId}").get();
-    
+        await FirebaseFirestore.instance.doc("users/${userModel.userId}").get();
+
     if (_checkUser.data() == null) {
       await _firestoreDB
           .collection("users")
           .doc(userModel.userId)
           .set(userModel.toMap());
       return true;
-    }
-    else return true;
+    } else
+      return true;
   }
 
   @override
@@ -204,5 +204,16 @@ class FireStoreDbService implements DbBase {
     return snapshot.map((messageList) => messageList.docs
         .map((message) => Message.fromMap(message.data()))
         .toList());
+  }
+
+  Future<bool> saveCase(CaseModel caseModel) async {
+    var _caseMap = caseModel.toMap();
+      await _firestoreDB
+          .collection("vakalar")
+          .doc(caseModel.caseTag)
+          .collection(caseModel.caseTag + "_vakalari")
+          .doc(caseModel.caseId)
+          .set(_caseMap);
+    return true;
   }
 }

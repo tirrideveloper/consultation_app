@@ -12,9 +12,17 @@ class CaseModel {
   String casePhotoURL1;
   String casePhotoURL2;
   String casePhotoURL3;
+  String caseTag;
 
-  CaseModel(this.caseId, this.caseTitle, this.caseBody, this.caseOwnerId,
-      this.caseOwnerName, this.caseOwnerTitle, this.caseDate);
+  CaseModel(
+      {this.caseId,
+      this.caseTitle,
+      this.caseBody,
+      this.caseOwnerId,
+      this.caseOwnerName,
+      this.caseOwnerTitle,
+      this.caseDate,
+      this.caseTag});
 
   Map<String, dynamic> toMap() {
     return {
@@ -24,11 +32,12 @@ class CaseModel {
       "case_ownerID": caseOwnerId,
       "case_owner_name": caseOwnerName,
       "case_owner_title": caseOwnerTitle,
-      "case_date": FieldValue.serverTimestamp(),
+      "case_date": caseDate ?? FieldValue.serverTimestamp(),
       "case_solve": caseSolve,
       "case_photoURL1": casePhotoURL1,
       "case_photoURL2": casePhotoURL2,
-      "case_photoURL3": casePhotoURL3
+      "case_photoURL3": casePhotoURL3,
+      "case_tag": caseTag,
     };
   }
 
@@ -43,7 +52,8 @@ class CaseModel {
         caseSolve = map["case_solve"],
         casePhotoURL1 = map["case_photoURL1"],
         casePhotoURL2 = map["case_photoURL2"],
-        casePhotoURL3 = map["case_photoURL3"];
+        casePhotoURL3 = map["case_photoURL3"],
+        caseTag = map["case_tag"];
 
   @override
   String toString() {

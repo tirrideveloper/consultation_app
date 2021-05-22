@@ -1,0 +1,26 @@
+import 'package:consultation_app/locator.dart';
+import 'package:consultation_app/models/case_model.dart';
+import 'package:consultation_app/models/user_model.dart';
+import 'package:consultation_app/repository/user_repository.dart';
+import 'package:flutter/material.dart';
+
+enum CaseViewState {Idle, Busy}
+
+class CaseViewModel with ChangeNotifier {
+  CaseViewState _state = CaseViewState.Idle;
+  UserRepository _userRepository = locator<UserRepository>();
+
+  final UserModel currentUser;
+
+  CaseViewModel({this.currentUser});
+
+  CaseViewState get state => _state;
+
+  set state (CaseViewState value){
+    _state = value;
+    notifyListeners();
+  }
+  Future<bool> saveCase(CaseModel caseModel) async {
+    return await _userRepository.saveCase(caseModel);
+  }
+}

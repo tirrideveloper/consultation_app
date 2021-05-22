@@ -49,6 +49,8 @@ dependencies:
   timeago: ^3.0.2
   firebase_messaging: ^10.0.0
   flutter_local_notifications: ^5.0.0+4
+  transparent_image: ^2.0.0
+  dropdownfield: ^1.0.3
 
 
 dev_dependencies:
