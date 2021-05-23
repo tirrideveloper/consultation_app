@@ -9,7 +9,7 @@ abstract class DbBase {
 
   Future<bool> updateUserName(String userId, String userName);
 
-  Future<bool> updateUser(String userId, String nameSurname, String aboutUser);
+  Future<bool> updateUser(String userId, String nameSurname, String aboutUser, String userProfession);
 
   Future<bool> updateProfilePhoto(String userId, String profilePhotoUrl);
 

@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
 class CaseModel {
   final String caseId;
   final String caseTitle;
   final String caseBody;
-  final String caseOwnerId;
-  final String caseOwnerName;
-  final String caseOwnerTitle;
+  final Map caseOwner;
   final Timestamp caseDate;
   bool caseSolve;
   List<String> casePhotos;
@@ -16,9 +15,7 @@ class CaseModel {
       {this.caseId,
       this.caseTitle,
       this.caseBody,
-      this.caseOwnerId,
-      this.caseOwnerName,
-      this.caseOwnerTitle,
+      @required this.caseOwner,
       this.caseDate,
       this.caseTag});
 
@@ -27,9 +24,7 @@ class CaseModel {
       "case_id": caseId,
       "case_title": caseTitle,
       "case_body": caseBody,
-      "case_ownerID": caseOwnerId,
-      "case_owner_name": caseOwnerName,
-      "case_owner_title": caseOwnerTitle,
+      "case_owner" : caseOwner,
       "case_date": caseDate ?? FieldValue.serverTimestamp(),
       "case_solve": caseSolve,
       "case_photos": casePhotos,
@@ -41,9 +36,7 @@ class CaseModel {
       : caseId = map["case_id"],
         caseTitle = map["case_title"],
         caseBody = map["case_body"],
-        caseOwnerId = map["case_ownerID"],
-        caseOwnerName = map["case_owner_name"],
-        caseOwnerTitle = map["case_owner_title"],
+        caseOwner = map["caseOwner"],
         caseDate = map["case_date"],
         caseSolve = map["case_solve"],
         caseTag = map["case_tag"],
@@ -51,6 +44,6 @@ class CaseModel {
 
   @override
   String toString() {
-    return 'CaseModel{caseId: $caseId, caseTitle: $caseTitle, caseBody: $caseBody, caseOwnerId: $caseOwnerId, caseOwnerName: $caseOwnerName, caseOwnerTitle: $caseOwnerTitle, caseDate: $caseDate, caseSolve: $caseSolve}';
+    return 'CaseModel{caseId: $caseId, caseTitle: $caseTitle, caseBody: $caseBody, caseOwner: $caseOwner, caseDate: $caseDate, caseSolve: $caseSolve, casePhotos: $casePhotos, caseTag: $caseTag}';
   }
 }

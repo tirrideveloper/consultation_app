@@ -52,11 +52,11 @@ class FireStoreDbService implements DbBase {
 
   @override
   Future<bool> updateUser(
-      String userId, String nameSurname, String aboutUser) async {
+      String userId, String nameSurname, String aboutUser, String userProfession) async {
     await _firestoreDB
         .collection("users")
         .doc(userId)
-        .update({"nameSurname": nameSurname, "aboutUser": aboutUser});
+        .update({"nameSurname": nameSurname, "aboutUser": aboutUser, "userProfession": userProfession});
     return true;
   }
 

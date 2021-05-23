@@ -45,6 +45,7 @@ class _EnterNewCaseState extends State<EnterNewCase> {
     } else {
       selectedTag = "";
       Navigator.of(context).pop();
+      return null;
     }
   }
 
@@ -221,9 +222,7 @@ class _EnterNewCaseState extends State<EnterNewCase> {
         caseId: caseId,
         caseTitle: caseTitle,
         caseBody: caseBody,
-        caseOwnerId: userId,
-        caseOwnerName: _caseModel.currentUser.nameSurname,
-        caseOwnerTitle: _caseModel.currentUser.userName,
+        caseOwner: _caseModel.currentUser.toMap(),
         caseTag: selectedTag);
     return _case;
   }

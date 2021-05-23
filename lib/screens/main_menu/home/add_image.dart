@@ -48,6 +48,19 @@ class _AddImageState extends State<AddImage> {
     var _case = widget.caseModel;
 
     _uploadCase() async {
+      final snackBar = SnackBar(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+        elevation: 0,
+        duration: const Duration(milliseconds: 1000),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          "Vaka kaydediliyor",
+          style: TextStyle(fontSize: 16, color: Colors.white),
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       for (var casePhoto in _images) {
         final fileName = basename(casePhoto.path);
         var casePhotoURL = await _caseViewModel.uploadCasePhoto(
@@ -61,16 +74,16 @@ class _AddImageState extends State<AddImage> {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
           elevation: 0,
-          duration: const Duration(milliseconds: 2000),
+          duration: const Duration(milliseconds: 1500),
           behavior: SnackBarBehavior.floating,
           content: Text(
-            "Vaka başarıyla kaydedildi",
+            "Vaka başarıyla kaydedildi. Ana sayfaya dönülüyor.",
             style: TextStyle(fontSize: 16, color: Colors.white),
           ),
           backgroundColor: Theme.of(context).primaryColor,
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
+        Future.delayed(Duration(seconds: 5));
         Navigator.of(context).popUntil((route) => route.isFirst);
       } else {
         final snackBar = SnackBar(
@@ -97,7 +110,7 @@ class _AddImageState extends State<AddImage> {
             onPressed: () => _uploadCase(),
             child: Text(
               "Kaydet",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
         ],
