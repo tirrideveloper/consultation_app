@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:consultation_app/locator.dart';
 import 'package:consultation_app/models/case_model.dart';
 import 'package:consultation_app/models/user_model.dart';
@@ -22,5 +24,12 @@ class CaseViewModel with ChangeNotifier {
   }
   Future<bool> saveCase(CaseModel caseModel) async {
     return await _userRepository.saveCase(caseModel);
+  }
+
+  Future<String> uploadCasePhoto(
+      String caseId, String fileName, File casePhoto) async {
+    var result =
+    await _userRepository.uploadCasePhotos(caseId, fileName, casePhoto);
+    return result;
   }
 }

@@ -214,6 +214,17 @@ class UserRepository implements AuthBase {
     }
   }
 
+  Future<String> uploadCasePhotos(
+      String caseId, String fileName, File casePhoto) async {
+    if (appMode == AppMode.DEBUG) {
+      return "file_download_link";
+    } else {
+      var casePhotoUrl =
+      await _storageService.uploadCasePhotos(caseId, fileName, casePhoto);
+      return casePhotoUrl;
+    }
+  }
+
   void calculateTimeAgo(Chats snapChat, DateTime time) {
     snapChat.lastReadTime = time;
 

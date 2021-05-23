@@ -9,9 +9,7 @@ class CaseModel {
   final String caseOwnerTitle;
   final Timestamp caseDate;
   bool caseSolve;
-  String casePhotoURL1;
-  String casePhotoURL2;
-  String casePhotoURL3;
+  List<String> casePhotos;
   String caseTag;
 
   CaseModel(
@@ -34,9 +32,7 @@ class CaseModel {
       "case_owner_title": caseOwnerTitle,
       "case_date": caseDate ?? FieldValue.serverTimestamp(),
       "case_solve": caseSolve,
-      "case_photoURL1": casePhotoURL1,
-      "case_photoURL2": casePhotoURL2,
-      "case_photoURL3": casePhotoURL3,
+      "case_photos": casePhotos,
       "case_tag": caseTag,
     };
   }
@@ -50,13 +46,11 @@ class CaseModel {
         caseOwnerTitle = map["case_owner_title"],
         caseDate = map["case_date"],
         caseSolve = map["case_solve"],
-        casePhotoURL1 = map["case_photoURL1"],
-        casePhotoURL2 = map["case_photoURL2"],
-        casePhotoURL3 = map["case_photoURL3"],
-        caseTag = map["case_tag"];
+        caseTag = map["case_tag"],
+        casePhotos = map["case_photos"];
 
   @override
   String toString() {
-    return 'CaseModel{caseId: $caseId, caseTitle: $caseTitle, caseBody: $caseBody, caseOwnerId: $caseOwnerId, caseOwnerName: $caseOwnerName, caseOwnerTitle: $caseOwnerTitle, caseDate: $caseDate, caseSolve: $caseSolve, casePhotoURL1: $casePhotoURL1, casePhotoURL2: $casePhotoURL2, casePhotoURL3: $casePhotoURL3}';
+    return 'CaseModel{caseId: $caseId, caseTitle: $caseTitle, caseBody: $caseBody, caseOwnerId: $caseOwnerId, caseOwnerName: $caseOwnerName, caseOwnerTitle: $caseOwnerTitle, caseDate: $caseDate, caseSolve: $caseSolve}';
   }
 }
