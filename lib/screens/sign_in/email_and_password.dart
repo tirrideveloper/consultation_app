@@ -132,8 +132,8 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
 
     final _userViewModel = Provider.of<UserViewModel>(context);
     if (_userViewModel.user != null) {
-      Future.delayed(Duration(milliseconds: 10), () {
-        Navigator.of(context).pop();
+      Future.delayed(Duration(milliseconds: 1), () {
+        Navigator.of(context).popUntil((route) => route.isFirst);
       });
     }
 

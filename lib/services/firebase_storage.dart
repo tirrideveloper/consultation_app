@@ -29,7 +29,7 @@ class FirebaseStorageService implements StorageBase {
 
   @override
   Future<String> uploadVerifyFile(
-      String userId, File verifyFile, String fileName) async{
+      String userId, File verifyFile, String fileName) async {
     _reference = firebase_storage.FirebaseStorage.instance
         .ref()
         .child(userId)
@@ -41,6 +41,21 @@ class FirebaseStorageService implements StorageBase {
     await uploadTask;
 
     var url = await _reference.getDownloadURL();
+    return url;
+  }
+
+  Future<String> uploadCasePhotos(
+      String caseId, String fileName, File casePhoto) async {
+    _reference = firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child(caseId)
+        .child("case_photos")
+        .child(fileName);
+
+    firebase_storage.UploadTask uploadTask = _reference.putFile(casePhoto);
+    await uploadTask;
+
+    var  url = await _reference.getDownloadURL();
     return url;
   }
 }

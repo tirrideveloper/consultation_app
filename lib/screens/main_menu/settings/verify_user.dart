@@ -10,7 +10,6 @@ import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 class VerifyUser extends StatefulWidget {
-  const VerifyUser({Key key}) : super(key: key);
 
   @override
   _VerifyUserState createState() => _VerifyUserState();

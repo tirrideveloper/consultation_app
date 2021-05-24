@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:consultation_app/common_widget/side_menu.dart';
 import 'package:consultation_app/models/chats_model.dart';
 import 'package:consultation_app/models/user_model.dart';
+import 'package:consultation_app/tools/app_localizations.dart';
 import 'package:consultation_app/view_model/chat_view_model.dart';
 import 'package:consultation_app/view_model/user_view_model.dart';
 import 'package:consultation_app/screens/main_menu/messaging/messaging_page.dart';
@@ -25,7 +26,7 @@ class _MessagesPageState extends State<MessagesPage> {
     return Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
-        title: Text("Mesajlar"),
+        title: Text(AppLocalizations.of(context).translate("messages_page")),
       ),
       body: FutureBuilder<List<Chats>>(
         future: _viewModel.getAllConversations(_viewModel.user.userId),

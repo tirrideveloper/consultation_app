@@ -1,3 +1,4 @@
+import 'package:consultation_app/firebase_notification_handler.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/screens/main_menu/messaging/messages_page.dart';
 import 'package:consultation_app/screens/main_menu/home/home_page.dart';
@@ -5,6 +6,7 @@ import 'package:consultation_app/screens/main_menu/navigation_bar/my_custom_bott
 import 'package:consultation_app/screens/main_menu/profile/profile_page.dart';
 import 'package:consultation_app/screens/main_menu/search/search_page.dart';
 import 'package:consultation_app/screens/main_menu/navigation_bar/tab_items.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -17,6 +19,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  FirebaseNotifications firebaseNotifications = new FirebaseNotifications();
+
   TabItem _currentTab = TabItem.HomePage;
 
   Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
@@ -33,6 +37,15 @@ class _MainPageState extends State<MainPage> {
       TabItem.Messages: MessagesPage(),
       TabItem.Profile: ProfilePage(),
     };
+  }
+
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        firebaseNotifications.setupFirebase(context);
+      },
+    );
   }
 
   @override

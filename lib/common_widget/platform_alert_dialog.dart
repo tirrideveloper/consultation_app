@@ -60,7 +60,10 @@ class PlatformAlertDialog extends PlatformWidget {
       }
       buttons.add(
         CupertinoDialogAction(
-          child: Text(buttonText),
+          child: Text(
+            buttonText,
+            style: TextStyle(color: Theme.of(context).primaryColor),
+          ),
           onPressed: () {
             Navigator.of(context).pop(true);
           },
@@ -70,7 +73,8 @@ class PlatformAlertDialog extends PlatformWidget {
       if (button2Text != null) {
         buttons.add(
           TextButton(
-            child: Text(button2Text),
+            child: Text(button2Text,
+                style: TextStyle(color: Theme.of(context).primaryColor)),
             onPressed: () {
               Navigator.of(context).pop(false);
             },
@@ -79,7 +83,8 @@ class PlatformAlertDialog extends PlatformWidget {
       }
       buttons.add(
         TextButton(
-          child: Text(buttonText),
+          child: Text(buttonText,
+              style: TextStyle(color: Theme.of(context).primaryColor)),
           onPressed: () {
             Navigator.of(context).pop(true);
           },

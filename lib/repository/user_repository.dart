@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:consultation_app/locator.dart';
+import 'package:consultation_app/models/case_model.dart';
 import 'package:consultation_app/models/chats_model.dart';
 import 'package:consultation_app/models/message_model.dart';
 import 'package:consultation_app/models/user_model.dart';
@@ -30,7 +31,10 @@ class UserRepository implements AuthBase {
       return await _fakeAuthService.currentUser();
     } else {
       UserModel _user = await _firebaseAuthService.currentUser();
-      return await _firestoreDBService.readUser(_user.userId);
+      if (_user != null)
+        return await _firestoreDBService.readUser(_user.userId);
+      else
+        return null;
     }
   }
 
@@ -58,9 +62,14 @@ class UserRepository implements AuthBase {
       return await _fakeAuthService.signInGoogle();
     } else {
       UserModel _user = await _firebaseAuthService.signInGoogle();
-      bool _result = await _firestoreDBService.saveUser(_user);
-      if (_result) {
-        return await _firestoreDBService.readUser(_user.userId);
+      if (_user != null) {
+        bool _result = await _firestoreDBService.saveUser(_user);
+        if (_result) {
+          return await _firestoreDBService.readUser(_user.userId);
+        } else {
+          await _firebaseAuthService.signOut();
+          return null;
+        }
       } else
         return null;
     }
@@ -72,9 +81,14 @@ class UserRepository implements AuthBase {
       return await _fakeAuthService.signInFacebook();
     } else {
       UserModel _user = await _firebaseAuthService.signInFacebook();
-      bool _result = await _firestoreDBService.saveUser(_user);
-      if (_result) {
-        return await _firestoreDBService.readUser(_user.userId);
+      if (_user != null) {
+        bool _result = await _firestoreDBService.saveUser(_user);
+        if (_result) {
+          return await _firestoreDBService.readUser(_user.userId);
+        } else {
+          await _firebaseAuthService.signOut();
+          return null;
+        }
       } else
         return null;
     }
@@ -117,12 +131,12 @@ class UserRepository implements AuthBase {
   }
 
   Future<bool> updateUser(
-      String userId, String nameSurname, String aboutUser) async {
+      String userId, String nameSurname, String aboutUser, String userProfession) async {
     if (appMode == AppMode.DEBUG) {
       return false;
     } else {
       return await _firestoreDBService.updateUser(
-          userId, nameSurname, aboutUser);
+          userId, nameSurname, aboutUser, userProfession);
     }
   }
 
@@ -200,6 +214,17 @@ class UserRepository implements AuthBase {
     }
   }
 
+  Future<String> uploadCasePhotos(
+      String caseId, String fileName, File casePhoto) async {
+    if (appMode == AppMode.DEBUG) {
+      return "file_download_link";
+    } else {
+      var casePhotoUrl =
+      await _storageService.uploadCasePhotos(caseId, fileName, casePhoto);
+      return casePhotoUrl;
+    }
+  }
+
   void calculateTimeAgo(Chats snapChat, DateTime time) {
     snapChat.lastReadTime = time;
 
@@ -234,6 +259,14 @@ class UserRepository implements AuthBase {
       return Stream.empty();
     } else {
       return _firestoreDBService.getMessages(currentUserId, otherUserId);
+    }
+  }
+
+  Future<bool> saveCase(CaseModel caseModel) async {
+    if (appMode == AppMode.DEBUG) {
+      return true;
+    } else {
+      return _firestoreDBService.saveCase(caseModel);
     }
   }
 }

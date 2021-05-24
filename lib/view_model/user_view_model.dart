@@ -83,7 +83,10 @@ class UserViewModel with ChangeNotifier implements AuthBase {
     try {
       state = ViewState.Busy;
       _userModel = await _userRepository.signInGoogle();
-      return _userModel;
+      if (_userModel != null)
+        return _userModel;
+      else
+        return null;
     } catch (e) {
       print("VIEW MODEL SIGN IN GOOGLE ERROR" + e);
       return null;
@@ -97,10 +100,10 @@ class UserViewModel with ChangeNotifier implements AuthBase {
     try {
       state = ViewState.Busy;
       _userModel = await _userRepository.signInFacebook();
-      return _userModel;
-    } catch (e) {
-      print("VIEW MODEL SIGN IN GOOGLE ERROR" + e);
-      return null;
+      if (_userModel != null)
+        return _userModel;
+      else
+        return null;
     } finally {
       state = ViewState.Idle;
     }
@@ -144,12 +147,13 @@ class UserViewModel with ChangeNotifier implements AuthBase {
   }
 
   Future<bool> updateUser(
-      String userId, String nameSurname, String aboutUser) async {
+      String userId, String nameSurname, String aboutUser, String userProfession) async {
     var result =
-        await _userRepository.updateUser(userId, nameSurname, aboutUser);
+        await _userRepository.updateUser(userId, nameSurname, aboutUser, userProfession);
     if (result) {
       _userModel.nameSurname = nameSurname;
       _userModel.aboutUser = aboutUser;
+      _userModel.userProfession = userProfession;
     }
     return result;
   }

@@ -36,5 +36,6 @@
   "email_already_use_error": "Bu mail adresi kullanılmaktadır, farklı bir mail kullanınız.",
   "user_not_found_error" : "Kullanıcı bulunamadı",
   "wrong_password_error" : "Şifreniz yanlış. Lütfen bilgilerinizi kontrol edip tekrar deneyiniz.",
-  "password_reset_error" : "Sıfırlama hatası"
+  "password_reset_error" : "Sıfırlama hatası",
+  "messages_page" : "Mesajlar"
 }
