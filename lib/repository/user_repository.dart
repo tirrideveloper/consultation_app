@@ -225,6 +225,14 @@ class UserRepository implements AuthBase {
     }
   }
 
+  Future<bool> updateUserCases(String userId, String newCaseId) async {
+    if (appMode == AppMode.DEBUG) {
+      return false;
+    } else {
+      return _firestoreDBService.updateUserCases(userId, newCaseId);
+    }
+  }
+
   void calculateTimeAgo(Chats snapChat, DateTime time) {
     snapChat.lastReadTime = time;
 

@@ -56,6 +56,7 @@ class _EnterNewCaseState extends State<EnterNewCase> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Yeni vaka"),
+          actions: [addCasePhoto(context)],
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -147,55 +148,6 @@ class _EnterNewCaseState extends State<EnterNewCase> {
                           //suffixIcon: Icon(Icons.arrow_downward)
                         ),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          FocusScope.of(context).unfocus();
-                          if (_controllerTitle.text.trim().length > 0 &&
-                              _controllerContent.text.trim().length > 0) {
-                            Navigator.of(context, rootNavigator: true).push(
-                              CupertinoPageRoute(
-                                builder: (context) => AddImage(
-                                  caseModel: _saveCase(),
-                                ),
-                              ),
-                            );
-                          } else {
-                            final snackBar = SnackBar(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              elevation: 0,
-                              duration: const Duration(milliseconds: 1500),
-                              behavior: SnackBarBehavior.floating,
-                              content: Text(
-                                "Lütfen başlık ve içerik girin",
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.white),
-                              ),
-                              backgroundColor: Theme.of(context).primaryColor,
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          }
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              "Foto ekle",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 15),
-                            ),
-                            SizedBox(width: 5),
-                            Icon(
-                              Icons.arrow_forward,
-                              size: 17,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -205,6 +157,58 @@ class _EnterNewCaseState extends State<EnterNewCase> {
         ),
       ),
     );
+  }
+
+  TextButton addCasePhoto(BuildContext context) {
+    return TextButton(
+                      onPressed: () {
+                        FocusScope.of(context).unfocus();
+                        if (_controllerTitle.text.trim().length > 0 &&
+                            _controllerContent.text.trim().length > 0) {
+                          Navigator.of(context, rootNavigator: true).push(
+                            CupertinoPageRoute(
+                              builder: (context) => AddImage(
+                                caseModel: _saveCase(),
+                              ),
+                            ),
+                          );
+                        } else {
+                          final snackBar = SnackBar(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            elevation: 0,
+                            duration: const Duration(milliseconds: 1500),
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              "Lütfen başlık ve içerik girin",
+                              style: TextStyle(
+                                  fontSize: 16, color: Colors.white),
+                            ),
+                            backgroundColor: Theme.of(context).primaryColor,
+                          );
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(snackBar);
+                        }
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Foto Ekle ve Kaydet",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16),
+                          ),
+                          SizedBox(width: 5),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 17,
+                            color:Colors.white,
+                          ),
+                        ],
+                      ),
+                    );
   }
 
   CaseModel _saveCase() {

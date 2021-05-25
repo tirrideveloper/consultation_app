@@ -51,12 +51,13 @@ class FireStoreDbService implements DbBase {
   }
 
   @override
-  Future<bool> updateUser(
-      String userId, String nameSurname, String aboutUser, String userProfession) async {
-    await _firestoreDB
-        .collection("users")
-        .doc(userId)
-        .update({"nameSurname": nameSurname, "aboutUser": aboutUser, "userProfession": userProfession});
+  Future<bool> updateUser(String userId, String nameSurname, String aboutUser,
+      String userProfession) async {
+    await _firestoreDB.collection("users").doc(userId).update({
+      "nameSurname": nameSurname,
+      "aboutUser": aboutUser,
+      "userProfession": userProfession
+    });
     return true;
   }
 
@@ -208,12 +209,19 @@ class FireStoreDbService implements DbBase {
 
   Future<bool> saveCase(CaseModel caseModel) async {
     var _caseMap = caseModel.toMap();
-      await _firestoreDB
-          .collection("vakalar")
-          .doc(caseModel.caseTag)
-          .collection(caseModel.caseTag + "_vakalari")
-          .doc(caseModel.caseId)
-          .set(_caseMap);
+    await _firestoreDB
+        .collection("vakalar")
+        .doc(caseModel.caseTag)
+        .collection(caseModel.caseTag + "_vakalari")
+        .doc(caseModel.caseId)
+        .set(_caseMap);
+    return true;
+  }
+
+  Future<bool> updateUserCases(String userId, String newCaseId) async {
+    await _firestoreDB.collection("users").doc(userId).update({
+      "userCases": FieldValue.arrayUnion([newCaseId])
+    });
     return true;
   }
 }

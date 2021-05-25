@@ -16,6 +16,7 @@ class UserModel {
   bool verifiedUser;
   String verifyFileURL;
   String userProfession;
+  List userCases;
 
   UserModel({@required this.userId, @required this.email});
 
@@ -34,7 +35,8 @@ class UserModel {
       "aboutUser": aboutUser ?? "",
       "verifiedUser": verifiedUser ?? false,
       "verifyFileURL": verifyFileURL ?? "",
-      "userProfession": userProfession ?? ""
+      "userProfession": userProfession ?? "",
+      "userCases": userCases,
     };
   }
 
@@ -50,7 +52,8 @@ class UserModel {
         aboutUser = map["aboutUser"],
         verifiedUser = map["verifiedUser"],
         verifyFileURL = map["verifyFileURL"],
-        userProfession = map["userProfession"];
+        userProfession = map["userProfession"],
+        userCases = map["userCases"];
 
   @override
   String toString() {

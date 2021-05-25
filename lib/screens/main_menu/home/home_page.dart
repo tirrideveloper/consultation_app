@@ -16,7 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   Future<bool> _onBackPressed() {
     return showDialog(
       context: context,
@@ -32,50 +31,61 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final _viewModel = Provider.of<UserViewModel>(context, listen: false);
-
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
         appBar: AppBar(
-          title:
-              Text(AppLocalizations.of(context).translate("tab_item_home_page")),
+          title: Text(
+              AppLocalizations.of(context).translate("tab_item_home_page")),
+        ),
+        floatingActionButton: Container(
+          padding: EdgeInsets.only(right: 7, bottom: 50),
+          child: FloatingActionButton(
+            onPressed: () {
+              if (_viewModel.user.verifiedUser) {
+                _addNewCase();
+              }
+              PlatformAlertDialog(title: "Onaylama hatası", content: "Vaka girmeden önce lütfen hesabınızı onaylayın.", buttonText: "Tamam").show(context);
+            },
+            elevation: 2,
+            backgroundColor: Theme.of(context).primaryColor,
+            child: Text("+\nCase", textAlign: TextAlign.center, style: TextStyle(color: Colors.white),),
+          ),
         ),
         drawer: NavDrawer(),
         body: Center(
           child: Column(
             children: [
-              TextButton(
-                onPressed: () {
-                  if (Platform.isAndroid) {
-                    Navigator.of(context, rootNavigator: true).push(
-                      MaterialPageRoute(
-                        fullscreenDialog: true,
-                        builder: (context) => ChangeNotifierProvider(
-                          create: (context) =>
-                              CaseViewModel(currentUser: _viewModel.user),
-                          child: EnterNewCase(),
-                        ),
-                      ),
-                    );
-                  } else if (Platform.isIOS) {
-                    Navigator.of(context, rootNavigator: true).push(
-                      CupertinoPageRoute(
-                        fullscreenDialog: true,
-                        builder: (context) => ChangeNotifierProvider(
-                          create: (context) =>
-                              CaseViewModel(currentUser: _viewModel.user),
-                          child: EnterNewCase(),
-                        ),
-                      ),
-                    );;
-                  }
-                },
-                child: Text("NAABER"),
-              )
             ],
           ),
         ),
       ),
     );
+  }
+  void _addNewCase(){
+    final _viewModel = Provider.of<UserViewModel>(context, listen: false);
+    if (Platform.isAndroid) {
+      Navigator.of(context, rootNavigator: true).push(
+        MaterialPageRoute(
+          fullscreenDialog: true,
+          builder: (context) => ChangeNotifierProvider(
+            create: (context) =>
+                CaseViewModel(currentUser: _viewModel.user),
+            child: EnterNewCase(),
+          ),
+        ),
+      );
+    } else if (Platform.isIOS) {
+      Navigator.of(context, rootNavigator: true).push(
+        CupertinoPageRoute(
+          fullscreenDialog: true,
+          builder: (context) => ChangeNotifierProvider(
+            create: (context) =>
+                CaseViewModel(currentUser: _viewModel.user),
+            child: EnterNewCase(),
+          ),
+        ),
+      );
+    }
   }
 }

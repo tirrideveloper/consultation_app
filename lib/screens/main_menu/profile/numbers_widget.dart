@@ -2,18 +2,25 @@ import 'package:consultation_app/tools/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class NumbersWidget extends StatelessWidget {
+  final String userRank;
+  final String userCase;
+  final String userComment;
+
+  const NumbersWidget({Key key, this.userRank, this.userCase, this.userComment})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          buildButton(context, '4.8',
+          buildButton(context, userRank,
               AppLocalizations.of(context).translate("profile_rank")),
           buildDivider(),
-          buildButton(context, '35',
-              AppLocalizations.of(context).translate("profile_following")),
+          buildButton(context, userCase,
+              "Vaka Sayısı"),
           buildDivider(),
-          buildButton(context, '50',
-              AppLocalizations.of(context).translate("profile_followers")),
+          buildButton(context, userComment,
+              "Yorum"),
         ],
       );
 
