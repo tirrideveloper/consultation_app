@@ -1,5 +1,6 @@
 import 'package:consultation_app/firebase_notification_handler.dart';
 import 'package:consultation_app/locator.dart';
+import 'package:consultation_app/view_model/all_case_view_model.dart';
 import 'package:consultation_app/view_model/case_view_model.dart';
 import 'package:consultation_app/view_model/chat_view_model.dart';
 import 'package:consultation_app/view_model/user_view_model.dart';
@@ -28,7 +29,8 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => UserViewModel()),
         ChangeNotifierProvider(create: (context) => ChatViewModel()),
-        ChangeNotifierProvider(create: (context) => CaseViewModel())
+        ChangeNotifierProvider(create: (context) => CaseViewModel()),
+        ChangeNotifierProvider(create: (context) => AllCaseViewModel()),
       ],
       child: MyApp(),
     ),

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:consultation_app/models/case_model.dart';
 import 'package:consultation_app/view_model/case_view_model.dart';
+import 'package:consultation_app/view_model/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
@@ -45,22 +46,11 @@ class _AddImageState extends State<AddImage> {
   Widget build(BuildContext context) {
     CaseViewModel _caseViewModel =
         Provider.of<CaseViewModel>(context, listen: false);
+    UserViewModel _userViewModel =
+        Provider.of<UserViewModel>(context, listen: false);
     var _case = widget.caseModel;
 
     _uploadCase() async {
-      final snackBar = SnackBar(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10))),
-        elevation: 0,
-        duration: const Duration(milliseconds: 1000),
-        behavior: SnackBarBehavior.floating,
-        content: Text(
-          "Vaka kaydediliyor",
-          style: TextStyle(fontSize: 16, color: Colors.white),
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       for (var casePhoto in _images) {
         final fileName = basename(casePhoto.path);
         var casePhotoURL = await _caseViewModel.uploadCasePhoto(
@@ -68,8 +58,13 @@ class _AddImageState extends State<AddImage> {
         _casePhotoURLs.add(casePhotoURL);
       }
       _case.casePhotos = _casePhotoURLs;
+
       var result = await _caseViewModel.saveCase(_case);
-      if (result) {
+
+      var result2 = await _caseViewModel.updateUserCases(
+          _userViewModel.user.userId, _case.caseId);
+
+      if (result == true && result2 == true) {
         final snackBar = SnackBar(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -83,7 +78,7 @@ class _AddImageState extends State<AddImage> {
           backgroundColor: Theme.of(context).primaryColor,
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        Future.delayed(Duration(seconds: 5));
+        await Future.delayed(Duration(seconds: 2));
         Navigator.of(context).popUntil((route) => route.isFirst);
       } else {
         final snackBar = SnackBar(

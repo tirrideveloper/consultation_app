@@ -1,3 +1,4 @@
+import 'package:consultation_app/common_widget/platform_alert_dialog.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/tools/app_localizations.dart';
 import 'package:consultation_app/view_model/chat_view_model.dart';
@@ -36,14 +37,20 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
             ProfileWidget(
               imagePath: user.profileURL,
               isEdit: user.userId == _viewModel.user.userId ? false : true,
-              onClicked: user.userId == _viewModel.user.userId ? null : _goMessagingScreen,
+              onClicked: user.userId == _viewModel.user.userId
+                  ? null
+                  : _goMessagingScreen,
             ),
             const SizedBox(height: 24),
             buildName(user.nameSurname, user.userName, user.verifiedUser),
             const SizedBox(height: 15),
-            NumbersWidget(),
-            const SizedBox(height: 24),
-            buildAbout(user.aboutUser),
+            NumbersWidget(
+              userRank: user.rank.toString(),
+              userCase: user.userCases.length.toString(),
+              userComment: "0",
+            ),
+            SizedBox(height: 24),
+            buildAbout(user.aboutUser, user.userProfession),
           ],
         ),
       ),
@@ -78,7 +85,11 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
     );
   }
 
-  Widget buildAbout(String aboutUser) {
+  Widget buildAbout(String aboutUser, String profession) {
+    if (profession == "") {
+      profession = "Belirtilmemiş";
+    }
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 48),
       child: Column(
@@ -88,7 +99,10 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
             AppLocalizations.of(context).translate("profile_about"),
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
+          Text("Uzmanlık Alanı: " + profession,
+              style: TextStyle(fontSize: 16, height: 1.4)),
+          SizedBox(height: 10),
           Text(
             aboutUser,
             style: TextStyle(fontSize: 16, height: 1.4),
@@ -100,14 +114,21 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
 
   void _goMessagingScreen() {
     final _viewModel = Provider.of<UserViewModel>(context, listen: false);
-    Navigator.of(context, rootNavigator: false).push(
-      MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider(
-          create: (context) => ChatViewModel(
-              currentUser: _viewModel.user, otherUser: widget.otherUser),
-          child: MessagingPage(),
+    if (_viewModel.user.verifiedUser) {
+      Navigator.of(context, rootNavigator: false).push(
+        MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider(
+            create: (context) => ChatViewModel(
+                currentUser: _viewModel.user, otherUser: widget.otherUser),
+            child: MessagingPage(),
+          ),
         ),
-      ),
-    );
+      );
+    } else
+      PlatformAlertDialog(
+              title: "Onaylama hatası",
+              content: "Mesaj atmadan önce lütfen hesabınızı onaylayın.",
+              buttonText: "Tamam")
+          .show(context);
   }
 }

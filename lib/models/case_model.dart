@@ -3,19 +3,19 @@ import 'package:flutter/cupertino.dart';
 
 class CaseModel {
   final String caseId;
-  final String caseTitle;
+  String caseTitle;
   final String caseBody;
-  final Map caseOwner;
-  final Timestamp caseDate;
+  Map caseOwner;
+  Timestamp caseDate;
   bool caseSolve;
-  List<String> casePhotos;
+  List casePhotos;
   String caseTag;
 
   CaseModel(
-      {this.caseId,
+      {@required this.caseOwner,
+      this.caseId,
       this.caseTitle,
       this.caseBody,
-      @required this.caseOwner,
       this.caseDate,
       this.caseTag});
 
@@ -24,7 +24,7 @@ class CaseModel {
       "case_id": caseId,
       "case_title": caseTitle,
       "case_body": caseBody,
-      "case_owner" : caseOwner,
+      "case_owner": caseOwner,
       "case_date": caseDate ?? FieldValue.serverTimestamp(),
       "case_solve": caseSolve,
       "case_photos": casePhotos,
@@ -44,6 +44,7 @@ class CaseModel {
 
   @override
   String toString() {
-    return 'CaseModel{caseId: $caseId, caseTitle: $caseTitle, caseBody: $caseBody, caseOwner: $caseOwner, caseDate: $caseDate, caseSolve: $caseSolve, casePhotos: $casePhotos, caseTag: $caseTag}';
+    return 'CaseModel{caseOwner: $caseOwner}';
   }
+
 }
