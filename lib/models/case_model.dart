@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 
 class CaseModel {
   final String caseId;
-  final String caseTitle;
+  String caseTitle;
   final String caseBody;
-  final Map caseOwner;
+  Map caseOwner;
   Timestamp caseDate;
   bool caseSolve;
-  List<String> casePhotos;
+  List casePhotos;
   String caseTag;
 
   CaseModel(
@@ -44,6 +44,7 @@ class CaseModel {
 
   @override
   String toString() {
-    return 'CaseModel{caseId: $caseId, caseTitle: $caseTitle, caseBody: $caseBody, caseOwner: $caseOwner, caseDate: $caseDate, caseSolve: $caseSolve, casePhotos: $casePhotos, caseTag: $caseTag}';
+    return 'CaseModel{caseOwner: $caseOwner}';
   }
+
 }

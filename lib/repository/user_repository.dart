@@ -24,6 +24,7 @@ class UserRepository implements AuthBase {
   //DEBUG => random
   AppMode appMode = AppMode.RELEASE;
   List<UserModel> usersList = [];
+  List<CaseModel> allCaseList = [];
 
   @override
   Future<UserModel> currentUser() async {
@@ -275,6 +276,16 @@ class UserRepository implements AuthBase {
       return true;
     } else {
       return _firestoreDBService.saveCase(caseModel);
+    }
+  }
+
+  Future<List<CaseModel>>getCaseWithPagination(CaseModel lastLoadedCase, int valuePerPage)  async{
+    if (appMode == AppMode.DEBUG) {
+      return [];
+    } else {
+      List<CaseModel> _caseList = await _firestoreDBService.getCaseWithPagination(lastLoadedCase, valuePerPage);
+      allCaseList.addAll(_caseList);
+      return _caseList;
     }
   }
 }

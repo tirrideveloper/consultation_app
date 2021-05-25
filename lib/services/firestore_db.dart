@@ -224,4 +224,71 @@ class FireStoreDbService implements DbBase {
     });
     return true;
   }
+
+  Future<List<CaseModel>> getCaseWithPagination(
+      CaseModel lastLoadedCase, int valuePerPage) async {
+    QuerySnapshot _querySnapshot;
+    List<CaseModel> _allCases = [];
+    List tagCases = [];
+
+    if (lastLoadedCase == null) {
+      for (String tag in vakaTagi) {
+        _querySnapshot = await _firestoreDB
+            .collection("vakalar")
+            .doc(tag)
+            .collection(tag + "_vakalari")
+            .orderBy("case_title")
+            .limit(valuePerPage)
+            .get();
+        tagCases.add(_querySnapshot);
+      }
+    } else {
+      for (String tag in vakaTagi) {
+        _querySnapshot = await _firestoreDB
+            .collection("vakalar")
+            .doc(tag)
+            .collection(tag + "_vakalari")
+            .orderBy("case_title")
+            .startAfter([lastLoadedCase.caseId])
+            .limit(valuePerPage)
+            .get();
+        tagCases.add(_querySnapshot);
+      }
+      await Future.delayed(Duration(seconds: 1));
+    }
+    for (QuerySnapshot query in tagCases) {
+      for (DocumentSnapshot snap in query.docs) {
+        CaseModel _case = CaseModel.fromMap(snap.data());
+
+        String titleId = _case.caseTitle.replaceAll(RegExp(r"\s+"), "");
+        String _caseOwnerId = _case.caseId;
+        String ownerId = _caseOwnerId.replaceAll("-" + titleId, "");
+
+        DocumentSnapshot _owner =
+        await FirebaseFirestore.instance.collection("users").doc(ownerId).get();
+        Map<String, dynamic> _ownerMap = _owner.data();
+
+        _case.caseOwner = _ownerMap;
+
+        _allCases.add(_case);
+      }
+    }
+    return _allCases;
+  }
 }
+
+List<String> vakaTagi = [
+  "agiz-dis",
+  "beyin-sinir",
+  "cocuk_sagligi",
+  "diger",
+  "genel-cerrahi",
+  "gogus-cerrahi",
+  "goz-hastaklıkları",
+  "kadın-hastalıkları",
+  "kalp-damar",
+  "kulak-burun-bogaz",
+  "ortopedi",
+  "plastik-estetik",
+  "uroloji"
+];

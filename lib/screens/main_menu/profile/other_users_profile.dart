@@ -1,3 +1,4 @@
+import 'package:consultation_app/common_widget/platform_alert_dialog.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/tools/app_localizations.dart';
 import 'package:consultation_app/view_model/chat_view_model.dart';
@@ -113,14 +114,21 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
 
   void _goMessagingScreen() {
     final _viewModel = Provider.of<UserViewModel>(context, listen: false);
-    Navigator.of(context, rootNavigator: false).push(
-      MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider(
-          create: (context) => ChatViewModel(
-              currentUser: _viewModel.user, otherUser: widget.otherUser),
-          child: MessagingPage(),
+    if (_viewModel.user.verifiedUser) {
+      Navigator.of(context, rootNavigator: false).push(
+        MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider(
+            create: (context) => ChatViewModel(
+                currentUser: _viewModel.user, otherUser: widget.otherUser),
+            child: MessagingPage(),
+          ),
         ),
-      ),
-    );
+      );
+    } else
+      PlatformAlertDialog(
+              title: "Onaylama hatası",
+              content: "Mesaj atmadan önce lütfen hesabınızı onaylayın.",
+              buttonText: "Tamam")
+          .show(context);
   }
 }
