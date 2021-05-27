@@ -237,7 +237,7 @@ class FireStoreDbService implements DbBase {
             .collection("vakalar")
             .doc(tag)
             .collection(tag + "_vakalari")
-            .orderBy("case_title")
+            .orderBy("case_date", descending: true)
             .limit(valuePerPage)
             .get();
         tagCases.add(_querySnapshot);
@@ -248,7 +248,7 @@ class FireStoreDbService implements DbBase {
             .collection("vakalar")
             .doc(tag)
             .collection(tag + "_vakalari")
-            .orderBy("case_title")
+            .orderBy("case_date", descending: true)
             .startAfter([lastLoadedCase.caseId])
             .limit(valuePerPage)
             .get();

@@ -61,6 +61,5 @@ class AllCaseViewModel with ChangeNotifier {
     _lastLoadedCase = null;
     _allCases = [];
     getCasesWithPagination(_lastLoadedCase, true);
-    return null;
   }
 }

@@ -7,12 +7,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class EnterNewCase extends StatefulWidget {
+class AddNewCase extends StatefulWidget {
   @override
-  _EnterNewCaseState createState() => _EnterNewCaseState();
+  _AddNewCaseState createState() => _AddNewCaseState();
 }
 
-class _EnterNewCaseState extends State<EnterNewCase> {
+class _AddNewCaseState extends State<AddNewCase> {
   TextEditingController _controllerTitle, _controllerContent;
 
   @override
