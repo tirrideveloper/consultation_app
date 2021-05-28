@@ -22,7 +22,7 @@ Future<void> _backgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_backgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(_backgroundHandler); //deneme
   setupLocator();
   runApp(
     MultiProvider(
