@@ -52,7 +52,6 @@ dependencies:
   transparent_image: ^2.0.0
   dropdownfield: ^1.0.3
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

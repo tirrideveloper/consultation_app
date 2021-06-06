@@ -288,4 +288,20 @@ class UserRepository implements AuthBase {
       return _caseList;
     }
   }
+
+  Future<bool>checkPassword(String password) async{
+    if (appMode == AppMode.DEBUG) {
+      return true;
+    } else {
+      return await _firebaseAuthService.checkPassword(password);
+    }
+  }
+
+  Future<bool>updateUserPassword(String password) async{
+    if (appMode == AppMode.DEBUG) {
+      return true;
+    } else {
+      return await _firebaseAuthService.updateUserPassword(password);
+    }
+  }
 }

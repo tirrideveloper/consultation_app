@@ -135,7 +135,27 @@ class FirebaseAuthService implements AuthBase {
   }
 
   @override
-  Future resetUserPassword(String email) async {
-      await _firebaseAuth.sendPasswordResetEmail(email: email);
+  Future<bool> resetUserPassword(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
+  Future<bool> checkPassword(String password) async {
+    var firebaseUser = _firebaseAuth.currentUser;
+    var authCredentials = EmailAuthProvider.credential(
+        email: firebaseUser.email, password: password);
+    var authResult =
+        await firebaseUser.reauthenticateWithCredential(authCredentials);
+    return authResult.user != null;
+  }
+
+  Future<bool>updateUserPassword(String password) async{
+    var firebaseUser = _firebaseAuth.currentUser;
+    try{
+      await firebaseUser.updatePassword(password);
+      return true;
+    }
+    catch(e){
+      return false;
+    }
   }
 }

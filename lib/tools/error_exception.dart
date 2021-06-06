@@ -18,7 +18,7 @@ class Errors {
         return AppLocalizations.of(context).translate("account_already_exist");
 
       default:
-        return AppLocalizations.of(context).translate("error_occurred_tex");
+        return AppLocalizations.of(context).translate("error_occurred_text");
     }
   }
 }
