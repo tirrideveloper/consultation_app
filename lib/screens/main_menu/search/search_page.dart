@@ -164,7 +164,7 @@ class _SearchPageState extends State<SearchPage> {
                   size: 120,
                 ),
                 Text(
-                  "Kullanıcı arayın",
+                  AppLocalizations.of(context).translate("search_text"),
                   style: TextStyle(fontSize: 36),
                 )
               ],

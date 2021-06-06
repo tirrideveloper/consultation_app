@@ -280,7 +280,7 @@ class FireStoreDbService implements DbBase {
 List<String> vakaTagi = [
   "agiz-dis",
   "beyin-sinir",
-  "cocuk_sagligi",
+  "paediatric",
   "diger",
   "genel-cerrahi",
   "gogus-cerrahi",

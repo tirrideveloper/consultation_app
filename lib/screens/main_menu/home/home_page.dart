@@ -48,17 +48,19 @@ class _HomePageState extends State<HomePage> {
                 _addNewCase();
               } else {
                 PlatformAlertDialog(
-                        title: "Onaylama hatası",
-                        content:
-                            "Vaka girmeden önce lütfen hesabınızı onaylayın.",
-                        buttonText: "Tamam")
+                        title: AppLocalizations.of(context)
+                            .translate("verification_error"),
+                        content: AppLocalizations.of(context)
+                            .translate("verify_account"),
+                        buttonText:
+                            AppLocalizations.of(context).translate("okay_text"))
                     .show(context);
               }
             },
             elevation: 2,
             backgroundColor: Theme.of(context).primaryColor,
             child: Text(
-              "+\nCase",
+              "+\n" + AppLocalizations.of(context).translate("case_txt"),
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white),
             ),
@@ -110,10 +112,9 @@ class _HomePageState extends State<HomePage> {
     return showDialog(
       context: context,
       builder: (context) => PlatformAlertDialog(
-        title: "ConsulApp'ten çıkılsın mı?",
-        content: "Oturumunuz kapanmayacaktır",
-        buttonText: "Evet",
-        button2Text: "Hayır",
+        title: AppLocalizations.of(context).translate("exit_app"),
+        buttonText: AppLocalizations.of(context).translate("okay_text"),
+        button2Text: AppLocalizations.of(context).translate("cancel_text"),
       ),
     );
   }
@@ -184,6 +185,7 @@ class _HomePageState extends State<HomePage> {
       onRefresh: () async {
         // ignore: unnecessary_statements
         setState(() {});
+        // ignore: unnecessary_statements
         _allCaseView.refresh;
         await Future.delayed(Duration(seconds: 1));
         return null;
@@ -197,7 +199,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "Henüz Vaka Yok",
+                  "Case Yok",
                   style: TextStyle(fontSize: 36),
                 )
               ],
@@ -234,7 +236,7 @@ class _HomePageState extends State<HomePage> {
         );
       },
       child: Container(
-        padding: EdgeInsets.fromLTRB(5,5,5,0),
+        padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
         child: Card(
           elevation: 0.7,
           child: ListTile(

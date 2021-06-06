@@ -1,4 +1,4 @@
-import 'package:consultation_app/firebase_notification_handler.dart';
+import 'package:consultation_app/notification/firebase_notification_handler.dart';
 import 'package:consultation_app/locator.dart';
 import 'package:consultation_app/view_model/all_case_view_model.dart';
 import 'package:consultation_app/view_model/case_view_model.dart';
@@ -14,7 +14,7 @@ import 'tools/app_localizations.dart';
 
 Future<void> _backgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print("Handling a background message: ${message}");
+  print("Handling a background message: $message");
   dynamic data = message.data["data"];
   FirebaseNotifications.showNotification(data["title"], data["body"]);
 }
@@ -22,7 +22,7 @@ Future<void> _backgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_backgroundHandler); //deneme
+  FirebaseMessaging.onBackgroundMessage(_backgroundHandler);
   setupLocator();
   runApp(
     MultiProvider(

@@ -67,7 +67,6 @@ class ChatViewModel with ChangeNotifier {
 
     if (_newMessageListener == false) {
       _newMessageListener = true;
-      //print("Listener yok o yüzden atanacak");
       getNewMessageListener();
     }
   }

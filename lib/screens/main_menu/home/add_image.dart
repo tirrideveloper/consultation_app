@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:consultation_app/models/case_model.dart';
+import 'package:consultation_app/tools/app_localizations.dart';
 import 'package:consultation_app/view_model/case_view_model.dart';
 import 'package:consultation_app/view_model/user_view_model.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,7 @@ class _AddImageState extends State<AddImage> {
           duration: const Duration(milliseconds: 1500),
           behavior: SnackBarBehavior.floating,
           content: Text(
-            "Vaka başarıyla kaydedildi. Ana sayfaya dönülüyor.",
+            AppLocalizations.of(context).translate("case_saved"),
             style: TextStyle(fontSize: 16, color: Colors.white),
           ),
           backgroundColor: Theme.of(context).primaryColor,
@@ -88,7 +89,7 @@ class _AddImageState extends State<AddImage> {
           duration: const Duration(milliseconds: 1500),
           behavior: SnackBarBehavior.floating,
           content: Text(
-            "Bir hata oluştu lütfen tekrar deneyin",
+            AppLocalizations.of(context).translate("error_occurred_text"),
             style: TextStyle(fontSize: 16, color: Colors.white),
           ),
           backgroundColor: Theme.of(context).primaryColor,
@@ -99,12 +100,12 @@ class _AddImageState extends State<AddImage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Foto ekle ve vakayı paylaş"),
+        title: Text(AppLocalizations.of(context).translate("add_image_save")),
         actions: [
           TextButton(
             onPressed: () => _uploadCase(),
             child: Text(
-              "Kaydet",
+              AppLocalizations.of(context).translate("save_text"),
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),

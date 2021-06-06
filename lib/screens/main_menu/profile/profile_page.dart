@@ -128,8 +128,8 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 15),
               NumbersWidget(
                 userRank: _viewModel.user.rank.toString(),
-                userCase: _viewModel.user.userCases.length.toString(),
-                userComment: "0",
+                userCase: _viewModel.user.userCases.length,
+                userComment: 0,
               ),
               const SizedBox(height: 24),
               buildAbout(
@@ -171,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget buildAbout(String aboutUser, String profession) {
     if (profession == "") {
-      profession = "Belirtilmemiş";
+      profession = AppLocalizations.of(context).translate("unspecified_txt");
     }
 
     return Container(
@@ -184,7 +184,9 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 16),
-          Text("Uzmanlık Alanı: " + profession,
+          Text(
+              AppLocalizations.of(context).translate("profession_txt") +
+                  profession,
               style: TextStyle(fontSize: 16, height: 1.4)),
           SizedBox(height: 10),
           Text(

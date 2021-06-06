@@ -30,7 +30,7 @@ class OnBoardingPage extends StatelessWidget {
             PageViewModel(
               title: "Haydi başlayalım",
               body: "",
-              image:  buildImage("assets/images/docpat.jpg"),
+              image:  buildImage("assets/images/Doctor_And_Patient.jpg"),
               decoration: getPageDecoration(),
             ),
           ],
@@ -50,7 +50,7 @@ class OnBoardingPage extends StatelessWidget {
 
   DotsDecorator getDotDecoration() => DotsDecorator(
         color: Color(0xffbdbdbd),
-        activeColor: Colors.deepOrange,
+        activeColor: Color(0xff689f38),
         size: Size(10, 10),
         activeSize: Size(22, 10),
         activeShape: RoundedRectangleBorder(

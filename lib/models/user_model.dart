@@ -36,7 +36,7 @@ class UserModel {
       "verifiedUser": verifiedUser ?? false,
       "verifyFileURL": verifyFileURL ?? "",
       "userProfession": userProfession ?? "",
-      "userCases": userCases,
+      "userCases": userCases??[],
     };
   }
 

@@ -1,4 +1,4 @@
-import 'package:consultation_app/firebase_notification_handler.dart';
+import 'package:consultation_app/notification/firebase_notification_handler.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/screens/main_menu/messaging/messages_page.dart';
 import 'package:consultation_app/screens/main_menu/home/home_page.dart';

@@ -1,6 +1,7 @@
 import 'package:consultation_app/common_widget/platform_alert_dialog.dart';
 import 'package:consultation_app/models/case_model.dart';
 import 'package:consultation_app/screens/main_menu/home/add_image.dart';
+import 'package:consultation_app/tools/app_localizations.dart';
 import 'package:consultation_app/view_model/case_view_model.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,10 +37,9 @@ class _AddNewCaseState extends State<AddNewCase> {
       return showDialog(
         context: context,
         builder: (context) => PlatformAlertDialog(
-          title: "Vaka silinsin mi?",
-          content: "Girmiş olduğunuz bilgiler silinecek",
-          buttonText: "Evet",
-          button2Text: "Hayır",
+          title: AppLocalizations.of(context).translate("cancel_case"),
+          buttonText: AppLocalizations.of(context).translate("okay_text"),
+          button2Text: AppLocalizations.of(context).translate("cancel_text"),
         ),
       );
     } else {
@@ -55,7 +55,7 @@ class _AddNewCaseState extends State<AddNewCase> {
       onWillPop: _onBackPressed,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Yeni vaka"),
+          title: Text(AppLocalizations.of(context).translate("new_case_txt")),
           actions: [addCasePhoto(context)],
         ),
         body: SingleChildScrollView(
@@ -67,7 +67,8 @@ class _AddNewCaseState extends State<AddNewCase> {
                   textStyle:
                       TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
                   controller: tagController,
-                  hintText: "Vaka tagi seçin",
+                  hintText:
+                      AppLocalizations.of(context).translate("select_tag"),
                   enabled: true,
                   items: vakaTagi,
                   itemsVisibleInDropdown: 5,
@@ -130,7 +131,8 @@ class _AddNewCaseState extends State<AddNewCase> {
                       TextFormField(
                         controller: _controllerTitle,
                         decoration: InputDecoration(
-                          hintText: "Başlık",
+                          hintText: AppLocalizations.of(context)
+                              .translate("title_txt"),
                           contentPadding: EdgeInsets.fromLTRB(0, 5, 10, 5),
                           //suffixIcon: Icon(Icons.arrow_downward)
                         ),
@@ -143,7 +145,8 @@ class _AddNewCaseState extends State<AddNewCase> {
                         maxLength: 1000,
                         controller: _controllerContent,
                         decoration: InputDecoration(
-                          hintText: "İçerik",
+                          hintText: AppLocalizations.of(context)
+                              .translate("content_txt"),
                           contentPadding: EdgeInsets.fromLTRB(0, 5, 10, 5),
                           //suffixIcon: Icon(Icons.arrow_downward)
                         ),
@@ -161,54 +164,49 @@ class _AddNewCaseState extends State<AddNewCase> {
 
   TextButton addCasePhoto(BuildContext context) {
     return TextButton(
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
-                        if (_controllerTitle.text.trim().length > 0 &&
-                            _controllerContent.text.trim().length > 0) {
-                          Navigator.of(context, rootNavigator: true).push(
-                            CupertinoPageRoute(
-                              builder: (context) => AddImage(
-                                caseModel: _saveCase(),
-                              ),
-                            ),
-                          );
-                        } else {
-                          final snackBar = SnackBar(
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            elevation: 0,
-                            duration: const Duration(milliseconds: 1500),
-                            behavior: SnackBarBehavior.floating,
-                            content: Text(
-                              "Lütfen başlık ve içerik girin",
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.white),
-                            ),
-                            backgroundColor: Theme.of(context).primaryColor,
-                          );
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(snackBar);
-                        }
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "Foto Ekle ve Kaydet",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16),
-                          ),
-                          SizedBox(width: 5),
-                          Icon(
-                            Icons.arrow_forward,
-                            size: 17,
-                            color:Colors.white,
-                          ),
-                        ],
-                      ),
-                    );
+      onPressed: () {
+        FocusScope.of(context).unfocus();
+        if (_controllerTitle.text.trim().length > 0 &&
+            _controllerContent.text.trim().length > 0) {
+          Navigator.of(context, rootNavigator: true).push(
+            CupertinoPageRoute(
+              builder: (context) => AddImage(
+                caseModel: _saveCase(),
+              ),
+            ),
+          );
+        } else {
+          final snackBar = SnackBar(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            elevation: 0,
+            duration: const Duration(milliseconds: 1500),
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              AppLocalizations.of(context).translate("empty_title_content"),
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
+            backgroundColor: Theme.of(context).primaryColor,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      },
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            AppLocalizations.of(context).translate("add_image_save"),
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(width: 5),
+          Icon(
+            Icons.arrow_forward,
+            size: 17,
+            color: Colors.white,
+          ),
+        ],
+      ),
+    );
   }
 
   CaseModel _saveCase() {

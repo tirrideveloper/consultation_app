@@ -95,8 +95,10 @@ class _NavDrawerState extends State<NavDrawer> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.verified_user_outlined, color: Color(0xff689f38)),
-            title: Text('Onaylama'),
+            leading:
+                Icon(Icons.verified_user_outlined, color: Color(0xff689f38)),
+            title: Text(
+                AppLocalizations.of(context).translate("verification_txt")),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context, rootNavigator: true)
@@ -105,17 +107,18 @@ class _NavDrawerState extends State<NavDrawer> {
           ),
           ListTile(
             leading: Icon(Icons.security_outlined, color: Color(0xff689f38)),
-            title: Text('Şifre ve kullanıcı adı değiştirme'),
+            title: Text(
+                AppLocalizations.of(context).translate("change_username_pass")),
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context, rootNavigator: true)
-                  .push(MaterialPageRoute(builder: (context) => UserNamePassword()));
+              Navigator.of(context, rootNavigator: true).push(
+                  MaterialPageRoute(builder: (context) => UserNamePassword()));
             },
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.feedback_outlined, color: Color(0xff689f38)),
-            title: Text('Geri Bildirim gönder'),
+            title: Text(AppLocalizations.of(context).translate("feedback_txt")),
           ),
           ListTile(
             leading: Icon(
@@ -123,16 +126,17 @@ class _NavDrawerState extends State<NavDrawer> {
               color: Color(0xff689f38),
               size: 26,
             ),
-            title: Text('Bize Ulaşın'),
+            title:
+                Text(AppLocalizations.of(context).translate("contact_us_txt")),
           ),
           ListTile(
             leading: Icon(Icons.info_outline, color: Color(0xff689f38)),
-            title: Text('Hakkında'),
+            title: Text(AppLocalizations.of(context).translate("about_txt")),
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.exit_to_app, color: Color(0xff689f38)),
-            title: Text('Logout'),
+            title: Text(AppLocalizations.of(context).translate("logout_txt")),
             onTap: () => _signOutConfirmation(context),
           ),
         ],
@@ -142,10 +146,9 @@ class _NavDrawerState extends State<NavDrawer> {
 
   Future _signOutConfirmation(BuildContext context) async {
     final result = await PlatformAlertDialog(
-      title: "exit",
-      content: "sure?",
-      buttonText: "okay",
-      button2Text: "cancel",
+      title: AppLocalizations.of(context).translate("logout_confirm"),
+      buttonText: AppLocalizations.of(context).translate("okay_text"),
+      button2Text: AppLocalizations.of(context).translate("cancel_text"),
     ).show(context);
     if (result == true) {
       _signOut(context);

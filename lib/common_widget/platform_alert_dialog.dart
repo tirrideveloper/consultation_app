@@ -12,7 +12,7 @@ class PlatformAlertDialog extends PlatformWidget {
 
   PlatformAlertDialog(
       {@required this.title,
-      @required this.content,
+      this.content,
       @required this.buttonText,
       this.button2Text});
 
@@ -28,20 +28,34 @@ class PlatformAlertDialog extends PlatformWidget {
 
   @override
   Widget buildAndroidWidget(BuildContext context) {
-    return AlertDialog(
-      title: Text(title),
-      content: Text(content),
-      actions: _dialogButtons(context),
-    );
+    if (content == null) {
+      return AlertDialog(
+        title: Text(title),
+        actions: _dialogButtons(context),
+      );
+    } else {
+      return AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: _dialogButtons(context),
+      );
+    }
   }
 
   @override
   Widget buildIOSWidget(BuildContext context) {
-    return CupertinoAlertDialog(
-      title: Text(title),
-      content: Text(content),
-      actions: _dialogButtons(context),
-    );
+    if (content == null) {
+      return CupertinoAlertDialog(
+        title: Text(title),
+        actions: _dialogButtons(context),
+      );
+    } else {
+      return CupertinoAlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: _dialogButtons(context),
+      );
+    }
   }
 
   List<Widget> _dialogButtons(BuildContext context) {
