@@ -87,6 +87,9 @@ class _UserNamePasswordState extends State<UserNamePassword> {
                 decoration: InputDecoration(
                   hintText: _userViewModel.user.userName,
                   contentPadding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     borderSide: BorderSide(
@@ -153,6 +156,9 @@ class _UserNamePasswordState extends State<UserNamePassword> {
                         ),
                         hintText: "Şifreniz",
                         contentPadding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
@@ -180,6 +186,9 @@ class _UserNamePasswordState extends State<UserNamePassword> {
                         ),
                         hintText: "Yeni şifre",
                         contentPadding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
@@ -207,6 +216,9 @@ class _UserNamePasswordState extends State<UserNamePassword> {
                         ),
                         hintText: "Yeni şifre tekrar",
                         contentPadding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(

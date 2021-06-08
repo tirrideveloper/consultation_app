@@ -214,4 +214,8 @@ class UserViewModel with ChangeNotifier implements AuthBase {
   Future<bool> updateUserPassword(String password) async {
     return await _userRepository.updateUserPassword(password);
   }
+
+  Future<bool> sendFeedback(String userId, String feedback) async{
+    return await _userRepository.sendFeedback(userId, feedback);
+  }
 }

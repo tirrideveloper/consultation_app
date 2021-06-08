@@ -304,4 +304,12 @@ class UserRepository implements AuthBase {
       return await _firebaseAuthService.updateUserPassword(password);
     }
   }
+
+  Future<bool>sendFeedback(String userId, String feedback) async{
+    if (appMode == AppMode.DEBUG) {
+      return true;
+    } else {
+      return await _firestoreDBService.sendFeedback(userId, feedback);
+    }
+  }
 }

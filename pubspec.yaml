@@ -51,6 +51,7 @@ dependencies:
   flutter_local_notifications: ^6.0.0
   transparent_image: ^2.0.0
   dropdownfield: ^1.0.3
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:

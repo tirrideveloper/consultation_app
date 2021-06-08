@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:consultation_app/common_widget/shimmer_effect.dart';
 import 'package:consultation_app/common_widget/side_menu.dart';
 import 'package:consultation_app/models/chats_model.dart';
 import 'package:consultation_app/models/user_model.dart';
@@ -32,9 +33,18 @@ class _MessagesPageState extends State<MessagesPage> {
         future: _viewModel.getAllConversations(_viewModel.user.userId),
         builder: (context, conversationList) {
           if (!conversationList.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            return ListView.builder(
+                itemCount: 8,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      leading: CircleAvatar(child: ShimmerEffect.circular(width: 48, height: 48)),
+                      title: ShimmerEffect.rectangular(height: 12, width: 70,),
+                      subtitle: ShimmerEffect.rectangular(height: 12, width: 120,),
+                      trailing: ShimmerEffect.rectangular(height: 12, width: 60,),
+                    ),
+                  );
+                });
           } else {
             var allConversations = conversationList.data;
 
@@ -69,7 +79,7 @@ class _MessagesPageState extends State<MessagesPage> {
                       child: Card(
                         child: ListTile(
                           title: Text(snapshotChat.spokenUserName),
-                          subtitle: Text(snapshotChat.lastMessage),
+                          subtitle: Text(snapshotChat.lastMessage.replaceRange(30, snapshotChat.lastMessage.length, "...")),
                           trailing: Text(snapshotChat.timeDifference),
                           leading: CircleAvatar(
                             backgroundColor: Colors.grey.shade200,

@@ -1,4 +1,5 @@
 import 'package:consultation_app/common_widget/platform_alert_dialog.dart';
+import 'package:consultation_app/screens/main_menu/settings/feedback_page.dart';
 import 'package:consultation_app/screens/main_menu/settings/username_password.dart';
 import 'package:consultation_app/tools/app_localizations.dart';
 import 'package:consultation_app/view_model/user_view_model.dart';
@@ -119,15 +120,11 @@ class _NavDrawerState extends State<NavDrawer> {
           ListTile(
             leading: Icon(Icons.feedback_outlined, color: Color(0xff689f38)),
             title: Text(AppLocalizations.of(context).translate("feedback_txt")),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.contact_support_outlined,
-              color: Color(0xff689f38),
-              size: 26,
-            ),
-            title:
-                Text(AppLocalizations.of(context).translate("contact_us_txt")),
+            onTap: (){
+              Navigator.of(context).pop();
+              Navigator.of(context, rootNavigator: true).push(
+                  MaterialPageRoute(builder: (context) => FeedbackPage()));
+            },
           ),
           ListTile(
             leading: Icon(Icons.info_outline, color: Color(0xff689f38)),

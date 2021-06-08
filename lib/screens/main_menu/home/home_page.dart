@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:consultation_app/common_widget/platform_alert_dialog.dart';
+import 'package:consultation_app/common_widget/shimmer_effect.dart';
 import 'package:consultation_app/common_widget/side_menu.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/screens/main_menu/home/add_new_case.dart';
@@ -70,9 +71,37 @@ class _HomePageState extends State<HomePage> {
         body: Consumer<AllCaseViewModel>(
           builder: (context, model, child) {
             if (model.state == AllCaseViewState.Busy) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return ListView.builder(
+                  itemCount: 7,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: ListTile(
+                        leading: CircleAvatar(child: ShimmerEffect.circular(width: 48, height: 48)),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ShimmerEffect.rectangular(height: 12, width: 80),
+                            SizedBox(height: 5),
+                            Row(
+                              children: [
+                                ShimmerEffect.rectangular(height: 10, width: 130),
+                                SizedBox(width: 10),
+                                ShimmerEffect.rectangular(height: 10, width: 100),
+                              ],
+                            ),
+                            SizedBox(height: 15)
+                          ],
+                        ),
+                        subtitle: Column(
+                          children: [
+                            ShimmerEffect.rectangular(height: 12),
+                            SizedBox(height: 5),
+                            ShimmerEffect.rectangular(height: 12)
+                          ],
+                        ),
+                      ),
+                    );
+                  });
             } else if (model.state == AllCaseViewState.Loaded) {
               return RefreshIndicator(
                 onRefresh: () async {
@@ -266,7 +295,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             subtitle: Text(_snapCase.caseBody
-                .replaceRange(90, _snapCase.caseBody.length, "...")),
+                .replaceRange(80, _snapCase.caseBody.length, "...")),
             leading: CircleAvatar(
               backgroundColor: Colors.white,
               backgroundImage: NetworkImage(caseOwner.profileURL),

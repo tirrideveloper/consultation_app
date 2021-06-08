@@ -225,6 +225,18 @@ class FireStoreDbService implements DbBase {
     return true;
   }
 
+  Future<bool> sendFeedback(String userId, String feedback) async {
+    var _feedbackId = _firestoreDB.collection("feedbacks").doc().id;
+
+    await _firestoreDB.collection("feedbacks").doc(_feedbackId).set({
+      "feedback_sender": userId,
+      "feedback_message": feedback,
+      "creation_date": FieldValue.serverTimestamp(),
+    });
+
+    return true;
+  }
+
   Future<List<CaseModel>> getCaseWithPagination(
       CaseModel lastLoadedCase, int valuePerPage) async {
     QuerySnapshot _querySnapshot;
@@ -264,8 +276,10 @@ class FireStoreDbService implements DbBase {
         String _caseOwnerId = _case.caseId;
         String ownerId = _caseOwnerId.replaceAll("-" + titleId, "");
 
-        DocumentSnapshot _owner =
-        await FirebaseFirestore.instance.collection("users").doc(ownerId).get();
+        DocumentSnapshot _owner = await FirebaseFirestore.instance
+            .collection("users")
+            .doc(ownerId)
+            .get();
         Map<String, dynamic> _ownerMap = _owner.data();
 
         _case.caseOwner = _ownerMap;
