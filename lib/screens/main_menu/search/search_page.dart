@@ -95,7 +95,6 @@ class _SearchPageState extends State<SearchPage> {
                   return Card(
                     child: ListTile(
                       onTap: () {
-
                         Navigator.of(context, rootNavigator: true).push(
                           MaterialPageRoute(
                             builder: (context) => OtherUserProfile(

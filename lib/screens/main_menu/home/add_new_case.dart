@@ -130,6 +130,7 @@ class _AddNewCaseState extends State<AddNewCase> {
                     children: [
                       TextFormField(
                         controller: _controllerTitle,
+                        maxLength: 50,
                         decoration: InputDecoration(
                           hintText: AppLocalizations.of(context)
                               .translate("title_txt"),
