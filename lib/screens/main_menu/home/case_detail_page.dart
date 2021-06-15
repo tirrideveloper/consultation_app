@@ -3,8 +3,10 @@ import 'package:consultation_app/models/case_model.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/common_widget/photo_detail.dart';
 import 'package:consultation_app/screens/main_menu/profile/other_users_profile.dart';
+import 'package:consultation_app/view_model/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CaseDetailPage extends StatefulWidget {
   final CaseModel caseModel;
@@ -16,14 +18,76 @@ class CaseDetailPage extends StatefulWidget {
 }
 
 class _CaseDetailPageState extends State<CaseDetailPage> {
-  bool _eksiOylama = false;
-  bool _artiOylama = false;
-  int _puan = 0;
+  final FirebaseFirestore _firestoreDB = FirebaseFirestore.instance;
+  bool currentUserFav = false;
+  bool currentUserUnFav = false;
 
   @override
   Widget build(BuildContext context) {
+    final _userModel = Provider.of<UserViewModel>(context, listen: false);
     var _case = widget.caseModel;
     UserModel _caseOwner = UserModel.fromMap(widget.caseModel.caseOwner);
+    int caseScore = _case.favList.length - _case.unFavList.length;
+
+    for (var i in _case.favList) {
+      if (i == _userModel.user.userId) {
+        setState(() {
+          currentUserFav = true;
+          currentUserUnFav = false;
+        });
+      }
+    }
+    for (var i in _case.unFavList) {
+      if (i == _userModel.user.userId) {
+        setState(() {
+          currentUserFav = false;
+          currentUserUnFav = true;
+        });
+      }
+    }
+
+    Future<void> favCase() async {
+      if (currentUserUnFav == true) {
+        await _firestoreDB
+            .collection("vakalar")
+            .doc(_case.caseTag)
+            .collection(_case.caseTag + "_vakalari")
+            .doc(_case.caseId)
+            .update({
+          "un_fav_list": FieldValue.arrayRemove([_userModel.user.userId])
+        });
+      }
+
+      await _firestoreDB
+          .collection("vakalar")
+          .doc(_case.caseTag)
+          .collection(_case.caseTag + "_vakalari")
+          .doc(_case.caseId)
+          .update({
+        "fav_list": FieldValue.arrayUnion([_userModel.user.userId])
+      });
+    }
+
+    Future<void> unFavCase() async {
+      if (currentUserFav == true) {
+        await _firestoreDB
+            .collection("vakalar")
+            .doc(_case.caseTag)
+            .collection(_case.caseTag + "_vakalari")
+            .doc(_case.caseId)
+            .update({
+          "fav_list": FieldValue.arrayRemove([_userModel.user.userId])
+        });
+      }
+      await _firestoreDB
+          .collection("vakalar")
+          .doc(_case.caseTag)
+          .collection(_case.caseTag + "_vakalari")
+          .doc(_case.caseId)
+          .update({
+        "un_fav_list": FieldValue.arrayUnion([_userModel.user.userId])
+      });
+    }
 
     return Scaffold(
       body: CustomScrollView(
@@ -86,65 +150,49 @@ class _CaseDetailPageState extends State<CaseDetailPage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               IconButton(
-                                onPressed: () {
-                                  if (_artiOylama == true &&
-                                      _eksiOylama == false)
+                                onPressed: () async {
+                                  if (currentUserFav == true) {
                                     return null;
-                                  else if (_artiOylama == false &&
-                                      _eksiOylama == false) {
+                                  } else {
+                                    await favCase();
                                     setState(() {
-                                      _artiOylama = true;
-                                      _eksiOylama = false;
-                                      _puan++;
-                                    });
-                                  } else if (_artiOylama == false &&
-                                      _eksiOylama == true) {
-                                    setState(() {
-                                      _artiOylama = true;
-                                      _eksiOylama = false;
-                                      _puan++;
+                                      currentUserUnFav = false;
+                                      currentUserFav = true;
+                                      caseScore++;
                                     });
                                   }
                                 },
                                 icon: Icon(Icons.keyboard_arrow_up),
                                 splashRadius: 15,
-                                color:
-                                    _artiOylama == true && _eksiOylama == false
-                                        ? Theme.of(context).primaryColor
-                                        : Colors.grey,
+                                color: currentUserFav == true &&
+                                        currentUserUnFav == false
+                                    ? Theme.of(context).primaryColor
+                                    : Colors.grey,
                               ),
                               Text(
-                                _puan.toString(),
+                                caseScore.toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600, fontSize: 16),
                               ),
                               IconButton(
-                                onPressed: () {
-                                  if (_artiOylama == false &&
-                                      _eksiOylama == true)
+                                onPressed: () async {
+                                  if (currentUserUnFav == true) {
                                     return null;
-                                  else if (_artiOylama == false &&
-                                      _eksiOylama == false) {
+                                  } else {
+                                    await unFavCase();
                                     setState(() {
-                                      _artiOylama = false;
-                                      _eksiOylama = true;
-                                      _puan--;
-                                    });
-                                  } else if (_artiOylama == true &&
-                                      _eksiOylama == false) {
-                                    setState(() {
-                                      _artiOylama = false;
-                                      _eksiOylama = true;
-                                      _puan--;
+                                      currentUserFav = false;
+                                      currentUserUnFav = true;
+                                      caseScore--;
                                     });
                                   }
                                 },
                                 icon: Icon(Icons.keyboard_arrow_down),
                                 splashRadius: 15,
-                                color:
-                                    _artiOylama == false && _eksiOylama == true
-                                        ? Theme.of(context).primaryColor
-                                        : Colors.grey,
+                                color: currentUserFav == false &&
+                                        currentUserUnFav == true
+                                    ? Theme.of(context).primaryColor
+                                    : Colors.grey,
                               ),
                             ],
                           ),
@@ -152,11 +200,28 @@ class _CaseDetailPageState extends State<CaseDetailPage> {
                             height: 24,
                             child: VerticalDivider(thickness: 1),
                           ),
+                          SizedBox(width: 15),
                           Text(
                             _case.caseTitle,
                             style: TextStyle(
                                 fontWeight: FontWeight.w400, fontSize: 18),
-                          )
+                          ),
+                          SizedBox(width: 5),
+                          Container(
+                            height: 24,
+                            child: VerticalDivider(thickness: 1),
+                          ),
+                          Container(
+                              child: _case.caseSolve == true
+                                  ? Row(
+                                      children: [
+                                        SizedBox(width: 5),
+                                        Text("Solved"),
+                                        SizedBox(width: 5),
+                                        Icon(Icons.verified_outlined, size: 15,color: Theme.of(context).primaryColor),
+                                      ],
+                                    )
+                                  : null)
                         ],
                       ),
                       Padding(
