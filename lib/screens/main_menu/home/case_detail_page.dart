@@ -179,7 +179,7 @@ class _CaseDetailPageState extends State<CaseDetailPage> {
                           print("NABIYON YA");
                         } else {
                           var _comment = _saveComment();
-                          await _commentModel.saveComment(_comment, _case);
+                          await _commentModel.saveComment(_comment, _case, _userModel.user.userId);
                           _commentController.clear();
                         }
                       } catch (e) {
@@ -485,7 +485,7 @@ class _CaseDetailPageState extends State<CaseDetailPage> {
                                                   _userModel.user.userId
                                               ? InkWell(
                                                   onTap: () async{
-                                                    await _commentModel.deleteComment(allComments[index].commentId, _case);
+                                                    await _commentModel.deleteComment(allComments[index].commentId, _case, _userModel.user.userId);
                                                     final snackBar = SnackBar(
                                                       shape: RoundedRectangleBorder(
                                                           borderRadius: BorderRadius.all(Radius.circular(10))),

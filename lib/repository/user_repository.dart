@@ -314,11 +314,11 @@ class UserRepository implements AuthBase {
     }
   }
 
-  Future<bool> saveComment(CommentModel commentModel, CaseModel caseModel) async{
+  Future<bool> saveComment(CommentModel commentModel, CaseModel caseModel, String userId) async{
     if (appMode == AppMode.DEBUG) {
       return true;
     } else {
-      return _firestoreDBService.saveComment(commentModel, caseModel);
+      return _firestoreDBService.saveComment(commentModel, caseModel, userId);
     }
   }
 
@@ -330,11 +330,11 @@ class UserRepository implements AuthBase {
     }
   }
 
-  Future<void>deleteComment(String commentId, CaseModel caseModel) async{
+  Future<void>deleteComment(String commentId, CaseModel caseModel, String userId) async{
     if (appMode == AppMode.DEBUG) {
       return true;
     } else {
-      return _firestoreDBService.deleteComment(commentId, caseModel);
+      return _firestoreDBService.deleteComment(commentId, caseModel, userId);
     }
   }
 }

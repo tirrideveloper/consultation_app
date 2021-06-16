@@ -292,7 +292,7 @@ class FireStoreDbService implements DbBase {
   }
 
   Future<bool> saveComment(
-      CommentModel commentModel, CaseModel caseModel) async {
+      CommentModel commentModel, CaseModel caseModel, String userId) async {
 
     var _commentId = _firestoreDB
         .collection("vakalar")
@@ -315,6 +315,10 @@ class FireStoreDbService implements DbBase {
         .doc(_commentId)
         .set(_commentMap);
 
+    await _firestoreDB.collection("users").doc(userId).update({
+      "userComments": FieldValue.arrayUnion([_commentId])
+    });
+
     return true;
   }
 
@@ -333,7 +337,7 @@ class FireStoreDbService implements DbBase {
         .toList());
   }
 
-  Future<void> deleteComment(String commentId, CaseModel caseModel) async{
+  Future<void> deleteComment(String commentId, CaseModel caseModel, String userId) async{
     await _firestoreDB
         .collection("vakalar")
         .doc(caseModel.caseTag)
@@ -341,6 +345,10 @@ class FireStoreDbService implements DbBase {
         .doc(caseModel.caseId)
         .collection("comments")
         .doc(commentId).delete();
+
+    await _firestoreDB.collection("users").doc(userId).update({
+      "userComments": FieldValue.arrayRemove([commentId])
+    });
   }
 }
 

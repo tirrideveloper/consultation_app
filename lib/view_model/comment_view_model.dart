@@ -23,15 +23,15 @@ class CommentViewModel with ChangeNotifier {
   }
 
   Future<bool> saveComment(
-      CommentModel commentModel, CaseModel caseModel) async {
-    return await _userRepository.saveComment(commentModel, caseModel);
+      CommentModel commentModel, CaseModel caseModel, String userId) async {
+    return await _userRepository.saveComment(commentModel, caseModel, userId);
   }
 
   Stream<List<CommentModel>>getComments(CaseModel caseModel) {
     return _userRepository.getComments(caseModel);
   }
 
-  Future<void> deleteComment(String commentId, CaseModel caseModel) async{
-    return await _userRepository.deleteComment(commentId, caseModel);
+  Future<void> deleteComment(String commentId, CaseModel caseModel, String userId) async{
+    return await _userRepository.deleteComment(commentId, caseModel, userId);
   }
 }

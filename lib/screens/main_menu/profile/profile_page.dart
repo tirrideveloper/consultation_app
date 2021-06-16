@@ -129,7 +129,7 @@ class _ProfilePageState extends State<ProfilePage> {
               NumbersWidget(
                 userRank: _viewModel.user.rank.toString(),
                 userCase: _viewModel.user.userCases.length,
-                userComment: 0,
+                userComment: _viewModel.user.userComments.length,
               ),
               const SizedBox(height: 24),
               buildAbout(

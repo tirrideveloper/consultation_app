@@ -10,8 +10,6 @@ class NumbersWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (userCase == null) userCase = 0;
-    if (userComment == null) userComment = 0;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -33,7 +31,6 @@ class NumbersWidget extends StatelessWidget {
       );
 
   Widget buildButton(BuildContext context, String value, String text) {
-    if (value == null) value = "0";
     return MaterialButton(
       padding: EdgeInsets.symmetric(vertical: 4),
       onPressed: () {},
