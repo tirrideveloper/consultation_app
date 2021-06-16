@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:consultation_app/models/case_model.dart';
 import 'package:consultation_app/models/chats_model.dart';
+import 'package:consultation_app/models/comment_model.dart';
 import 'package:consultation_app/models/message_model.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/services/db_base.dart';
@@ -288,6 +289,58 @@ class FireStoreDbService implements DbBase {
       }
     }
     return _allCases;
+  }
+
+  Future<bool> saveComment(
+      CommentModel commentModel, CaseModel caseModel) async {
+
+    var _commentId = _firestoreDB
+        .collection("vakalar")
+        .doc(caseModel.caseTag)
+        .collection(caseModel.caseTag + "_vakalari")
+        .doc(caseModel.caseId)
+        .collection("comments")
+        .doc()
+        .id;
+    commentModel.commentId = _commentId;
+
+    var _commentMap = commentModel.toMap();
+
+    await _firestoreDB
+        .collection("vakalar")
+        .doc(caseModel.caseTag)
+        .collection(caseModel.caseTag + "_vakalari")
+        .doc(caseModel.caseId)
+        .collection("comments")
+        .doc(_commentId)
+        .set(_commentMap);
+
+    return true;
+  }
+
+  Stream<List<CommentModel>> getComments(CaseModel caseModel) {
+    var snapshot = _firestoreDB
+        .collection("vakalar")
+        .doc(caseModel.caseTag)
+        .collection(caseModel.caseTag + "_vakalari")
+        .doc(caseModel.caseId)
+        .collection("comments")
+        .orderBy("comment_date")
+        .snapshots();
+
+    return snapshot.map((commentList) => commentList.docs
+        .map((comment) => CommentModel.fromMap(comment.data()))
+        .toList());
+  }
+
+  Future<void> deleteComment(String commentId, CaseModel caseModel) async{
+    await _firestoreDB
+        .collection("vakalar")
+        .doc(caseModel.caseTag)
+        .collection(caseModel.caseTag + "_vakalari")
+        .doc(caseModel.caseId)
+        .collection("comments")
+        .doc(commentId).delete();
   }
 }
 

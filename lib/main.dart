@@ -3,6 +3,7 @@ import 'package:consultation_app/locator.dart';
 import 'package:consultation_app/view_model/all_case_view_model.dart';
 import 'package:consultation_app/view_model/case_view_model.dart';
 import 'package:consultation_app/view_model/chat_view_model.dart';
+import 'package:consultation_app/view_model/comment_view_model.dart';
 import 'package:consultation_app/view_model/user_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -31,6 +32,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => ChatViewModel()),
         ChangeNotifierProvider(create: (context) => CaseViewModel()),
         ChangeNotifierProvider(create: (context) => AllCaseViewModel()),
+        ChangeNotifierProvider(create: (context) => CommentViewModel()),
       ],
       child: MyApp(),
     ),

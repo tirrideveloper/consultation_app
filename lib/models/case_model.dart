@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CaseModel {
   final String caseId;
@@ -29,7 +29,7 @@ class CaseModel {
       "case_owner": caseOwner,
       "case_date": caseDate ?? FieldValue.serverTimestamp(),
       "case_solve": caseSolve ?? false,
-      "case_photos": casePhotos,
+      "case_photos": casePhotos ?? [],
       "case_tag": caseTag,
       "fav_list": favList ?? [],
       "un_fav_list": unFavList ?? []
