@@ -23,7 +23,6 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-
   @override
   void initState() {
     super.initState();
@@ -31,9 +30,10 @@ class _SignInPageState extends State<SignInPage> {
       (_) {
         if (myError != null) {
           PlatformAlertDialog(
-            title: "Facebook giriş hatası",
+            title:
+                AppLocalizations.of(context).translate("facebook_signup_error"),
             content: Errors.showError(myError.code, context),
-            buttonText: "Tamam",
+            buttonText: AppLocalizations.of(context).translate("okay_text"),
           ).show(context);
         }
       },
@@ -49,7 +49,6 @@ class _SignInPageState extends State<SignInPage> {
       myError = e;
     }
   }
-
 
   Widget buildImage(String path, double height) => Image.asset(path,
       fit: BoxFit.cover,

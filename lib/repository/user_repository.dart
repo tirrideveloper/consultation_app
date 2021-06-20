@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:consultation_app/locator.dart';
 import 'package:consultation_app/models/case_model.dart';
 import 'package:consultation_app/models/chats_model.dart';
+import 'package:consultation_app/models/comment_model.dart';
 import 'package:consultation_app/models/message_model.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/services/auth_base.dart';
@@ -286,6 +287,54 @@ class UserRepository implements AuthBase {
       List<CaseModel> _caseList = await _firestoreDBService.getCaseWithPagination(lastLoadedCase, valuePerPage);
       allCaseList.addAll(_caseList);
       return _caseList;
+    }
+  }
+
+  Future<bool>checkPassword(String password) async{
+    if (appMode == AppMode.DEBUG) {
+      return true;
+    } else {
+      return await _firebaseAuthService.checkPassword(password);
+    }
+  }
+
+  Future<bool>updateUserPassword(String password) async{
+    if (appMode == AppMode.DEBUG) {
+      return true;
+    } else {
+      return await _firebaseAuthService.updateUserPassword(password);
+    }
+  }
+
+  Future<bool>sendFeedback(String userId, String feedback) async{
+    if (appMode == AppMode.DEBUG) {
+      return true;
+    } else {
+      return await _firestoreDBService.sendFeedback(userId, feedback);
+    }
+  }
+
+  Future<bool> saveComment(CommentModel commentModel, CaseModel caseModel, String userId) async{
+    if (appMode == AppMode.DEBUG) {
+      return true;
+    } else {
+      return _firestoreDBService.saveComment(commentModel, caseModel, userId);
+    }
+  }
+
+  Stream<List<CommentModel>> getComments(CaseModel caseModel) {
+    if (appMode == AppMode.DEBUG) {
+      return Stream.empty();
+    } else {
+      return _firestoreDBService.getComments(caseModel);
+    }
+  }
+
+  Future<void>deleteComment(String commentId, CaseModel caseModel, String userId) async{
+    if (appMode == AppMode.DEBUG) {
+      return true;
+    } else {
+      return _firestoreDBService.deleteComment(commentId, caseModel, userId);
     }
   }
 }

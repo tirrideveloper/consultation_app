@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:consultation_app/common_widget/photo_detail.dart';
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
@@ -21,7 +22,7 @@ class ProfileWidget extends StatelessWidget {
     return Center(
       child: Stack(
         children: [
-          buildImage(),
+          buildImage(context),
           Positioned(
             bottom: 0,
             right: 4,
@@ -32,19 +33,26 @@ class ProfileWidget extends StatelessWidget {
     );
   }
 
-  Widget buildImage() {
+  Widget buildImage(BuildContext context) {
     final image = imagePath.contains('https')
         ? NetworkImage(imagePath)
         : FileImage(File(imagePath));
 
-    return ClipOval(
-      child: Material(
-        color: Colors.transparent,
-        child: Ink.image(
-          image: image as ImageProvider,
-          fit: BoxFit.cover,
-          width: 128,
-          height: 128,
+    return InkWell(
+      onTap: () => Navigator.of(context, rootNavigator: true).push(
+          MaterialPageRoute(builder: (context) => PhotoDetail(imgPath: imagePath))),
+      child: Hero(
+        tag: imagePath,
+        child: ClipOval(
+          child: Material(
+            color: Colors.transparent,
+            child: Ink.image(
+              image: image as ImageProvider,
+              fit: BoxFit.cover,
+              width: 128,
+              height: 128,
+            ),
+          ),
         ),
       ),
     );

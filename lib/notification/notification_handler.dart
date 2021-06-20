@@ -18,8 +18,9 @@ class NotificationHandler {
         onSelectNotification: onSelectNotification);
   }
 
-  static Future onSelectNotification(String paylaod){
-    if(paylaod != null) print("payload alındı: $paylaod");
+  static Future onSelectNotification(String payload){
+    if(payload != null) print("payload get: $payload");
+    return null;
 }
 
   static Future onDidReceiveLocalNotification(
@@ -32,7 +33,7 @@ class NotificationHandler {
         actions: [
           CupertinoDialogAction(
             isDefaultAction: true,
-            child: Text("okeeey"),
+            child: Text("Okay"),
             onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
           ),
         ],

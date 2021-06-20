@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CaseModel {
   final String caseId;
@@ -10,6 +10,8 @@ class CaseModel {
   bool caseSolve;
   List casePhotos;
   String caseTag;
+  List favList;
+  List unFavList;
 
   CaseModel(
       {@required this.caseOwner,
@@ -26,9 +28,11 @@ class CaseModel {
       "case_body": caseBody,
       "case_owner": caseOwner,
       "case_date": caseDate ?? FieldValue.serverTimestamp(),
-      "case_solve": caseSolve,
-      "case_photos": casePhotos,
+      "case_solve": caseSolve ?? false,
+      "case_photos": casePhotos ?? [],
       "case_tag": caseTag,
+      "fav_list": favList ?? [],
+      "un_fav_list": unFavList ?? []
     };
   }
 
@@ -40,11 +44,12 @@ class CaseModel {
         caseDate = map["case_date"],
         caseSolve = map["case_solve"],
         caseTag = map["case_tag"],
-        casePhotos = map["case_photos"];
+        casePhotos = map["case_photos"],
+        favList = map["fav_list"],
+        unFavList = map["un_fav_list"];
 
   @override
   String toString() {
     return 'CaseModel{caseOwner: $caseOwner}';
   }
-
 }

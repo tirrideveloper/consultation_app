@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:consultation_app/models/case_model.dart';
 import 'package:consultation_app/models/chats_model.dart';
+import 'package:consultation_app/models/comment_model.dart';
 import 'package:consultation_app/models/message_model.dart';
 import 'package:consultation_app/models/user_model.dart';
 import 'package:consultation_app/services/db_base.dart';
@@ -225,6 +226,18 @@ class FireStoreDbService implements DbBase {
     return true;
   }
 
+  Future<bool> sendFeedback(String userId, String feedback) async {
+    var _feedbackId = _firestoreDB.collection("feedbacks").doc().id;
+
+    await _firestoreDB.collection("feedbacks").doc(_feedbackId).set({
+      "feedback_sender": userId,
+      "feedback_message": feedback,
+      "creation_date": FieldValue.serverTimestamp(),
+    });
+
+    return true;
+  }
+
   Future<List<CaseModel>> getCaseWithPagination(
       CaseModel lastLoadedCase, int valuePerPage) async {
     QuerySnapshot _querySnapshot;
@@ -237,7 +250,7 @@ class FireStoreDbService implements DbBase {
             .collection("vakalar")
             .doc(tag)
             .collection(tag + "_vakalari")
-            .orderBy("case_title")
+            .orderBy("case_date", descending: true)
             .limit(valuePerPage)
             .get();
         tagCases.add(_querySnapshot);
@@ -248,7 +261,7 @@ class FireStoreDbService implements DbBase {
             .collection("vakalar")
             .doc(tag)
             .collection(tag + "_vakalari")
-            .orderBy("case_title")
+            .orderBy("case_date", descending: true)
             .startAfter([lastLoadedCase.caseId])
             .limit(valuePerPage)
             .get();
@@ -264,8 +277,10 @@ class FireStoreDbService implements DbBase {
         String _caseOwnerId = _case.caseId;
         String ownerId = _caseOwnerId.replaceAll("-" + titleId, "");
 
-        DocumentSnapshot _owner =
-        await FirebaseFirestore.instance.collection("users").doc(ownerId).get();
+        DocumentSnapshot _owner = await FirebaseFirestore.instance
+            .collection("users")
+            .doc(ownerId)
+            .get();
         Map<String, dynamic> _ownerMap = _owner.data();
 
         _case.caseOwner = _ownerMap;
@@ -275,12 +290,72 @@ class FireStoreDbService implements DbBase {
     }
     return _allCases;
   }
+
+  Future<bool> saveComment(
+      CommentModel commentModel, CaseModel caseModel, String userId) async {
+
+    var _commentId = _firestoreDB
+        .collection("vakalar")
+        .doc(caseModel.caseTag)
+        .collection(caseModel.caseTag + "_vakalari")
+        .doc(caseModel.caseId)
+        .collection("comments")
+        .doc()
+        .id;
+    commentModel.commentId = _commentId;
+
+    var _commentMap = commentModel.toMap();
+
+    await _firestoreDB
+        .collection("vakalar")
+        .doc(caseModel.caseTag)
+        .collection(caseModel.caseTag + "_vakalari")
+        .doc(caseModel.caseId)
+        .collection("comments")
+        .doc(_commentId)
+        .set(_commentMap);
+
+    await _firestoreDB.collection("users").doc(userId).update({
+      "userComments": FieldValue.arrayUnion([_commentId])
+    });
+
+    return true;
+  }
+
+  Stream<List<CommentModel>> getComments(CaseModel caseModel) {
+    var snapshot = _firestoreDB
+        .collection("vakalar")
+        .doc(caseModel.caseTag)
+        .collection(caseModel.caseTag + "_vakalari")
+        .doc(caseModel.caseId)
+        .collection("comments")
+        .orderBy("comment_date")
+        .snapshots();
+
+    return snapshot.map((commentList) => commentList.docs
+        .map((comment) => CommentModel.fromMap(comment.data()))
+        .toList());
+  }
+
+  Future<void> deleteComment(String commentId, CaseModel caseModel, String userId) async{
+    await _firestoreDB
+        .collection("vakalar")
+        .doc(caseModel.caseTag)
+        .collection(caseModel.caseTag + "_vakalari")
+        .doc(caseModel.caseId)
+        .collection("comments")
+        .doc(commentId).delete();
+
+    await _firestoreDB.collection("users").doc(userId).update({
+      "userComments": FieldValue.arrayRemove([commentId])
+    });
+  }
 }
 
 List<String> vakaTagi = [
   "agiz-dis",
   "beyin-sinir",
-  "cocuk_sagligi",
+  "paediatric",
   "diger",
   "genel-cerrahi",
   "gogus-cerrahi",

@@ -206,4 +206,16 @@ class UserViewModel with ChangeNotifier implements AuthBase {
   Future<List<Chats>> getAllConversations(String userId) async {
     return await _userRepository.getAllConversations(userId);
   }
+
+  Future<bool> checkPassword(String password) async {
+    return await _userRepository.checkPassword(password);
+  }
+
+  Future<bool> updateUserPassword(String password) async {
+    return await _userRepository.updateUserPassword(password);
+  }
+
+  Future<bool> sendFeedback(String userId, String feedback) async{
+    return await _userRepository.sendFeedback(userId, feedback);
+  }
 }

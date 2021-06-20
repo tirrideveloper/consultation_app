@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:consultation_app/common_widget/platform_alert_dialog.dart';
+import 'package:consultation_app/common_widget/shimmer_effect.dart';
 import 'package:consultation_app/common_widget/side_menu.dart';
 import 'package:consultation_app/models/user_model.dart';
+import 'package:consultation_app/screens/main_menu/home/add_new_case.dart';
 import 'package:consultation_app/screens/main_menu/home/case_detail_page.dart';
-import 'package:consultation_app/screens/main_menu/home/konu_giris.dart';
 import 'package:consultation_app/tools/app_localizations.dart';
 import 'package:consultation_app/view_model/all_case_view_model.dart';
 import 'package:consultation_app/view_model/case_view_model.dart';
@@ -48,17 +49,19 @@ class _HomePageState extends State<HomePage> {
                 _addNewCase();
               } else {
                 PlatformAlertDialog(
-                        title: "Onaylama hatası",
-                        content:
-                            "Vaka girmeden önce lütfen hesabınızı onaylayın.",
-                        buttonText: "Tamam")
+                        title: AppLocalizations.of(context)
+                            .translate("verification_error"),
+                        content: AppLocalizations.of(context)
+                            .translate("verify_account"),
+                        buttonText:
+                            AppLocalizations.of(context).translate("okay_text"))
                     .show(context);
               }
             },
             elevation: 2,
             backgroundColor: Theme.of(context).primaryColor,
             child: Text(
-              "+\nCase",
+              "+\n" + AppLocalizations.of(context).translate("case_txt"),
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white),
             ),
@@ -68,15 +71,43 @@ class _HomePageState extends State<HomePage> {
         body: Consumer<AllCaseViewModel>(
           builder: (context, model, child) {
             if (model.state == AllCaseViewState.Busy) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return ListView.builder(
+                  itemCount: 7,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: ListTile(
+                        leading: CircleAvatar(child: ShimmerEffect.circular(width: 48, height: 48)),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ShimmerEffect.rectangular(height: 12, width: 80),
+                            SizedBox(height: 5),
+                            Row(
+                              children: [
+                                ShimmerEffect.rectangular(height: 10, width: 130),
+                                SizedBox(width: 10),
+                                ShimmerEffect.rectangular(height: 10, width: 100),
+                              ],
+                            ),
+                            SizedBox(height: 15)
+                          ],
+                        ),
+                        subtitle: Column(
+                          children: [
+                            ShimmerEffect.rectangular(height: 12),
+                            SizedBox(height: 5),
+                            ShimmerEffect.rectangular(height: 12)
+                          ],
+                        ),
+                      ),
+                    );
+                  });
             } else if (model.state == AllCaseViewState.Loaded) {
               return RefreshIndicator(
                 onRefresh: () async {
+                  setState(() {});
                   // ignore: unnecessary_statements
                   model.refresh;
-                  setState(() {});
                   await Future.delayed(Duration(seconds: 1));
                   return null;
                 },
@@ -110,10 +141,9 @@ class _HomePageState extends State<HomePage> {
     return showDialog(
       context: context,
       builder: (context) => PlatformAlertDialog(
-        title: "ConsulApp'ten çıkılsın mı?",
-        content: "Oturumunuz kapanmayacaktır",
-        buttonText: "Evet",
-        button2Text: "Hayır",
+        title: AppLocalizations.of(context).translate("exit_app"),
+        buttonText: AppLocalizations.of(context).translate("okay_text"),
+        button2Text: AppLocalizations.of(context).translate("cancel_text"),
       ),
     );
   }
@@ -126,7 +156,7 @@ class _HomePageState extends State<HomePage> {
           fullscreenDialog: true,
           builder: (context) => ChangeNotifierProvider(
             create: (context) => CaseViewModel(currentUser: _viewModel.user),
-            child: EnterNewCase(),
+            child: AddNewCase(),
           ),
         ),
       );
@@ -136,7 +166,7 @@ class _HomePageState extends State<HomePage> {
           fullscreenDialog: true,
           builder: (context) => ChangeNotifierProvider(
             create: (context) => CaseViewModel(currentUser: _viewModel.user),
-            child: EnterNewCase(),
+            child: AddNewCase(),
           ),
         ),
       );
@@ -183,8 +213,9 @@ class _HomePageState extends State<HomePage> {
     return RefreshIndicator(
       onRefresh: () async {
         // ignore: unnecessary_statements
-        _allCaseView.refresh;
         setState(() {});
+        // ignore: unnecessary_statements
+        _allCaseView.refresh;
         await Future.delayed(Duration(seconds: 1));
         return null;
       },
@@ -197,7 +228,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "Henüz Vaka Yok",
+                  "Case Yok",
                   style: TextStyle(fontSize: 36),
                 )
               ],
@@ -234,36 +265,37 @@ class _HomePageState extends State<HomePage> {
         );
       },
       child: Container(
-        padding: EdgeInsets.all(5.0),
+        padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
         child: Card(
           elevation: 0.7,
           child: ListTile(
             title: RichText(
               text: TextSpan(
-                  text: caseOwner.nameSurname + "\n",
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600),
-                  children: [
-                    TextSpan(
-                      text: _title + "\t • \t",
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    TextSpan(
-                      text: _showTime(_snapCase.caseDate) + "\n",
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ]),
+                text: caseOwner.nameSurname + "\n",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600),
+                children: [
+                  TextSpan(
+                    text: _title + "\t • \t",
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  TextSpan(
+                    text: _showTime(_snapCase.caseDate) + "\n",
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             ),
             subtitle: Text(_snapCase.caseBody
-                .replaceRange(100, _snapCase.caseBody.length, "...")),
+                .replaceRange(80, _snapCase.caseBody.length, "...")),
             leading: CircleAvatar(
               backgroundColor: Colors.white,
               backgroundImage: NetworkImage(caseOwner.profileURL),

@@ -46,8 +46,9 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
             const SizedBox(height: 15),
             NumbersWidget(
               userRank: user.rank.toString(),
-              userCase: user.userCases.length.toString(),
-              userComment: "0",
+              userCase:
+                  user.userCases.length == null ? 0 : user.userCases.length,
+              userComment: 0,
             ),
             SizedBox(height: 24),
             buildAbout(user.aboutUser, user.userProfession),
@@ -87,7 +88,7 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
 
   Widget buildAbout(String aboutUser, String profession) {
     if (profession == "") {
-      profession = "Belirtilmemiş";
+      profession = AppLocalizations.of(context).translate("unspecified_txt");
     }
 
     return Container(
@@ -100,7 +101,9 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 16),
-          Text("Uzmanlık Alanı: " + profession,
+          Text(
+              AppLocalizations.of(context).translate("profession_txt") +
+                  profession,
               style: TextStyle(fontSize: 16, height: 1.4)),
           SizedBox(height: 10),
           Text(
@@ -126,9 +129,9 @@ class _OtherUserProfileState extends State<OtherUserProfile> {
       );
     } else
       PlatformAlertDialog(
-              title: "Onaylama hatası",
-              content: "Mesaj atmadan önce lütfen hesabınızı onaylayın.",
-              buttonText: "Tamam")
+              title: AppLocalizations.of(context)
+                  .translate("message_verify_error"),
+              buttonText: AppLocalizations.of(context).translate("okay_text"))
           .show(context);
   }
 }

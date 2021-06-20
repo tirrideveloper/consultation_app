@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:consultation_app/models/message_model.dart';
+import 'package:consultation_app/tools/app_localizations.dart';
 import 'package:consultation_app/view_model/chat_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -92,7 +93,7 @@ class _MessagingPageState extends State<MessagingPage> {
                 contentPadding: EdgeInsets.fromLTRB(10, 5, 8, 0),
                 fillColor: Colors.green.shade100,
                 filled: true,
-                hintText: "Mesajınızı yazın",
+                hintText: AppLocalizations.of(context).translate("enter_message"),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   borderSide: BorderSide.none,

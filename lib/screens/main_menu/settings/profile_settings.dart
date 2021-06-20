@@ -104,7 +104,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               Text(
-                "Uzmanlık Alanınız",
+                AppLocalizations.of(context).translate("profession_txt"),
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

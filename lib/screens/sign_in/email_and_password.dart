@@ -49,7 +49,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
         final snackBar = SnackBar(
           behavior: SnackBarBehavior.floating,
           content: Text(
-            "Resetleme maili gönderildi",
+            AppLocalizations.of(context).translate("reset_password_mail"),
             style: TextStyle(fontSize: 14, color: Colors.white),
           ),
           backgroundColor: Theme.of(context).primaryColor,
@@ -60,7 +60,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
           ),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }catch (e) {
+      } catch (e) {
         final snackBar = SnackBar(
           behavior: SnackBarBehavior.floating,
           content: Text(
@@ -116,18 +116,18 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
       _buttonText = AppLocalizations.of(context).translate("login_text");
       _linkText =
           AppLocalizations.of(context).translate("account_question_sign_in");
-      _appBarText = "Giriş yap";
+      _appBarText = AppLocalizations.of(context).translate("login_text");
     } else if (_formType == FormType.Register) {
       _showForgetPassword = false;
       _buttonText = AppLocalizations.of(context).translate("sign_up_text");
       _linkText =
           AppLocalizations.of(context).translate("account_question_login");
-      _appBarText = "Hesap oluştur";
+      _appBarText = AppLocalizations.of(context).translate("sign_up_text");
     } else {
       _showForgetPassword = false;
-      _buttonText = "sıfırla";
-      _linkText = "girişe geri dön";
-      _appBarText = "Şifre sıfırla";
+      _buttonText = AppLocalizations.of(context).translate("reset_pass_txt");
+      _linkText = AppLocalizations.of(context).translate("back_login");
+      _appBarText = AppLocalizations.of(context).translate("reset_pass_txt");
     }
 
     final _userViewModel = Provider.of<UserViewModel>(context);
@@ -189,6 +189,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
                                     .translate("sign_in_password"),
                                 labelText: AppLocalizations.of(context)
                                     .translate("sign_in_password"),
+                                focusColor: Theme.of(context).primaryColor,
                                 border: OutlineInputBorder(),
                               ),
                               onSaved: (String inputPassword) {
@@ -227,7 +228,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
           });
         },
         child: Text(
-          "Parolanızı unuttunuz mu?",
+          AppLocalizations.of(context).translate("forgot_password"),
           style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
         ),
       ),
