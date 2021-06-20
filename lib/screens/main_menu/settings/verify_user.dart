@@ -41,7 +41,7 @@ class _VerifyUserState extends State<VerifyUser> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                      "\nBuraya kullanıcı mezuniyet belgesi yüklesin diye yazı yazcaz."),
+                      "\nDeğerli kullanıcımız uygulamaya tem erişim sağlamanız için varsa hekim kimliğinizi ya da öğrenci belgenizi yükleyiniz.Hesabınızın onaylanma süresi yoğunluğa göre değişmektedir."),
                 ],
               ),
               SizedBox(height: 20),
