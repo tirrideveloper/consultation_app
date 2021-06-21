@@ -37,4 +37,10 @@ class CaseViewModel with ChangeNotifier {
   Future<bool> updateUserCases(String userId, String newCaseId) async {
     return await _userRepository.updateUserCases(userId, newCaseId);
   }
+
+  Future<List<CaseModel>> getTagSearchedCases(String tag) async {
+    List<CaseModel> searchedList =
+    await _userRepository.getTagSearchedCases(tag);
+    return searchedList;
+  }
 }

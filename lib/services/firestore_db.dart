@@ -238,6 +238,41 @@ class FireStoreDbService implements DbBase {
     return true;
   }
 
+  Future<List<CaseModel>> getTagSearchedCases(String tag) async {
+    QuerySnapshot _querySnapshot;
+    List<CaseModel> _allSearchedCases = [];
+    List _tagCases = [];
+
+    _querySnapshot = await _firestoreDB
+        .collection("vakalar")
+        .doc(tag)
+        .collection(tag + "_vakalari")
+        .orderBy("case_date")
+        .get();
+    _tagCases.add(_querySnapshot);
+
+    for(QuerySnapshot query in _tagCases){
+      for(DocumentSnapshot snap in query.docs){
+        CaseModel _case = CaseModel.fromMap(snap.data());
+
+        String titleId = _case.caseTitle.replaceAll(RegExp(r"\s+"), "");
+        String _caseOwnerId = _case.caseId;
+        String ownerId = _caseOwnerId.replaceAll("-" + titleId, "");
+
+        DocumentSnapshot _owner = await FirebaseFirestore.instance
+            .collection("users")
+            .doc(ownerId)
+            .get();
+        Map<String, dynamic> _ownerMap = _owner.data();
+
+        _case.caseOwner = _ownerMap;
+
+        _allSearchedCases.add(_case);
+      }
+    }
+    return _allSearchedCases;
+  }
+
   Future<List<CaseModel>> getCaseWithPagination(
       CaseModel lastLoadedCase, int valuePerPage) async {
     QuerySnapshot _querySnapshot;
@@ -293,7 +328,6 @@ class FireStoreDbService implements DbBase {
 
   Future<bool> saveComment(
       CommentModel commentModel, CaseModel caseModel, String userId) async {
-
     var _commentId = _firestoreDB
         .collection("vakalar")
         .doc(caseModel.caseTag)
@@ -337,14 +371,16 @@ class FireStoreDbService implements DbBase {
         .toList());
   }
 
-  Future<void> deleteComment(String commentId, CaseModel caseModel, String userId) async{
+  Future<void> deleteComment(
+      String commentId, CaseModel caseModel, String userId) async {
     await _firestoreDB
         .collection("vakalar")
         .doc(caseModel.caseTag)
         .collection(caseModel.caseTag + "_vakalari")
         .doc(caseModel.caseId)
         .collection("comments")
-        .doc(commentId).delete();
+        .doc(commentId)
+        .delete();
 
     await _firestoreDB.collection("users").doc(userId).update({
       "userComments": FieldValue.arrayRemove([commentId])

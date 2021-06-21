@@ -179,7 +179,8 @@ class _CaseDetailPageState extends State<CaseDetailPage> {
                           print("NABIYON YA");
                         } else {
                           var _comment = _saveComment();
-                          await _commentModel.saveComment(_comment, _case, _userModel.user.userId);
+                          await _commentModel.saveComment(
+                              _comment, _case, _userModel.user.userId);
                           _commentController.clear();
                         }
                       } catch (e) {
@@ -315,7 +316,7 @@ class _CaseDetailPageState extends State<CaseDetailPage> {
                               height: 24,
                               child: VerticalDivider(thickness: 1),
                             ),
-                            SizedBox(width: 15),
+
                             Text(
                               _case.caseTitle,
                               style: TextStyle(
@@ -339,7 +340,19 @@ class _CaseDetailPageState extends State<CaseDetailPage> {
                                                   .primaryColor),
                                         ],
                                       )
-                                    : null)
+                                    : null),
+                            Container(
+                              height: 24,
+                              child: _caseOwner.userId == _userModel.user.userId ? VerticalDivider(thickness: 1):null,
+                            ),
+                            Container(
+                                child:
+                                    _caseOwner.userId == _userModel.user.userId
+                                        ? InkWell(
+                                            onTap: () {},
+                                            child: Icon(Icons.delete, size: 16, color: Colors.grey.shade600),
+                                          )
+                                        : null),
                           ],
                         ),
                         Padding(
@@ -484,26 +497,45 @@ class _CaseDetailPageState extends State<CaseDetailPage> {
                                           trailing: commentOwner.userId ==
                                                   _userModel.user.userId
                                               ? InkWell(
-                                                  onTap: () async{
-                                                    await _commentModel.deleteComment(allComments[index].commentId, _case, _userModel.user.userId);
+                                                  onTap: () async {
+                                                    await _commentModel
+                                                        .deleteComment(
+                                                            allComments[index]
+                                                                .commentId,
+                                                            _case,
+                                                            _userModel
+                                                                .user.userId);
                                                     final snackBar = SnackBar(
                                                       shape: RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10))),
                                                       elevation: 0,
-                                                      duration: Duration(milliseconds: 1500),
-                                                      behavior: SnackBarBehavior.floating,
+                                                      duration: Duration(
+                                                          milliseconds: 1500),
+                                                      behavior: SnackBarBehavior
+                                                          .floating,
                                                       content: Text(
                                                         "Yorumunuz silindi",
-                                                        style: TextStyle(fontSize: 16, color: Colors.white),
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            color:
+                                                                Colors.white),
                                                       ),
-                                                      backgroundColor: Theme.of(context).primaryColor,
+                                                      backgroundColor:
+                                                          Theme.of(context)
+                                                              .primaryColor,
                                                     );
-                                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(snackBar);
                                                   },
                                                   child: Icon(
-                                                    Icons.delete_outline,
-                                                    size: 20,
-                                                    color: Colors.redAccent,
+                                                    Icons.delete,
+                                                    size: 16,
+                                                    color: Colors.grey.shade600,
                                                   ),
                                                 )
                                               : null,

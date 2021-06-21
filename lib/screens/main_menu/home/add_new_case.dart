@@ -33,7 +33,7 @@ class _AddNewCaseState extends State<AddNewCase> {
   Future<bool> _onBackPressed() {
     if (_controllerTitle.text.isNotEmpty ||
         _controllerContent.text.isNotEmpty) {
-      selectedTag = "";
+      _selectedTag = "";
       return showDialog(
         context: context,
         builder: (context) => PlatformAlertDialog(
@@ -43,7 +43,7 @@ class _AddNewCaseState extends State<AddNewCase> {
         ),
       );
     } else {
-      selectedTag = "";
+      _selectedTag = "";
       Navigator.of(context).pop();
       return null;
     }
@@ -66,7 +66,7 @@ class _AddNewCaseState extends State<AddNewCase> {
                 DropDownField(
                   textStyle:
                       TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
-                  controller: tagController,
+                  controller: _tagController,
                   hintText:
                       AppLocalizations.of(context).translate("select_tag"),
                   enabled: true,
@@ -74,16 +74,16 @@ class _AddNewCaseState extends State<AddNewCase> {
                   itemsVisibleInDropdown: 5,
                   onValueChanged: (value) {
                     setState(() {
-                      selectedTag = value;
+                      _selectedTag = value;
                       FocusScope.of(context).unfocus();
-                      //tagController.clear();
+                      //_tagController.clear();
                     });
                   },
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                selectedTag != ""
+                _selectedTag != ""
                     ? Row(
                         children: [
                           Container(
@@ -98,15 +98,15 @@ class _AddNewCaseState extends State<AddNewCase> {
                               children: [
                                 Container(
                                   margin: EdgeInsets.only(left: 10, right: 10),
-                                  child: Text(selectedTag),
+                                  child: Text(_selectedTag),
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(right: 10),
                                   child: GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                        selectedTag = "";
-                                        tagController.clear();
+                                        _selectedTag = "";
+                                        _tagController.clear();
                                       });
                                     },
                                     child: Icon(
@@ -213,7 +213,7 @@ class _AddNewCaseState extends State<AddNewCase> {
   CaseModel _saveCase() {
     final _caseModel = Provider.of<CaseViewModel>(context, listen: false);
 
-    if (selectedTag == "") selectedTag = "diger";
+    if (_selectedTag == "") _selectedTag = "diger";
 
     String titleId = _controllerTitle.text.replaceAll(RegExp(r"\s+"), "");
     String userId = _caseModel.currentUser.userId;
@@ -226,19 +226,19 @@ class _AddNewCaseState extends State<AddNewCase> {
         caseTitle: caseTitle,
         caseBody: caseBody,
         caseOwner: _caseModel.currentUser.toMap(),
-        caseTag: selectedTag);
+        caseTag: _selectedTag);
     return _case;
   }
 }
 
-String selectedTag = "";
+String _selectedTag = "";
 
-final tagController = TextEditingController();
+final _tagController = TextEditingController();
 
 List<String> vakaTagi = [
   "agiz-dis",
   "beyin-sinir",
-  "cocuk_sagligi",
+  "paediatric",
   "diger",
   "genel-cerrahi",
   "gogus-cerrahi",

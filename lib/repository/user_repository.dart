@@ -26,6 +26,7 @@ class UserRepository implements AuthBase {
   AppMode appMode = AppMode.RELEASE;
   List<UserModel> usersList = [];
   List<CaseModel> allCaseList = [];
+  List<CaseModel> allSearchedCaseList = [];
 
   @override
   Future<UserModel> currentUser() async {
@@ -132,8 +133,8 @@ class UserRepository implements AuthBase {
     }
   }
 
-  Future<bool> updateUser(
-      String userId, String nameSurname, String aboutUser, String userProfession) async {
+  Future<bool> updateUser(String userId, String nameSurname, String aboutUser,
+      String userProfession) async {
     if (appMode == AppMode.DEBUG) {
       return false;
     } else {
@@ -222,7 +223,7 @@ class UserRepository implements AuthBase {
       return "file_download_link";
     } else {
       var casePhotoUrl =
-      await _storageService.uploadCasePhotos(caseId, fileName, casePhoto);
+          await _storageService.uploadCasePhotos(caseId, fileName, casePhoto);
       return casePhotoUrl;
     }
   }
@@ -280,17 +281,31 @@ class UserRepository implements AuthBase {
     }
   }
 
-  Future<List<CaseModel>>getCaseWithPagination(CaseModel lastLoadedCase, int valuePerPage)  async{
+  Future<List<CaseModel>> getCaseWithPagination(
+      CaseModel lastLoadedCase, int valuePerPage) async {
     if (appMode == AppMode.DEBUG) {
       return [];
     } else {
-      List<CaseModel> _caseList = await _firestoreDBService.getCaseWithPagination(lastLoadedCase, valuePerPage);
+      List<CaseModel> _caseList = await _firestoreDBService
+          .getCaseWithPagination(lastLoadedCase, valuePerPage);
       allCaseList.addAll(_caseList);
       return _caseList;
     }
   }
 
-  Future<bool>checkPassword(String password) async{
+  Future<List<CaseModel>> getTagSearchedCases(
+      String tag) async {
+    if (appMode == AppMode.DEBUG) {
+      return [];
+    } else {
+      List<CaseModel> _caseList = await _firestoreDBService
+          .getTagSearchedCases(tag);
+      allSearchedCaseList.addAll(_caseList);
+      return _caseList;
+    }
+  }
+
+  Future<bool> checkPassword(String password) async {
     if (appMode == AppMode.DEBUG) {
       return true;
     } else {
@@ -298,7 +313,7 @@ class UserRepository implements AuthBase {
     }
   }
 
-  Future<bool>updateUserPassword(String password) async{
+  Future<bool> updateUserPassword(String password) async {
     if (appMode == AppMode.DEBUG) {
       return true;
     } else {
@@ -306,7 +321,7 @@ class UserRepository implements AuthBase {
     }
   }
 
-  Future<bool>sendFeedback(String userId, String feedback) async{
+  Future<bool> sendFeedback(String userId, String feedback) async {
     if (appMode == AppMode.DEBUG) {
       return true;
     } else {
@@ -314,7 +329,8 @@ class UserRepository implements AuthBase {
     }
   }
 
-  Future<bool> saveComment(CommentModel commentModel, CaseModel caseModel, String userId) async{
+  Future<bool> saveComment(
+      CommentModel commentModel, CaseModel caseModel, String userId) async {
     if (appMode == AppMode.DEBUG) {
       return true;
     } else {
@@ -330,7 +346,9 @@ class UserRepository implements AuthBase {
     }
   }
 
-  Future<void>deleteComment(String commentId, CaseModel caseModel, String userId) async{
+
+  Future<void> deleteComment(
+      String commentId, CaseModel caseModel, String userId) async {
     if (appMode == AppMode.DEBUG) {
       return true;
     } else {
