@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   final _tagController = TextEditingController();
   String _selectedTag = "";
   List<CaseModel> _allSearchedCase = [];
+  final textFieldFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -75,23 +76,28 @@ class _HomePageState extends State<HomePage> {
                   child: Padding(
                     padding: EdgeInsets.only(left: 15),
                     child: TextField(
+                      focusNode: textFieldFocusNode,
                       style: TextStyle(color: Colors.white),
                       controller: _searchController,
                       decoration: InputDecoration(
                         hintStyle: TextStyle(color: Colors.grey.shade50),
                         border: InputBorder.none,
                         hintText: "Search case",
-                        suffixIcon: IconButton(
-                          onPressed: () {
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            textFieldFocusNode.unfocus();
+                            textFieldFocusNode.canRequestFocus = false;
                             setState(() {
                               _searchController.clear();
                               _isSearching = false;
                               _selectedTag = "";
                               _tagController.clear();
                             });
+                            Future.delayed(Duration(milliseconds: 100), () {
+                              textFieldFocusNode.canRequestFocus = true;
+                            });
                           },
-                          icon: Icon(Icons.clear),
-                          color: Colors.white,
+                          child: Icon(Icons.clear, color: Colors.white),
                         ),
                       ),
                     ),
@@ -237,7 +243,6 @@ class _HomePageState extends State<HomePage> {
                                     () {
                                       _allSearchedCase.clear();
                                       _selectedTag = value;
-                                      FocusScope.of(context).unfocus();
                                     },
                                   );
                                 },
@@ -281,7 +286,8 @@ class _HomePageState extends State<HomePage> {
                   }
                   return InkWell(
                     onTap: () {
-                      FocusScope.of(context).unfocus();
+                      textFieldFocusNode.unfocus();
+                      textFieldFocusNode.canRequestFocus = false;
 
                       Navigator.of(context, rootNavigator: true).push(
                         MaterialPageRoute(
@@ -294,6 +300,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       );
+                      Future.delayed(Duration(milliseconds: 100), () {
+                        textFieldFocusNode.canRequestFocus = true;
+                      });
                     },
                     child: Padding(
                       padding: EdgeInsets.only(top: 10),
