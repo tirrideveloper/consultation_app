@@ -107,7 +107,7 @@ class _UserNamePasswordState extends State<UserNamePassword> {
                 ),
               ),
               Container(
-                width: 150,
+                width: 160,
                 child: BasicButton(
                   buttonText: AppLocalizations.of(context)
                       .translate("update_username_text"),

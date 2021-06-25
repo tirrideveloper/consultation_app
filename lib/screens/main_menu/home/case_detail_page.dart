@@ -159,7 +159,7 @@ class _CaseDetailPageState extends State<CaseDetailPage> {
                     maxLength: 240,
                     decoration: InputDecoration(
                       counterText: "",
-                      hintText: "Yorumunuzu yazın.",
+                      hintText: "Type a comment.",
                       contentPadding: EdgeInsets.fromLTRB(0, 15, 10, 10),
                       focusedBorder: UnderlineInputBorder(
                         borderSide:
@@ -409,7 +409,7 @@ class _CaseDetailPageState extends State<CaseDetailPage> {
                         Container(
                           padding: EdgeInsets.fromLTRB(15, 10, 10, 0),
                           child: Text(
-                            "Yorumlar",
+                            "Comments",
                             style: TextStyle(
                                 fontSize: 18,
                                 color: Theme.of(context).primaryColor,

@@ -79,7 +79,7 @@ class _MessagesPageState extends State<MessagesPage> {
                       child: Card(
                         child: ListTile(
                           title: Text(snapshotChat.spokenUserName),
-                          subtitle: Text(snapshotChat.lastMessage.replaceRange(30, snapshotChat.lastMessage.length, "...")),
+                          subtitle: Text(snapshotChat.lastMessage),
                           trailing: Text(snapshotChat.timeDifference),
                           leading: CircleAvatar(
                             backgroundColor: Colors.grey.shade200,
